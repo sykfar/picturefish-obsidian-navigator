@@ -1,0 +1,13 @@
+Picturefish Obsidian Navigator
+Copyright (c) 2026 Alexander Sorge and Picturefish contributors
+
+This project is an independent fork of Notebook Navigator:
+https://github.com/johansan/notebook-navigator
+
+Notebook Navigator copyright (c) 2025-2026 Johan Sanneblad and its contributors.
+
+Picturefish Obsidian Navigator is not affiliated with, endorsed by, or maintained by the Notebook Navigator author.
+The source code remains licensed under the GNU General Public License, version 3 or any later version. See LICENSE.
+
+The exact upstream baseline and synchronization policy are documented in UPSTREAM.md. Files inherited from upstream
+retain their original copyright notices. Picturefish-specific changes are identified through Git history.
