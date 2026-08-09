@@ -31,7 +31,7 @@ describe('Picturefish runtime identity', () => {
     });
 
     it('namespaces every active localStorage key without reusing upstream state', () => {
-        const keys = Object.values(STORAGE_KEYS);
+        const keys = Object.values(STORAGE_KEYS) as string[];
         expect(keys.length).toBeGreaterThan(0);
         expect(new Set(keys).size).toBe(keys.length);
         expect(keys.every(key => key.startsWith(`${PRODUCT_STORAGE_PREFIX}-`))).toBe(true);
