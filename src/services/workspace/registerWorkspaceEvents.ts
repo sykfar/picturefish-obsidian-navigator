@@ -132,8 +132,7 @@ export default function registerWorkspaceEvents(plugin: NotebookNavigatorPlugin)
 
     // Add ribbon icon to open the navigator
     const localizedNavigatorLabel = strings.plugin.ribbonTooltip;
-    const ribbonTooltip =
-        localizedNavigatorLabel === 'Notebook Navigator' ? PRODUCT_NAME : `${PRODUCT_NAME} — ${localizedNavigatorLabel}`;
+    const ribbonTooltip = localizedNavigatorLabel === 'Notebook Navigator' ? PRODUCT_NAME : `${PRODUCT_NAME} — ${localizedNavigatorLabel}`;
     plugin.ribbonIconEl = plugin.addRibbonIcon(NOTEBOOK_NAVIGATOR_ICON_ID, ribbonTooltip, () => {
         // Activate navigator view with error handling
         runAsyncAction(() => plugin.activateView());

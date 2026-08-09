@@ -5,12 +5,12 @@ Picturefish Obsidian Navigator is an independent fork of
 
 ## Initial baseline
 
-| Field               | Value                                                  |
-| ------------------- | ------------------------------------------------------ |
-| Upstream repository | `johansan/notebook-navigator`                          |
-| Initial fork commit | `747383f6e1bfeaaf4d98d1db6aec00f210b63049`             |
-| Git description     | `3.3.2-34-g747383f6`                                   |
-| Fork initialized    | 2026-08-09                                             |
+| Field               | Value                                                    |
+| ------------------- | -------------------------------------------------------- |
+| Upstream repository | `johansan/notebook-navigator`                            |
+| Initial fork commit | `747383f6e1bfeaaf4d98d1db6aec00f210b63049`               |
+| Git description     | `3.3.2-34-g747383f6`                                     |
+| Fork initialized    | 2026-08-09                                               |
 | Runtime status      | M1 namespacing in development; not a Picturefish release |
 
 M1 started from this documented baseline. The next reviewed stable upstream release will be integrated on a dedicated
@@ -20,9 +20,8 @@ integration branch before the first Picturefish alpha.
 
 The initialization branch changed documentation and repository governance only. The M1 branch adds runtime namespacing
 without intentionally changing navigation behavior. It also retains the locked development-only transitive dependency
-updates for `js-yaml` from 4.3.0 to 4.3.1 and
-`nanoid` from 3.3.16 to 3.3.18 to clear the security advisories present at fork time. Production dependencies were not
-affected.
+updates for `js-yaml` from 4.3.0 to 4.3.1 and `nanoid` from 3.3.16 to 3.3.18 to clear the security advisories present at
+fork time. Production dependencies were not affected.
 
 ## Remotes
 

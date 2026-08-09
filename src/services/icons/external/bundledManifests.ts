@@ -28,7 +28,8 @@ export const BUNDLED_ICON_MANIFESTS: Record<ExternalIconProviderId, ExternalIcon
     'bootstrap-icons': {
         version: '1.13.1',
         font: 'https://raw.githubusercontent.com/sykfar/picturefish-obsidian-navigator/main/icon-assets/bootstrap-icons/bootstrap-icons.woff2',
-        metadata: 'https://raw.githubusercontent.com/sykfar/picturefish-obsidian-navigator/main/icon-assets/bootstrap-icons/bootstrap-icons.json',
+        metadata:
+            'https://raw.githubusercontent.com/sykfar/picturefish-obsidian-navigator/main/icon-assets/bootstrap-icons/bootstrap-icons.json',
         fontMimeType: 'font/woff2',
         metadataFormat: 'json'
     },
