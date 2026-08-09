@@ -1,8 +1,8 @@
 # Contributing to Picturefish Obsidian Navigator
 
 Picturefish Obsidian Navigator is an independent GPL-licensed fork of
-[Notebook Navigator](https://github.com/johansan/notebook-navigator). The fork is currently in its initialization phase;
-runtime identity and storage have not yet been safely namespaced.
+[Notebook Navigator](https://github.com/johansan/notebook-navigator). M1 runtime namespacing is in review; development
+builds remain unsuitable for production vaults until the manual release gates are complete.
 
 ## Before contributing
 

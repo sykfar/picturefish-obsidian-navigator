@@ -11,16 +11,16 @@ Picturefish Obsidian Navigator is an independent fork of
 | Initial fork commit | `747383f6e1bfeaaf4d98d1db6aec00f210b63049`             |
 | Git description     | `3.3.2-34-g747383f6`                                   |
 | Fork initialized    | 2026-08-09                                             |
-| Runtime status      | still identical to upstream; not a Picturefish release |
+| Runtime status      | M1 namespacing in development; not a Picturefish release |
 
-The preferred runtime-renaming baseline is the next reviewed stable upstream release, at least 3.3.3. If development
-starts before that release, this commit remains the documented temporary baseline and the stable tag will be integrated
-before the first Picturefish alpha.
+M1 started from this documented baseline. The next reviewed stable upstream release will be integrated on a dedicated
+integration branch before the first Picturefish alpha.
 
 ## Initial fork changes
 
-The initialization branch changes documentation and repository governance only; runtime identity and behavior remain
-unchanged. It also updates the locked development-only transitive dependencies `js-yaml` from 4.3.0 to 4.3.1 and
+The initialization branch changed documentation and repository governance only. The M1 branch adds runtime namespacing
+without intentionally changing navigation behavior. It also retains the locked development-only transitive dependency
+updates for `js-yaml` from 4.3.0 to 4.3.1 and
 `nanoid` from 3.3.16 to 3.3.18 to clear the security advisories present at fork time. Production dependencies were not
 affected.
 

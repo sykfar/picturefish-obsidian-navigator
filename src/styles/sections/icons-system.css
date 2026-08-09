@@ -5,7 +5,7 @@
    ================================================================================= */
 
 /* Plugin icon - ensure transparent background */
-.svg-icon.notebook-navigator {
+.svg-icon.picturefish-obsidian-navigator {
     background: transparent;
     overflow: visible;
 }

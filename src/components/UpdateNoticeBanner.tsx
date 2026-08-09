@@ -53,7 +53,7 @@ export function UpdateNoticeBanner({ notice, onDismiss }: UpdateNoticeBannerProp
     }, [visibleNotice, onDismiss]);
 
     const handleOpenUpdatePage = useCallback(() => {
-        window.open('obsidian://show-plugin?id=notebook-navigator');
+        window.open('obsidian://show-plugin?id=picturefish-obsidian-navigator');
         handleDismiss();
     }, [handleDismiss]);
 

@@ -18,6 +18,7 @@
 
 import { App, WorkspaceLeaf } from 'obsidian';
 import type { CSSProperties } from 'react';
+import { PRODUCT_ID, PRODUCT_STORAGE_PREFIX } from './constants/product';
 
 /**
  * Shared types and constants for Notebook Navigator
@@ -28,19 +29,19 @@ import type { CSSProperties } from 'react';
  * Unique identifier for the Notebook Navigator view type
  * Used by Obsidian to register and manage the custom view
  */
-export const NOTEBOOK_NAVIGATOR_VIEW = 'notebook-navigator';
+export const NOTEBOOK_NAVIGATOR_VIEW = PRODUCT_ID;
 
 /**
  * Unique identifier for the Notebook Navigator calendar view type.
  * Used by Obsidian to register and manage the right sidebar calendar view.
  */
-export const NOTEBOOK_NAVIGATOR_CALENDAR_VIEW = 'notebook-navigator-calendar';
+export const NOTEBOOK_NAVIGATOR_CALENDAR_VIEW = `${PRODUCT_ID}-calendar`;
 
 /**
  * Unique identifier for the folder note sidebar placeholder view.
  * Used to keep a stable right sidebar slot when no folder note is open.
  */
-export const NOTEBOOK_NAVIGATOR_FOLDER_NOTE_SIDEBAR_VIEW = 'notebook-navigator-folder-note-sidebar';
+export const NOTEBOOK_NAVIGATOR_FOLDER_NOTE_SIDEBAR_VIEW = `${PRODUCT_ID}-folder-note-sidebar`;
 
 /**
  * Virtual tag collection id for notes without tags.
@@ -323,66 +324,66 @@ export interface LocalStorageKeys {
  * Use this instead of defining keys in multiple places
  */
 export const STORAGE_KEYS: LocalStorageKeys = {
-    expandedFoldersKey: 'notebook-navigator-expanded-folders',
-    expandedTagsKey: 'notebook-navigator-expanded-tags',
-    expandedPropertiesKey: 'notebook-navigator-expanded-properties',
-    expandedVirtualFoldersKey: 'notebook-navigator-expanded-virtual-folders',
-    selectedFolderKey: 'notebook-navigator-selected-folder',
-    selectedPropertyKey: 'notebook-navigator-selected-property',
-    selectedFileKey: 'notebook-navigator-selected-file',
-    selectedFilesKey: 'notebook-navigator-selected-files',
-    selectedTagKey: 'notebook-navigator-selected-tag',
-    navigationPaneWidthKey: 'notebook-navigator-navigation-pane-width',
-    navigationPaneHeightKey: 'notebook-navigator-navigation-pane-height',
-    dualPaneOrientationKey: 'notebook-navigator-dual-pane-orientation',
-    narrowSidebarLayoutKey: 'notebook-navigator-narrow-sidebar-layout',
-    narrowSidebarTriggerModeKey: 'notebook-navigator-narrow-sidebar-trigger-mode',
-    narrowSidebarCustomWidthKey: 'notebook-navigator-narrow-sidebar-custom-width',
-    dualPaneKey: 'notebook-navigator-dual-pane',
-    uiScaleKey: 'notebook-navigator-ui-scale',
-    shortcutsExpandedKey: 'notebook-navigator-shortcuts-expanded',
-    recentNotesExpandedKey: 'notebook-navigator-recent-notes-expanded',
-    recentNotesKey: 'notebook-navigator-recent-notes',
-    recentIconsKey: 'notebook-navigator-recent-icons',
-    navigationSectionOrderKey: 'notebook-navigator-section-order',
-    pinnedShortcutsMaxHeightKey: 'notebook-navigator-pinned-shortcuts-max-height',
-    uxPreferencesKey: 'notebook-navigator-ux-preferences',
-    databaseSchemaVersionKey: 'notebook-navigator-db-schema-version',
-    databaseContentVersionKey: 'notebook-navigator-db-content-version',
-    frontmatterMetadataCacheSignatureKey: 'notebook-navigator-frontmatter-metadata-cache-signature',
-    cacheRebuildNoticeKey: 'notebook-navigator-cache-rebuild-notice',
-    debugLoggingEnabledKey: 'notebook-navigator-debug-logging-enabled',
-    lastShownVersionKey: 'notebook-navigator-last-shown-version',
+    expandedFoldersKey: `${PRODUCT_STORAGE_PREFIX}-expanded-folders`,
+    expandedTagsKey: `${PRODUCT_STORAGE_PREFIX}-expanded-tags`,
+    expandedPropertiesKey: `${PRODUCT_STORAGE_PREFIX}-expanded-properties`,
+    expandedVirtualFoldersKey: `${PRODUCT_STORAGE_PREFIX}-expanded-virtual-folders`,
+    selectedFolderKey: `${PRODUCT_STORAGE_PREFIX}-selected-folder`,
+    selectedPropertyKey: `${PRODUCT_STORAGE_PREFIX}-selected-property`,
+    selectedFileKey: `${PRODUCT_STORAGE_PREFIX}-selected-file`,
+    selectedFilesKey: `${PRODUCT_STORAGE_PREFIX}-selected-files`,
+    selectedTagKey: `${PRODUCT_STORAGE_PREFIX}-selected-tag`,
+    navigationPaneWidthKey: `${PRODUCT_STORAGE_PREFIX}-navigation-pane-width`,
+    navigationPaneHeightKey: `${PRODUCT_STORAGE_PREFIX}-navigation-pane-height`,
+    dualPaneOrientationKey: `${PRODUCT_STORAGE_PREFIX}-dual-pane-orientation`,
+    narrowSidebarLayoutKey: `${PRODUCT_STORAGE_PREFIX}-narrow-sidebar-layout`,
+    narrowSidebarTriggerModeKey: `${PRODUCT_STORAGE_PREFIX}-narrow-sidebar-trigger-mode`,
+    narrowSidebarCustomWidthKey: `${PRODUCT_STORAGE_PREFIX}-narrow-sidebar-custom-width`,
+    dualPaneKey: `${PRODUCT_STORAGE_PREFIX}-dual-pane`,
+    uiScaleKey: `${PRODUCT_STORAGE_PREFIX}-ui-scale`,
+    shortcutsExpandedKey: `${PRODUCT_STORAGE_PREFIX}-shortcuts-expanded`,
+    recentNotesExpandedKey: `${PRODUCT_STORAGE_PREFIX}-recent-notes-expanded`,
+    recentNotesKey: `${PRODUCT_STORAGE_PREFIX}-recent-notes`,
+    recentIconsKey: `${PRODUCT_STORAGE_PREFIX}-recent-icons`,
+    navigationSectionOrderKey: `${PRODUCT_STORAGE_PREFIX}-section-order`,
+    pinnedShortcutsMaxHeightKey: `${PRODUCT_STORAGE_PREFIX}-pinned-shortcuts-max-height`,
+    uxPreferencesKey: `${PRODUCT_STORAGE_PREFIX}-ux-preferences`,
+    databaseSchemaVersionKey: `${PRODUCT_STORAGE_PREFIX}-db-schema-version`,
+    databaseContentVersionKey: `${PRODUCT_STORAGE_PREFIX}-db-content-version`,
+    frontmatterMetadataCacheSignatureKey: `${PRODUCT_STORAGE_PREFIX}-frontmatter-metadata-cache-signature`,
+    cacheRebuildNoticeKey: `${PRODUCT_STORAGE_PREFIX}-cache-rebuild-notice`,
+    debugLoggingEnabledKey: `${PRODUCT_STORAGE_PREFIX}-debug-logging-enabled`,
+    lastShownVersionKey: `${PRODUCT_STORAGE_PREFIX}-last-shown-version`,
     // PDF_CRASH_DIAGNOSTICS: persists the last PDF path being processed on mobile support builds.
-    pdfProcessingDiagnosticKey: 'notebook-navigator-pdf-processing-diagnostic',
-    localStorageVersionKey: 'notebook-navigator-localstorage-version',
-    vaultProfileKey: 'notebook-navigator-vault-profile',
-    releaseCheckTimestampKey: 'notebook-navigator-release-check-timestamp',
-    searchProviderKey: 'notebook-navigator-search-provider',
-    homepageKey: 'notebook-navigator-homepage',
-    folderSortOrderKey: 'notebook-navigator-folder-sort-order',
-    tagSortOrderKey: 'notebook-navigator-tag-sort-order',
-    propertySortOrderKey: 'notebook-navigator-property-sort-order',
-    recentColorsKey: 'notebook-navigator-recent-colors',
-    paneTransitionDurationKey: 'notebook-navigator-pane-transition-duration',
-    toolbarVisibilityKey: 'notebook-navigator-toolbar-visibility',
-    useFloatingToolbarsKey: 'notebook-navigator-use-floating-toolbars',
-    pinNavigationBannerKey: 'notebook-navigator-pin-navigation-banner',
-    navIndentKey: 'notebook-navigator-nav-indent',
-    navItemHeightKey: 'notebook-navigator-nav-item-height',
-    navItemHeightScaleTextKey: 'notebook-navigator-nav-item-height-scale-text',
-    calendarPlacementKey: 'notebook-navigator-calendar-placement',
-    calendarLeftPlacementKey: 'notebook-navigator-calendar-left-placement',
-    calendarWeeksToShowKey: 'notebook-navigator-calendar-weeks-to-show',
-    compactItemHeightKey: 'notebook-navigator-compact-item-height',
-    compactItemHeightScaleTextKey: 'notebook-navigator-compact-item-height-scale-text',
-    featureImageSizeKey: 'notebook-navigator-feature-image-size',
-    featureImagePixelSizeKey: 'notebook-navigator-feature-image-pixel-size',
-    collapsedListGroupsKey: 'notebook-navigator-collapsed-list-groups',
-    collapsedPinnedContextsKey: 'notebook-navigator-collapsed-pinned-contexts',
-    mergeNotesSeparatorKey: 'notebook-navigator-merge-notes-separator',
-    mergeNotesMoveSourcesToTrashKey: 'notebook-navigator-merge-notes-move-sources-to-trash',
-    settingsImportBackupToRootKey: 'notebook-navigator-settings-import-backup-to-root'
+    pdfProcessingDiagnosticKey: `${PRODUCT_STORAGE_PREFIX}-pdf-processing-diagnostic`,
+    localStorageVersionKey: `${PRODUCT_STORAGE_PREFIX}-localstorage-version`,
+    vaultProfileKey: `${PRODUCT_STORAGE_PREFIX}-vault-profile`,
+    releaseCheckTimestampKey: `${PRODUCT_STORAGE_PREFIX}-release-check-timestamp`,
+    searchProviderKey: `${PRODUCT_STORAGE_PREFIX}-search-provider`,
+    homepageKey: `${PRODUCT_STORAGE_PREFIX}-homepage`,
+    folderSortOrderKey: `${PRODUCT_STORAGE_PREFIX}-folder-sort-order`,
+    tagSortOrderKey: `${PRODUCT_STORAGE_PREFIX}-tag-sort-order`,
+    propertySortOrderKey: `${PRODUCT_STORAGE_PREFIX}-property-sort-order`,
+    recentColorsKey: `${PRODUCT_STORAGE_PREFIX}-recent-colors`,
+    paneTransitionDurationKey: `${PRODUCT_STORAGE_PREFIX}-pane-transition-duration`,
+    toolbarVisibilityKey: `${PRODUCT_STORAGE_PREFIX}-toolbar-visibility`,
+    useFloatingToolbarsKey: `${PRODUCT_STORAGE_PREFIX}-use-floating-toolbars`,
+    pinNavigationBannerKey: `${PRODUCT_STORAGE_PREFIX}-pin-navigation-banner`,
+    navIndentKey: `${PRODUCT_STORAGE_PREFIX}-nav-indent`,
+    navItemHeightKey: `${PRODUCT_STORAGE_PREFIX}-nav-item-height`,
+    navItemHeightScaleTextKey: `${PRODUCT_STORAGE_PREFIX}-nav-item-height-scale-text`,
+    calendarPlacementKey: `${PRODUCT_STORAGE_PREFIX}-calendar-placement`,
+    calendarLeftPlacementKey: `${PRODUCT_STORAGE_PREFIX}-calendar-left-placement`,
+    calendarWeeksToShowKey: `${PRODUCT_STORAGE_PREFIX}-calendar-weeks-to-show`,
+    compactItemHeightKey: `${PRODUCT_STORAGE_PREFIX}-compact-item-height`,
+    compactItemHeightScaleTextKey: `${PRODUCT_STORAGE_PREFIX}-compact-item-height-scale-text`,
+    featureImageSizeKey: `${PRODUCT_STORAGE_PREFIX}-feature-image-size`,
+    featureImagePixelSizeKey: `${PRODUCT_STORAGE_PREFIX}-feature-image-pixel-size`,
+    collapsedListGroupsKey: `${PRODUCT_STORAGE_PREFIX}-collapsed-list-groups`,
+    collapsedPinnedContextsKey: `${PRODUCT_STORAGE_PREFIX}-collapsed-pinned-contexts`,
+    mergeNotesSeparatorKey: `${PRODUCT_STORAGE_PREFIX}-merge-notes-separator`,
+    mergeNotesMoveSourcesToTrashKey: `${PRODUCT_STORAGE_PREFIX}-merge-notes-move-sources-to-trash`,
+    settingsImportBackupToRootKey: `${PRODUCT_STORAGE_PREFIX}-settings-import-backup-to-root`
 };
 
 export interface UXPreferences {

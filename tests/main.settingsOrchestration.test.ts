@@ -141,11 +141,11 @@ function createPluginHarness(): PluginHarness {
             name: 'Notebook Navigator',
             version: '3.2.4',
             minAppVersion: '1.11.0',
-            dir: 'config/plugins/notebook-navigator'
+            dir: 'config/plugins/picturefish-obsidian-navigator'
         } as PluginManifest
     ) as unknown as PluginHarness;
     Object.assign(plugin, {
-        manifest: { dir: 'config/plugins/notebook-navigator', version: '3.2.4' },
+        manifest: { dir: 'config/plugins/picturefish-obsidian-navigator', version: '0.1.0' },
         app: { vault: { adapter: {} } },
         settings,
         settingsController,

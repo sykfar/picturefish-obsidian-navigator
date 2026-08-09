@@ -18,7 +18,7 @@ Complete TypeScript type definitions for the Notebook Navigator API.
    ```
 3. Use with the API:
    ```typescript
-   const nn = app.plugins.plugins['notebook-navigator']?.api as NotebookNavigatorAPI | undefined;
+   const nn = app.plugins.plugins['picturefish-obsidian-navigator']?.api as NotebookNavigatorAPI | undefined;
    if (!nn) {
      return;
    }
@@ -28,7 +28,7 @@ Complete TypeScript type definitions for the Notebook Navigator API.
 ## Public Surface
 
 `notebook-navigator.d.ts` mirrors the runtime API exposed at
-`app.plugins.plugins['notebook-navigator']?.api`.
+`app.plugins.plugins['picturefish-obsidian-navigator']?.api`.
 
 - Core methods: `getVersion()`, `isStorageReady()`, `whenReady()`, `on(...)`, `once(...)`, `off(...)`
 - Namespaces: `metadata`, `navigation`, `selection`, `menus`, `tagCollections`, `propertyNodes`

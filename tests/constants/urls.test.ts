@@ -21,19 +21,19 @@ import { getReleaseVideoOpenUrl, getReleaseVideoUrl } from '../../src/constants/
 describe('release video URLs', () => {
     it('uses raw GitHub URLs for embedded release videos', () => {
         expect(getReleaseVideoUrl(true, '3.1.3')).toBe(
-            'https://raw.githubusercontent.com/johansan/notebook-navigator/main/images/version-banners/3.1.3.mp4'
+            'https://raw.githubusercontent.com/sykfar/picturefish-obsidian-navigator/main/images/version-banners/3.1.3.mp4'
         );
         expect(getReleaseVideoUrl('sidebar-resize', '3.1.3')).toBe(
-            'https://raw.githubusercontent.com/johansan/notebook-navigator/main/images/version-banners/sidebar-resize.mp4'
+            'https://raw.githubusercontent.com/sykfar/picturefish-obsidian-navigator/main/images/version-banners/sidebar-resize.mp4'
         );
     });
 
     it('uses browser-playable CDN URLs when opening repository-hosted release videos', () => {
         expect(getReleaseVideoOpenUrl(true, '3.1.3')).toBe(
-            'https://cdn.jsdelivr.net/gh/johansan/notebook-navigator@main/images/version-banners/3.1.3.mp4'
+            'https://cdn.jsdelivr.net/gh/sykfar/picturefish-obsidian-navigator@main/images/version-banners/3.1.3.mp4'
         );
         expect(getReleaseVideoOpenUrl('sidebar-resize', '3.1.3')).toBe(
-            'https://cdn.jsdelivr.net/gh/johansan/notebook-navigator@main/images/version-banners/sidebar-resize.mp4'
+            'https://cdn.jsdelivr.net/gh/sykfar/picturefish-obsidian-navigator@main/images/version-banners/sidebar-resize.mp4'
         );
     });
 

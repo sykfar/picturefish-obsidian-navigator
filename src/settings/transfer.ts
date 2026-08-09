@@ -19,6 +19,7 @@
 import { DEFAULT_SETTINGS } from './defaultSettings';
 import type { NotebookNavigatorSettings } from './types';
 import { isRecord } from '../utils/typeGuards';
+import { PRODUCT_ID, PRODUCT_NAME, UPSTREAM_PLUGIN_ID } from '../constants/product';
 
 // These keys are stored locally or regenerated from local state and are intentionally excluded
 // from transfer exports and imports.
@@ -38,7 +39,8 @@ const NON_TRANSFERABLE_SETTING_KEYS = new Set([
     'propertyFields'
 ]);
 
-const SETTINGS_TRANSFER_PLUGIN_ID = 'notebook-navigator';
+const SETTINGS_TRANSFER_PLUGIN_ID = PRODUCT_ID;
+const ACCEPTED_SETTINGS_TRANSFER_PLUGIN_IDS = new Set([SETTINGS_TRANSFER_PLUGIN_ID, UPSTREAM_PLUGIN_ID]);
 
 function padTimestampPart(value: number): string {
     return value.toString().padStart(2, '0');
@@ -56,7 +58,7 @@ function formatSettingsTransferTimestamp(date: Date): string {
 }
 
 export function createSettingsTransferBaseName(date = new Date()): string {
-    return `notebook-navigator-settings_${formatSettingsTransferTimestamp(date)}`;
+    return `${PRODUCT_ID}-settings_${formatSettingsTransferTimestamp(date)}`;
 }
 
 export function createSettingsTransferFilename(date = new Date()): string {
@@ -140,7 +142,7 @@ function validateSettingsTransferDiff(transferSettings: Record<string, unknown>)
         return;
     }
 
-    throw new Error('Settings import must contain Notebook Navigator settings.');
+    throw new Error(`Settings import must contain ${PRODUCT_NAME} settings.`);
 }
 
 function areEquivalentValues(left: unknown, right: unknown): boolean {
@@ -282,8 +284,8 @@ function unwrapSettingsTransfer(transferData: Record<string, unknown>): Record<s
         return transferData;
     }
 
-    if (transferData.plugin !== SETTINGS_TRANSFER_PLUGIN_ID) {
-        throw new Error('Not a Notebook Navigator settings export.');
+    if (typeof transferData.plugin !== 'string' || !ACCEPTED_SETTINGS_TRANSFER_PLUGIN_IDS.has(transferData.plugin)) {
+        throw new Error(`Not a ${PRODUCT_NAME} or Notebook Navigator settings export.`);
     }
 
     const transferSettings = transferData.settings;

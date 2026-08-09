@@ -44,6 +44,7 @@ import {
     propagateAndroidFontCompensationToMobileRoot
 } from '../utils/androidFontScale';
 import { ensureNotebookNavigatorSvgFilters } from '../utils/svgFilters';
+import { PRODUCT_ID, PRODUCT_NAME, PRODUCT_VISIBLE_EVENT } from '../constants/product';
 
 export const IOS_FLOATING_TOOLBARS_CLASS = 'notebook-navigator-ios-floating-toolbars';
 
@@ -51,7 +52,7 @@ let viewInstanceCounter = 0;
 
 export function setupNotebookNavigatorViewContainer(container: HTMLElement, options?: { useFloatingToolbars?: boolean }): void {
     container.empty();
-    container.classList.add('notebook-navigator');
+    container.classList.add('notebook-navigator', PRODUCT_ID);
 
     if (Platform.isMobile) {
         container.classList.add('notebook-navigator-mobile');
@@ -73,7 +74,7 @@ export function setupNotebookNavigatorViewContainer(container: HTMLElement, opti
 
 export function teardownNotebookNavigatorViewContainer(container: HTMLElement): void {
     clearAndroidFontCompensation(container);
-    container.classList.remove('notebook-navigator');
+    container.classList.remove('notebook-navigator', PRODUCT_ID);
     container.classList.remove('notebook-navigator-mobile');
     container.classList.remove('notebook-navigator-android');
     container.classList.remove('notebook-navigator-ios');
@@ -104,7 +105,7 @@ export class NotebookNavigatorView extends ItemView {
         super(leaf);
         this.plugin = plugin;
         viewInstanceCounter += 1;
-        this.settingsUpdateListenerId = `notebook-navigator-view-${viewInstanceCounter}`;
+        this.settingsUpdateListenerId = `${PRODUCT_ID}-view-${viewInstanceCounter}`;
     }
 
     private readonly setComponentHandle = (handle: NotebookNavigatorHandle | null): void => {
@@ -148,7 +149,7 @@ export class NotebookNavigatorView extends ItemView {
      * @returns The human-readable name of this view
      */
     getDisplayText() {
-        return strings.plugin.viewName;
+        return PRODUCT_NAME;
     }
 
     /**
@@ -589,7 +590,7 @@ export class NotebookNavigatorView extends ItemView {
 
         if (!this.wasMobileContainerVisible) {
             this.wasMobileContainerVisible = true;
-            window.dispatchEvent(new CustomEvent('notebook-navigator-visible'));
+            window.dispatchEvent(new CustomEvent(PRODUCT_VISIBLE_EVENT));
         }
     }
 }

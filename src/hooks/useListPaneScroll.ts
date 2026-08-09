@@ -52,6 +52,7 @@ import { useFileCache } from '../context/StorageContext';
 import { ListPaneItemType, OVERSCAN } from '../types';
 import { Align, ListScrollIntent, getListAlign, rankListPending } from '../types/scroll';
 import type { ListPaneItem } from '../types/virtualization';
+import { PRODUCT_VISIBLE_EVENT } from '../constants/product';
 import { showsCharacterCount, showsWordCount, type NotebookNavigatorSettings, type SortOption } from '../settings/types';
 import type { FileContentChange, FileData, IndexedDBStorage } from '../storage/IndexedDBStorage';
 import type { SelectionDispatch, SelectionState } from '../context/SelectionContext';
@@ -1325,8 +1326,8 @@ export function useListPaneScroll({
             }
         };
 
-        window.addEventListener('notebook-navigator-visible', handleVisible);
-        return () => window.removeEventListener('notebook-navigator-visible', handleVisible);
+        window.addEventListener(PRODUCT_VISIBLE_EVENT, handleVisible);
+        return () => window.removeEventListener(PRODUCT_VISIBLE_EVENT, handleVisible);
     }, [enabled, isMobile, selectedFile, rowVirtualizer, filePathToIndex, setPending]);
 
     /**
