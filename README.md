@@ -1,8 +1,10 @@
 > [!IMPORTANT]
 > This repository is the independent development fork **Picturefish Obsidian Navigator**.
 > It is based on [Notebook Navigator](https://github.com/johansan/notebook-navigator) by Johan Sanneblad and remains
-> licensed under GPL-3.0-or-later. The runtime package is still identical to upstream while the fork is being initialized;
-> do not install it alongside Notebook Navigator yet. See [PRODUCT.md](PRODUCT.md) and [UPSTREAM.md](UPSTREAM.md).
+> licensed under GPL-3.0-or-later. M1 runtime namespacing is under review and this branch is not a production release.
+> Do not enable it alongside Notebook Navigator; inherited UI styles can still overlap. See
+> [M1 runtime namespacing](docs/m1-runtime-namespacing.md), [M1 validation](docs/m1-validation.md),
+> [PRODUCT.md](PRODUCT.md), and [UPSTREAM.md](UPSTREAM.md).
 
 Read in your language: [English](https://notebooknavigator.com/docs.html) • [العربية](https://notebooknavigator.com/ar/docs.html) • [Deutsch](https://notebooknavigator.com/de/docs.html) • [Español](https://notebooknavigator.com/es/docs.html) • [فارسی](https://notebooknavigator.com/fa/docs.html) • [Français](https://notebooknavigator.com/fr/docs.html) • [Bahasa Indonesia](https://notebooknavigator.com/id/docs.html) • [Italiano](https://notebooknavigator.com/it/docs.html) • [Nederlands](https://notebooknavigator.com/nl/docs.html) • [Polski](https://notebooknavigator.com/pl/docs.html) • [Português](https://notebooknavigator.com/pt/docs.html) • [Português (Brasil)](https://notebooknavigator.com/pt-br/docs.html) • [Русский](https://notebooknavigator.com/ru/docs.html) • [ไทย](https://notebooknavigator.com/th/docs.html) • [Türkçe](https://notebooknavigator.com/tr/docs.html) • [Українська](https://notebooknavigator.com/uk/docs.html) • [Tiếng Việt](https://notebooknavigator.com/vi/docs.html) • [日本語](https://notebooknavigator.com/ja/docs.html) • [한국어](https://notebooknavigator.com/ko/docs.html) • [中文简体](https://notebooknavigator.com/zh-cn/docs.html) • [中文繁體](https://notebooknavigator.com/zh-tw/docs.html)
 

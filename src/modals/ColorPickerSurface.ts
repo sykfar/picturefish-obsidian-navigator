@@ -31,8 +31,10 @@ import { addAsyncEventListener } from '../utils/domEventListeners';
 import { showNotice } from '../utils/noticeUtils';
 import { setNativeDragPreview } from '../utils/nativeDragPreview';
 import { ConfirmModal } from './ConfirmModal';
+import { PRODUCT_ID } from '../constants/product';
 
 const DEFAULT_PICKER_COLOR = '#3b82f6';
+const COLOR_DRAG_MIME = `application/x-${PRODUCT_ID}-color`;
 
 type RGBAValues = { r: number; g: number; b: number; a: number };
 type HSVValues = { h: number; s: number; v: number };
@@ -712,7 +714,7 @@ export class ColorPickerSurface {
                 }
 
                 const types = Array.from(transfer.types || []);
-                const canAccept = types.includes('application/x-notebook-navigator-color') || types.includes('text/plain');
+                const canAccept = types.includes(COLOR_DRAG_MIME) || types.includes('text/plain');
                 if (!canAccept) {
                     return;
                 }
@@ -888,7 +890,7 @@ export class ColorPickerSurface {
 
             const payload: PaletteDragData = { color };
 
-            transfer.setData('application/x-notebook-navigator-color', JSON.stringify(payload));
+            transfer.setData(COLOR_DRAG_MIME, JSON.stringify(payload));
             transfer.setData('text/plain', color);
             transfer.effectAllowed = 'copyMove';
 
@@ -905,7 +907,7 @@ export class ColorPickerSurface {
             return null;
         }
 
-        const encoded = transfer.getData('application/x-notebook-navigator-color');
+        const encoded = transfer.getData(COLOR_DRAG_MIME);
         if (encoded) {
             const parsedPayload = this.tryParseDragPayload(encoded);
             if (parsedPayload) {

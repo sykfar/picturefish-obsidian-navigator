@@ -2,7 +2,7 @@
 
 Updated: July 1, 2026
 
-The Notebook Navigator plugin exposes a public API for other plugins and scripts to interact with navigator features.
+The Picturefish Obsidian Navigator plugin exposes a public API for other plugins and scripts to interact with navigator features.
 
 **Current API Version:** 2.0.0
 
@@ -27,14 +27,14 @@ The Notebook Navigator plugin exposes a public API for other plugins and scripts
 
 ### Accessing the API
 
-The Notebook Navigator API is available at runtime through the Obsidian app object. The plugin manifest id is
-`notebook-navigator`; the current manifest requires Obsidian `1.11.0` or newer and sets `isDesktopOnly` to `false`.
+The Picturefish Obsidian Navigator API is available at runtime through the Obsidian app object. The plugin manifest id is
+`picturefish-obsidian-navigator`; the current manifest requires Obsidian `1.11.0` or newer and sets `isDesktopOnly` to `false`.
 
 Here's a practical example using Templater:
 
 ```javascript
 <%* // Templater script to pin the current file in Notebook Navigator
-const nn = app.plugins.plugins['notebook-navigator']?.api;
+const nn = app.plugins.plugins['picturefish-obsidian-navigator']?.api;
 
 if (nn) {
   // Pin the current file in folder, tag, and property contexts
@@ -49,7 +49,7 @@ Or set a folder color based on the current date:
 
 ```javascript
 <%* // Set folder color based on day of week
-const nn = app.plugins.plugins['notebook-navigator']?.api;
+const nn = app.plugins.plugins['picturefish-obsidian-navigator']?.api;
 if (nn) {
   const folder = tp.config.target_file.parent;
   const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3', '#54a0ff'];
@@ -400,7 +400,7 @@ Single selection example:
 ```typescript
 import type { NotebookNavigatorAPI } from './notebook-navigator';
 
-const nn = app.plugins.plugins['notebook-navigator']?.api as Partial<NotebookNavigatorAPI> | undefined;
+const nn = app.plugins.plugins['picturefish-obsidian-navigator']?.api as Partial<NotebookNavigatorAPI> | undefined;
 
 const dispose = nn?.menus?.registerFileMenu(({ addItem, file, selection }) => {
   if (selection.mode !== 'single') {
@@ -542,7 +542,7 @@ Save it to your plugin project and import:
 ```typescript
 import type { NotebookNavigatorAPI, IconString } from './notebook-navigator';
 
-const nn = app.plugins.plugins['notebook-navigator']?.api as NotebookNavigatorAPI | undefined;
+const nn = app.plugins.plugins['picturefish-obsidian-navigator']?.api as NotebookNavigatorAPI | undefined;
 if (!nn) {
   return;
 }
@@ -568,7 +568,7 @@ nn.on('selection-changed', ({ state }) => {
 
 ```javascript
 // Works without type definitions
-const nn = app.plugins.plugins['notebook-navigator']?.api;
+const nn = app.plugins.plugins['picturefish-obsidian-navigator']?.api;
 if (nn) {
   // Wait for storage if you need storage-backed navigation/tag/property reads
   await nn.whenReady();

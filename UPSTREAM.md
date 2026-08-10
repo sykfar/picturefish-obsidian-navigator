@@ -5,24 +5,27 @@ Picturefish Obsidian Navigator is an independent fork of
 
 ## Initial baseline
 
-| Field               | Value                                                  |
-| ------------------- | ------------------------------------------------------ |
-| Upstream repository | `johansan/notebook-navigator`                          |
-| Initial fork commit | `747383f6e1bfeaaf4d98d1db6aec00f210b63049`             |
-| Git description     | `3.3.2-34-g747383f6`                                   |
-| Fork initialized    | 2026-08-09                                             |
-| Runtime status      | still identical to upstream; not a Picturefish release |
+| Field               | Value                                                    |
+| ------------------- | -------------------------------------------------------- |
+| Upstream repository | `johansan/notebook-navigator`                            |
+| Initial fork commit | `747383f6e1bfeaaf4d98d1db6aec00f210b63049`               |
+| Git description     | `3.3.2-34-g747383f6`                                     |
+| Fork initialized    | 2026-08-09                                               |
+| Reviewed release    | `3.3.3` (`7ae7db62d32d9df9b6f577eff4e2ed758661a982`)     |
+| Runtime status      | M1 namespacing in development; not a Picturefish release |
 
-The preferred runtime-renaming baseline is the next reviewed stable upstream release, at least 3.3.3. If development
-starts before that release, this commit remains the documented temporary baseline and the stable tag will be integrated
-before the first Picturefish alpha.
+M1 started from this documented baseline. Upstream `3.3.3` was rechecked on 2026-08-10. The only changes between the
+fork commit and the signed release line are upstream version metadata in `manifest.json`, `package.json`,
+`package-lock.json`, and `versions.json`; there are no additional source changes. Picturefish intentionally keeps its
+own `0.1.0` version line, so no code integration is required for this tag. Later functional releases still go through a
+dedicated integration branch before entering Picturefish `main`.
 
 ## Initial fork changes
 
-The initialization branch changes documentation and repository governance only; runtime identity and behavior remain
-unchanged. It also updates the locked development-only transitive dependencies `js-yaml` from 4.3.0 to 4.3.1 and
-`nanoid` from 3.3.16 to 3.3.18 to clear the security advisories present at fork time. Production dependencies were not
-affected.
+The initialization branch changed documentation and repository governance only. The M1 branch adds runtime namespacing
+without intentionally changing navigation behavior. It also retains the locked development-only transitive dependency
+updates for `js-yaml` from 4.3.0 to 4.3.1 and `nanoid` from 3.3.16 to 3.3.18 to clear the security advisories present at
+fork time. Production dependencies were not affected.
 
 ## Remotes
 

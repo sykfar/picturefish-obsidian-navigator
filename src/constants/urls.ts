@@ -16,12 +16,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const NOTEBOOK_NAVIGATOR_REPOSITORY = 'johansan/notebook-navigator';
+import { PRODUCT_REPOSITORY } from './product';
+
+const NOTEBOOK_NAVIGATOR_REPOSITORY = PRODUCT_REPOSITORY;
 const NOTEBOOK_NAVIGATOR_RAW_BASE_URL = `https://raw.githubusercontent.com/${NOTEBOOK_NAVIGATOR_REPOSITORY}/main`;
 const NOTEBOOK_NAVIGATOR_CDN_BASE_URL = `https://cdn.jsdelivr.net/gh/${NOTEBOOK_NAVIGATOR_REPOSITORY}@main`;
 
 export const NOTEBOOK_NAVIGATOR_RELEASE_CHECK_URL = `https://api.github.com/repos/${NOTEBOOK_NAVIGATOR_REPOSITORY}/releases/latest`;
 
+// The inherited support UI continues to credit and fund the original author.
 export const SUPPORT_SPONSOR_URL = 'https://github.com/sponsors/johansan/';
 export const SUPPORT_BUY_ME_A_COFFEE_URL = 'https://buymeacoffee.com/johansan';
 

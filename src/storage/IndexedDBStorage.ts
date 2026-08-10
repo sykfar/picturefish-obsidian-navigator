@@ -23,6 +23,7 @@ import type { ContentProviderType, FileContentType } from '../interfaces/IConten
 import { isMarkdownPath } from '../utils/fileTypeUtils';
 import { DEFAULT_FEATURE_IMAGE_CACHE_MAX, FEATURE_IMAGE_STORE_NAME, FeatureImageBlobStore } from './FeatureImageBlobStore';
 import { MemoryFileCache } from './MemoryFileCache';
+import { createProductDatabaseName } from '../constants/product';
 import { FeatureImageCoordinator } from './indexeddb/featureImageOps';
 import { PreviewTextCoordinator, type PreviewTextBatchOp } from './indexeddb/previewTextOps';
 import { hydrateCacheFromMainStore } from './indexeddb/cacheHydration';
@@ -100,7 +101,7 @@ export class IndexedDBStorage {
     private pendingRebuildNotice = false;
 
     constructor(appId: string, options?: IndexedDBStorageOptions) {
-        this.dbName = `notebooknavigator/cache/${appId}`;
+        this.dbName = createProductDatabaseName('cache', appId);
         const previewTextCacheMaxEntries = options?.previewTextCacheMaxEntries ?? DEFAULT_PREVIEW_TEXT_CACHE_MAX_ENTRIES;
         this.cache = options?.cache ?? new MemoryFileCache({ previewTextCacheMaxEntries });
         const normalizedPreviewTextCacheMaxEntries = Math.max(0, previewTextCacheMaxEntries);

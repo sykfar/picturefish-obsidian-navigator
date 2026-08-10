@@ -25,6 +25,7 @@ import { ServicesProvider } from '../context/ServicesContext';
 import { CalendarRightSidebar } from '../components/CalendarRightSidebar';
 import { strings } from '../i18n';
 import type NotebookNavigatorPlugin from '../main';
+import { PRODUCT_ID } from '../constants/product';
 import { NOTEBOOK_NAVIGATOR_CALENDAR_VIEW } from '../types';
 import { resolveUXIconForMenu } from '../utils/uxIcons';
 import {
@@ -45,7 +46,7 @@ export class NotebookNavigatorCalendarView extends ItemView {
         super(leaf);
         this.plugin = plugin;
         calendarViewInstanceCounter += 1;
-        this.settingsUpdateListenerId = `notebook-navigator-calendar-view-${calendarViewInstanceCounter}`;
+        this.settingsUpdateListenerId = `${PRODUCT_ID}-calendar-view-${calendarViewInstanceCounter}`;
     }
 
     private updatePlatformClasses(): void {

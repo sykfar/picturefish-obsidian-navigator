@@ -29,8 +29,8 @@ describe('createSettingsTransferFilename', () => {
     it('formats settings transfer filenames with a sortable local timestamp', () => {
         const date = new Date(2026, 6, 3, 14, 22, 33);
 
-        expect(createSettingsTransferBaseName(date)).toBe('notebook-navigator-settings_20260703-142233');
-        expect(createSettingsTransferFilename(date)).toBe('notebook-navigator-settings_20260703-142233.json');
+        expect(createSettingsTransferBaseName(date)).toBe('picturefish-obsidian-navigator-settings_20260703-142233');
+        expect(createSettingsTransferFilename(date)).toBe('picturefish-obsidian-navigator-settings_20260703-142233.json');
     });
 });
 
@@ -39,7 +39,7 @@ describe('createModifiedSettingsTransfer', () => {
     // seed the grouping list from the sorting list without misreading an intentionally empty list.
     it('returns an envelope with only the always-exported keys when settings match defaults', () => {
         expect(createModifiedSettingsTransfer(structuredClone(DEFAULT_SETTINGS), '3.2.3')).toEqual({
-            plugin: 'notebook-navigator',
+            plugin: 'picturefish-obsidian-navigator',
             pluginVersion: '3.2.3',
             settings: { propertyGroupKey: '' }
         });
@@ -139,6 +139,16 @@ describe('applyModifiedSettingsTransfer', () => {
         expect(nextSettings.folderSortOrder).toBe('alpha-desc');
     });
 
+    it('accepts an upstream Notebook Navigator export as a one-way migration source', () => {
+        const nextSettings = applyModifiedSettingsTransfer(structuredClone(DEFAULT_SETTINGS), {
+            plugin: 'notebook-navigator',
+            pluginVersion: '3.3.2',
+            settings: { folderSortOrder: 'alpha-desc', propertyGroupKey: '' }
+        });
+
+        expect(nextSettings.folderSortOrder).toBe('alpha-desc');
+    });
+
     it('seeds the grouping property list from the sorting list for pre-split exports', () => {
         // Pre-split exports never contain propertyGroupKey; the enveloped and bare forms both seed.
         const enveloped = applyModifiedSettingsTransfer(structuredClone(DEFAULT_SETTINGS), {
@@ -171,7 +181,7 @@ describe('applyModifiedSettingsTransfer', () => {
                 plugin: 'other-plugin',
                 settings: { folderSortOrder: 'alpha-desc' }
             })
-        ).toThrow('Not a Notebook Navigator settings export.');
+        ).toThrow('Not a Picturefish Obsidian Navigator or Notebook Navigator settings export.');
     });
 
     it('rejects envelopes without a settings object', () => {
@@ -188,7 +198,7 @@ describe('applyModifiedSettingsTransfer', () => {
             applyModifiedSettingsTransfer(structuredClone(DEFAULT_SETTINGS), {
                 unrelated: true
             })
-        ).toThrow('Settings import must contain Notebook Navigator settings.');
+        ).toThrow('Settings import must contain Picturefish Obsidian Navigator settings.');
     });
 
     it('rejects bare objects with only non-transferable settings', () => {
@@ -196,7 +206,7 @@ describe('applyModifiedSettingsTransfer', () => {
             applyModifiedSettingsTransfer(structuredClone(DEFAULT_SETTINGS), {
                 searchProvider: 'omnisearch'
             })
-        ).toThrow('Settings import must contain Notebook Navigator settings.');
+        ).toThrow('Settings import must contain Picturefish Obsidian Navigator settings.');
     });
 
     it('rejects envelopes without a transferable settings key', () => {
@@ -206,7 +216,7 @@ describe('applyModifiedSettingsTransfer', () => {
                 pluginVersion: '3.2.3',
                 settings: { unrelated: true }
             })
-        ).toThrow('Settings import must contain Notebook Navigator settings.');
+        ).toThrow('Settings import must contain Picturefish Obsidian Navigator settings.');
     });
 
     it('ignores unknown top-level keys during import', () => {

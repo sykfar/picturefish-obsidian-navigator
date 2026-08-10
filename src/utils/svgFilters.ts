@@ -16,10 +16,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import { PRODUCT_ID } from '../constants/product';
+
 const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
 
-const NOTEBOOK_NAVIGATOR_SVG_FILTERS_ID = 'notebook-navigator-svg-filters';
-const NOTEBOOK_NAVIGATOR_FROSTED_FILTER_ID = 'notebook-navigator-frosted';
+const NOTEBOOK_NAVIGATOR_SVG_FILTERS_ID = `${PRODUCT_ID}-svg-filters`;
+const NOTEBOOK_NAVIGATOR_FROSTED_FILTER_ID = `${PRODUCT_ID}-frosted`;
 
 function createSvgElement(tagName: string) {
     return activeDocument.createElementNS(SVG_NAMESPACE, tagName);

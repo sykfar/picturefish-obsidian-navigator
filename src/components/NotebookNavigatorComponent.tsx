@@ -86,6 +86,7 @@ import { useNavigationPaneTreeSections } from '../hooks/navigationPane/data/useN
 import { useNavigationPaneSourceState } from '../hooks/navigationPane/data/useNavigationPaneSourceState';
 import type { SelectionHistoryEntry } from '../context/selection/types';
 import type { SearchQueryUpdateOptions } from '../hooks/useListPaneSearch';
+import { PRODUCT_ID } from '../constants/product';
 
 // Checks if two string arrays have identical content in the same order
 const arraysEqual = (a: string[], b: string[]): boolean => {
@@ -1371,7 +1372,7 @@ export const NotebookNavigatorComponent = React.memo(
                 const scaleTextWithHeight = settings.navItemHeightScaleText;
 
                 // Get Android font scale for compensation (1 if not on Android or no scaling)
-                const navigatorContainer = containerRef.current.closest('.notebook-navigator');
+                const navigatorContainer = containerRef.current.closest(`.${PRODUCT_ID}`);
                 const androidFontScale = getAndroidFontScale(navigatorContainer);
 
                 // Calculate font sizes based on item height (default 28px)

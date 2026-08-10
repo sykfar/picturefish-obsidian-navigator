@@ -89,6 +89,7 @@ import { DEFAULT_SETTINGS } from './settings/defaultSettings';
 import { buildFilePathInFolder, generateUniqueFilename } from './utils/fileCreationUtils';
 import { showNotice } from './utils/noticeUtils';
 import { strings } from './i18n';
+import { isUpstreamPluginEnabled } from './constants/product';
 
 interface ObsidianSettingsModal {
     open(): void;
@@ -400,6 +401,12 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
     async onload() {
         // Initialize localStorage before database so version checks work
         localStorage.init(this.app);
+        if (isUpstreamPluginEnabled((this.app as ExtendedApp).plugins?.enabledPlugins)) {
+            showNotice(
+                'Picturefish Obsidian Navigator detected that Notebook Navigator is also enabled. Disable one of the two plugins before continuing; M1 keeps their data separate, but inherited UI styles can still overlap.',
+                { timeout: 30000, variant: 'warning' }
+            );
+        }
         this.debugLoggingService = new DebugLoggingService(this.app, { pluginVersion: this.manifest.version });
         setDebugLoggingService(this.debugLoggingService);
         this.debugLoggingService.initialize();

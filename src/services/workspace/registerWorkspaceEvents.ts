@@ -22,6 +22,7 @@ import { strings } from '../../i18n';
 import { getIconService } from '../icons';
 import { runAsyncAction } from '../../utils/async';
 import { NOTEBOOK_NAVIGATOR_ICON_ID } from '../../constants/notebookNavigatorIcon';
+import { PRODUCT_NAME } from '../../constants/product';
 import { removeHiddenFolderExactMatches, updateHiddenFolderExactMatches } from '../../utils/vaultProfiles';
 import {
     invalidateVaultIconSvgCache,
@@ -130,7 +131,9 @@ export default function registerWorkspaceEvents(plugin: NotebookNavigatorPlugin)
     );
 
     // Add ribbon icon to open the navigator
-    plugin.ribbonIconEl = plugin.addRibbonIcon(NOTEBOOK_NAVIGATOR_ICON_ID, strings.plugin.ribbonTooltip, () => {
+    const localizedNavigatorLabel = strings.plugin.ribbonTooltip;
+    const ribbonTooltip = localizedNavigatorLabel === 'Notebook Navigator' ? PRODUCT_NAME : `${PRODUCT_NAME} — ${localizedNavigatorLabel}`;
+    plugin.ribbonIconEl = plugin.addRibbonIcon(NOTEBOOK_NAVIGATOR_ICON_ID, ribbonTooltip, () => {
         // Activate navigator view with error handling
         runAsyncAction(() => plugin.activateView());
     });

@@ -107,6 +107,12 @@ export interface ReleaseNote {
  */
 const RELEASE_NOTES: ReleaseNote[] = [
     {
+        version: '0.1.0',
+        date: '2026-08-10',
+        showOnUpdate: false,
+        info: 'Initial Picturefish Obsidian Navigator M1 release with the validated navigation, search, and migration workflow.'
+    },
+    {
         version: '3.3.3',
         date: '2026-08-09',
         showOnUpdate: true,

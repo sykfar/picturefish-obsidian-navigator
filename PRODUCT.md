@@ -74,18 +74,19 @@ confidential material belongs in a separate vault or stronger isolation boundary
 
 ## Identity
 
-| Field            | Value                                                                          |
-| ---------------- | ------------------------------------------------------------------------------ |
-| Product name     | Picturefish Obsidian Navigator                                                 |
-| Future plugin ID | `picturefish-obsidian-navigator`                                               |
-| Repository       | `sykfar/picturefish-obsidian-navigator`                                        |
-| License          | GPL-3.0-or-later                                                               |
-| Upstream         | `johansan/notebook-navigator`                                                  |
-| Versioning       | Picturefish versions start at `0.1.0`; upstream baseline is tracked separately |
+| Field        | Value                                                                          |
+| ------------ | ------------------------------------------------------------------------------ |
+| Product name | Picturefish Obsidian Navigator                                                 |
+| Plugin ID    | `picturefish-obsidian-navigator`                                               |
+| Repository   | `sykfar/picturefish-obsidian-navigator`                                        |
+| License      | GPL-3.0-or-later                                                               |
+| Upstream     | `johansan/notebook-navigator`                                                  |
+| Versioning   | Picturefish versions start at `0.1.0`; upstream baseline is tracked separately |
 
-The runtime name, plugin ID, view IDs, command IDs, local-storage keys, IndexedDB names, API path, CSS collision points,
-and release URLs will be renamed together in one tested milestone. Until that milestone is complete, this repository is
-not an installable Picturefish release.
+M1 namespacing now separates the runtime name, plugin and view IDs, command prefix, local-storage keys, IndexedDB names,
+drag payloads, browser events, API path, and release URLs. A Picturefish root class and separate Style Settings ID are
+present, but inherited `nn-*` CSS remains a known coexistence boundary. See
+[docs/m1-runtime-namespacing.md](docs/m1-runtime-namespacing.md). No production release has been cut yet.
 
 ## Delivery sequence
 

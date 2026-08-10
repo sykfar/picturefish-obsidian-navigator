@@ -27,7 +27,7 @@
  * ```typescript
  * import type { NotebookNavigatorAPI } from './notebook-navigator';
  *
- * const nn = app.plugins.plugins['notebook-navigator']?.api as NotebookNavigatorAPI | undefined;
+ * const nn = app.plugins.plugins['picturefish-obsidian-navigator']?.api as NotebookNavigatorAPI | undefined;
  * if (nn) {
  *   const folder = app.vault.getFolderByPath('Projects');
  *   if (folder) {
