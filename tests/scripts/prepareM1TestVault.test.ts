@@ -1,5 +1,5 @@
 import { execFile } from 'node:child_process';
-import { mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, readFile, readdir, rm, symlink, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { promisify } from 'node:util';
@@ -128,5 +128,16 @@ describe('prepare-m1-test-vault', () => {
         const errorOutput = await runExpectingFailure(['--target', targetDirectory, '--assets', assetDirectory, '--notes', '32']);
         expect(errorOutput).toContain('must be empty');
         expect(await readFile(path.join(targetDirectory, 'keep.md'), 'utf8')).toBe('preserve me\n');
+    });
+
+    it('rejects a target reached through a symlink into the source repository', async () => {
+        const assetDirectory = await createAssets();
+        const parentDirectory = await createTemporaryDirectory('picturefish-m1-symlink-');
+        const targetLink = path.join(parentDirectory, 'vault-link');
+        await symlink(path.resolve('.'), targetLink, 'dir');
+
+        const errorOutput = await runExpectingFailure(['--target', targetLink, '--assets', assetDirectory, '--notes', '32']);
+
+        expect(errorOutput).toContain('outside the source repository');
     });
 });

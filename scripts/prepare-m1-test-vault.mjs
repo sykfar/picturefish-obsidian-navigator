@@ -4,7 +4,7 @@
  * Picturefish Obsidian Navigator - deterministic, secret-free M1 reference vault generator.
  */
 
-import { copyFile, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, readFile, readdir, realpath, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -41,6 +41,29 @@ function parseArguments(argv) {
 function isSameOrParent(candidate, child) {
     const relative = path.relative(candidate, child);
     return relative === '' || (!relative.startsWith('..') && !path.isAbsolute(relative));
+}
+
+async function resolveCanonicalTarget(targetDirectory) {
+    let candidate = targetDirectory;
+    const missingSegments = [];
+
+    while (true) {
+        try {
+            const canonicalAncestor = await realpath(candidate);
+            return missingSegments.reduceRight((current, segment) => path.join(current, segment), canonicalAncestor);
+        } catch (error) {
+            if (error?.code !== 'ENOENT') {
+                throw error;
+            }
+
+            const parent = path.dirname(candidate);
+            if (parent === candidate) {
+                throw new Error(`Unable to resolve target directory: ${targetDirectory}`);
+            }
+            missingSegments.unshift(path.basename(candidate));
+            candidate = parent;
+        }
+    }
 }
 
 function assertSafeTarget(targetDirectory) {
@@ -156,6 +179,7 @@ async function main() {
     }
 
     const targetDirectory = path.resolve(options.target);
+    const canonicalTargetDirectory = await resolveCanonicalTarget(targetDirectory);
     const assetDirectory = path.resolve(options.assets ?? projectRoot);
     const noteCount = Number(options.notes ?? DEFAULT_NOTE_COUNT);
 
@@ -163,8 +187,8 @@ async function main() {
         throw new Error('--notes must be an integer between 32 and 5000.');
     }
 
-    assertSafeTarget(targetDirectory);
-    await assertEmptyOrMissing(targetDirectory);
+    assertSafeTarget(canonicalTargetDirectory);
+    await assertEmptyOrMissing(canonicalTargetDirectory);
 
     const manifest = JSON.parse(await readFile(path.join(assetDirectory, 'manifest.json'), 'utf8'));
     if (manifest.id !== PRODUCT_ID) {
@@ -174,7 +198,7 @@ async function main() {
         await readFile(path.join(assetDirectory, assetName));
     }
 
-    await mkdir(targetDirectory, { recursive: true });
+    await mkdir(canonicalTargetDirectory, { recursive: true });
     const notePaths = Array.from({ length: noteCount }, (_, index) => notePathFor(index));
 
     for (let index = 0; index < notePaths.length; index += 1) {
