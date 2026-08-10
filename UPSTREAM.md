@@ -48,6 +48,11 @@ The `upstream` remote is read-only by policy. Contributors must never push to it
 6. Merge through review without rewriting published main history.
 7. Update this file with the new baseline and add an upstream-integration learning note.
 
+The scheduled `Prepare upstream integration` workflow implements this policy. It fetches the selected upstream ref,
+creates a uniquely named integration branch, and opens a review-only pull request only when the merge is clean. A
+conflicting merge fails without pushing a branch. The workflow never merges into `main` automatically; maintainers must
+review the generated diff and run the complete M1/M2 validation gates before merging.
+
 Upstream does not accept external pull requests. General bugs may be reported through upstream issues, but Picturefish
 planning assumes long-term ownership of all fork-specific changes.
 
