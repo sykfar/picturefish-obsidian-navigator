@@ -25,6 +25,7 @@ jobs:
       - name: Check out Picturefish main
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v4.2.2
         with:
+          ref: main
           fetch-depth: 0
 
       - name: Create review-only integration branch
@@ -52,7 +53,19 @@ jobs:
             exit 0
           fi
 
-          branch="integration/upstream-${GITHUB_RUN_ID}"
+          branch="integration/upstream-${upstream_sha:0:12}"
+
+          existing_pr="$(gh pr list --repo "$GITHUB_REPOSITORY" --state open --head "$branch" --json number,url --jq '.[0] // empty')"
+          if [[ -n "$existing_pr" ]]; then
+            echo "An open integration PR already exists for $upstream_sha: $existing_pr"
+            exit 0
+          fi
+
+          if git ls-remote --exit-code --heads origin "$branch" >/dev/null 2>&1; then
+            echo "Integration branch $branch exists without an open PR; refusing to overwrite it." >&2
+            exit 1
+          fi
+
           git switch -c "$branch"
           if ! git merge --no-commit --no-ff "$upstream_sha"; then
             git merge --abort || true
