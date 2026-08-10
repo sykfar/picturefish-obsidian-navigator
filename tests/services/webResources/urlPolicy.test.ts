@@ -35,6 +35,14 @@ describe('evaluateWebResourceUrl', () => {
             allowed: false,
             rejection: 'control-character'
         });
+        expect(evaluateWebResourceUrl('\thttps://example.com')).toMatchObject({
+            allowed: false,
+            rejection: 'control-character'
+        });
+        expect(evaluateWebResourceUrl('https://example.com\n')).toMatchObject({
+            allowed: false,
+            rejection: 'control-character'
+        });
     });
 });
 

@@ -24,18 +24,19 @@ function rejected(rejection: WebResourceUrlRejection): WebResourceUrlPolicyResul
 
 /** Validate an external web URL without performing any network access. */
 export function evaluateWebResourceUrl(value: string): WebResourceUrlPolicyResult {
-    const candidate = value.trim();
-    if (candidate.length === 0) {
-        return rejected('empty');
-    }
-
+    const rawValue = value;
     if (
-        [...candidate].some(character => {
+        [...rawValue].some(character => {
             const code = character.charCodeAt(0);
             return code <= 0x1f || code === 0x7f;
         })
     ) {
         return rejected('control-character');
+    }
+
+    const candidate = rawValue.trim();
+    if (candidate.length === 0) {
+        return rejected('empty');
     }
 
     let parsed: URL;
