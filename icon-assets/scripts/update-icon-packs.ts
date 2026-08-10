@@ -18,7 +18,7 @@ import { simpleIcons } from './config/simple-icons';
 const ICON_PACKS = [bootstrapIcons, fontAwesome, materialIcons, phosphor, rpgAwesome, simpleIcons];
 
 const ICON_ASSETS_ROOT = path.resolve(__dirname, '..');
-const PUBLIC_BASE_URL = 'https://raw.githubusercontent.com/johansan/notebook-navigator/main/icon-assets';
+const PUBLIC_BASE_URL = 'https://raw.githubusercontent.com/sykfar/picturefish-obsidian-navigator/main/icon-assets';
 const BUNDLED_MANIFEST_OUTPUT = path.resolve(__dirname, '..', '..', 'src/services/icons/external/bundledManifests.ts');
 const ICONIZE_REVERSE_MAP_OUTPUT = path.resolve(__dirname, '..', '..', 'src/generated/iconizeReverseMaps.ts');
 
