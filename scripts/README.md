@@ -111,6 +111,33 @@ node scripts/release.js patch --dry-run    # Preview release PR preparation
 - If the script creates a pull request, leave it running while CI completes; it merges the pull request when checks pass and GitHub allows the merge
 - If you stop the script after merging the release pull request, run `node scripts/release.js` again to publish
 
+## package-m1-alpha.mjs
+
+Creates a local, installable M1 artifact directory with SHA-256 checksums.
+
+```bash
+npm run build
+npm run package:m1-alpha -- --output /tmp/picturefish-m1-alpha
+```
+
+The script copies only `main.js`, `manifest.json`, and `styles.css`. It refuses a non-Picturefish manifest and never
+overwrites a non-empty output directory.
+
+## prepare-m1-test-vault.mjs
+
+Creates a deterministic, secret-free Obsidian reference vault and installs an M1 artifact into it.
+
+```bash
+npm run prepare:m1-vault -- \
+  --target /tmp/picturefish-m1-reference-vault \
+  --assets /tmp/picturefish-m1-alpha \
+  --notes 1600
+```
+
+The target must be empty, outside the source repository, and outside every production vault. The generated vault
+contains nested folders, Unicode and long paths, repeated basenames, links, frontmatter, and synthetic attachments. See
+[`docs/m1-validation.md`](../docs/m1-validation.md) for the acceptance matrix.
+
 ## gitdump.sh
 
 Generates git diff snapshots for code review and backup purposes.

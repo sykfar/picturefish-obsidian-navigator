@@ -46,5 +46,10 @@ plugin before enabling the other.
 
 ## Validation
 
-The implementation is gated by the production build, ESLint, Stylelint, the full Vitest suite, and `npm audit`. Manual
-desktop, mobile, sync, migration, downgrade, and synthetic-vault checks are still required before an alpha release.
+The implementation is gated by the production build, ESLint, Stylelint, the full Vitest suite, and `npm audit`.
+`scripts/package-m1-alpha.mjs` creates an installable three-file artifact with SHA-256 checksums, while
+`scripts/prepare-m1-test-vault.mjs` creates a deterministic, secret-free reference vault without overwriting an existing
+directory. See [M1 validation](m1-validation.md) for the automated commands and manual acceptance matrix.
+
+Manual desktop, mobile, sync, migration, downgrade, and synthetic-vault checks are still required before an alpha
+release.

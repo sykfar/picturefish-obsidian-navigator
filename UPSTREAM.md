@@ -11,10 +11,14 @@ Picturefish Obsidian Navigator is an independent fork of
 | Initial fork commit | `747383f6e1bfeaaf4d98d1db6aec00f210b63049`               |
 | Git description     | `3.3.2-34-g747383f6`                                     |
 | Fork initialized    | 2026-08-09                                               |
+| Reviewed release    | `3.3.3` (`7ae7db62d32d9df9b6f577eff4e2ed758661a982`)     |
 | Runtime status      | M1 namespacing in development; not a Picturefish release |
 
-M1 started from this documented baseline. The next reviewed stable upstream release will be integrated on a dedicated
-integration branch before the first Picturefish alpha.
+M1 started from this documented baseline. Upstream `3.3.3` was rechecked on 2026-08-10. The only changes between the
+fork commit and the signed release line are upstream version metadata in `manifest.json`, `package.json`,
+`package-lock.json`, and `versions.json`; there are no additional source changes. Picturefish intentionally keeps its
+own `0.1.0` version line, so no code integration is required for this tag. Later functional releases still go through a
+dedicated integration branch before entering Picturefish `main`.
 
 ## Initial fork changes
 
