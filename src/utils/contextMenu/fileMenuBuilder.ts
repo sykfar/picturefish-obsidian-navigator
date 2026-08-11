@@ -57,7 +57,7 @@ function addWebResourceUrlActions(menu: Menu, app: App, file: TFile): boolean {
         return false;
     }
 
-    const candidates = discoverWebResourceUrls(frontmatter as Record<string, unknown>);
+    const candidates = discoverWebResourceUrls(frontmatter);
     if (candidates.length === 0) {
         return false;
     }
