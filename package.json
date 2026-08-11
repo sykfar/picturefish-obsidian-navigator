@@ -1,6 +1,6 @@
 {
   "name": "picturefish-obsidian-navigator",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Independent, security-conscious Obsidian navigator based on Notebook Navigator.",
   "main": "main.js",
   "engines": {
