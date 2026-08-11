@@ -107,6 +107,13 @@ export interface ReleaseNote {
  */
 const RELEASE_NOTES: ReleaseNote[] = [
     {
+        version: '0.2.1',
+        date: '2026-08-11',
+        showOnUpdate: true,
+        new: ['URL properties now expose explicit, confirmation-gated actions in the file context menu.'],
+        changed: ['Web resources always open in the external browser; no URL is opened automatically.']
+    },
+    {
         version: '0.2.0',
         date: '2026-08-11',
         showOnUpdate: true,
