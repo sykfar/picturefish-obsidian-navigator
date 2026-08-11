@@ -138,6 +138,9 @@ body {
        Notebook Navigator Theme Variables
        ======================================================================== */
 
+    /* -- Venezia integration -- */
+    --nn-theme-venezia-detail-font-size: 12.5px;
+
     /* -- Foreground colors -- */
     --nn-theme-foreground: var(--text-normal);
     --nn-theme-foreground-muted: color-mix(in srgb, var(--nn-theme-foreground) 70%, transparent);
