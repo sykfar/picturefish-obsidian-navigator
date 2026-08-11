@@ -684,6 +684,10 @@ export interface NotebookNavigatorSettings {
     // Advanced tab
     checkForUpdatesOnStart: boolean;
 
+    // Web resources
+    webResourcesEnabled: boolean;
+    webResourceUrlProperties: string[];
+
     // Navigation pane tab - Appearance
     pinNavigationBanner: boolean;
     showNoteCount: boolean;

@@ -436,6 +436,10 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     searchProvider: 'internal',
     keyboardShortcuts: getDefaultKeyboardShortcuts(),
 
+    // Web resources
+    webResourcesEnabled: true,
+    webResourceUrlProperties: ['url', 'source', 'canonical_url'],
+
     // Runtime state and cached data
     customVaultName: '',
     pinnedNotes: sanitizeRecord<PinnedNotes[string]>(undefined),
