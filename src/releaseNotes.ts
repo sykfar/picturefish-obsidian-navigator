@@ -107,6 +107,13 @@ export interface ReleaseNote {
  */
 const RELEASE_NOTES: ReleaseNote[] = [
     {
+        version: '0.2.2',
+        date: '2026-08-11',
+        showOnUpdate: true,
+        new: ['Web-resource actions can now be enabled or disabled and configured with a URL-property allowlist.'],
+        fixed: ['Malformed or incompatible URL-property settings now fall back to the safe default allowlist.']
+    },
+    {
         version: '0.2.1',
         date: '2026-08-11',
         showOnUpdate: true,
