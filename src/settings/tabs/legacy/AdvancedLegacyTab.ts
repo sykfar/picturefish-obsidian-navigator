@@ -60,7 +60,7 @@ export function renderAdvancedTab(context: SettingsTabContext): void {
     advancedGroup.addSetting(setting => {
         setting
             .setName('Web resources')
-            .setDesc('Enable confirmation-gated URL-property actions. Enter a comma-separated allowlist of property names.')
+            .setDesc('Enable confirmation-gated url-property actions. Enter a comma-separated allowlist of property names.')
             .addToggle(toggle =>
                 toggle.setValue(plugin.settings.webResourcesEnabled).onChange(async value => {
                     plugin.settings.webResourcesEnabled = value;
@@ -69,7 +69,7 @@ export function renderAdvancedTab(context: SettingsTabContext): void {
             )
             .addText(text =>
                 text
-                    .setPlaceholder('url, source, canonical_url')
+                    .setPlaceholder('Url, source, canonical_url')
                     .setValue(plugin.settings.webResourceUrlProperties.join(', '))
                     .onChange(async value => {
                         plugin.settings.webResourceUrlProperties = value

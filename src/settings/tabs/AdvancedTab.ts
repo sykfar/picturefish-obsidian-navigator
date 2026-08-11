@@ -40,8 +40,8 @@ export function createAdvancedSettingDefinitions(context: SettingsTabContext): S
         }),
         createRenderDefinition({
             name: 'Web resources',
-            desc: 'Control safe URL-property actions in the file context menu.',
-            aliases: ['web resources', 'URL properties'],
+            desc: 'Control safe url-property actions in the file context menu.',
+            aliases: ['web resources', 'url properties'],
             render: setting => renderWebResourceSettings(setting, context)
         }),
         createRenderDefinition({
@@ -142,7 +142,7 @@ function renderWebResourceSettings(setting: Setting, context: SettingsTabContext
     const { plugin } = context;
     setting
         .setName('Web resources')
-        .setDesc('Enable confirmation-gated actions for configured URL properties. Protocol validation always remains active.')
+        .setDesc('Enable confirmation-gated actions for configured url properties. Protocol validation always remains active.')
         .addToggle(toggle =>
             toggle.setValue(plugin.settings.webResourcesEnabled).onChange(async value => {
                 plugin.settings.webResourcesEnabled = value;
@@ -151,7 +151,7 @@ function renderWebResourceSettings(setting: Setting, context: SettingsTabContext
         )
         .addText(text =>
             text
-                .setPlaceholder('url, source, canonical_url')
+                .setPlaceholder('Url, source, canonical_url')
                 .setValue(plugin.settings.webResourceUrlProperties.join(', '))
                 .onChange(async value => {
                     plugin.settings.webResourceUrlProperties = value
