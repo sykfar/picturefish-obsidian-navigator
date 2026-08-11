@@ -107,6 +107,13 @@ export interface ReleaseNote {
  */
 const RELEASE_NOTES: ReleaseNote[] = [
     {
+        version: '0.2.3',
+        date: '2026-08-11',
+        showOnUpdate: true,
+        new: ['Optional Venezia palette and typography integration with an adjustable detail and table text size.'],
+        changed: ['Venezia integration is opt-in and preserves inherited Navigator theme overrides when disabled.']
+    },
+    {
         version: '0.2.2',
         date: '2026-08-11',
         showOnUpdate: true,
