@@ -46,8 +46,43 @@ import { addManualSortGroupHeaderMenuItems } from './manualSortGroupHeaderMenuIt
 import { addMergeNotesMenuItem } from './mergeNotesMenuItems';
 import { resolveEffectiveListGroupingForSort, resolveListGrouping } from '../listGrouping';
 import { resolveFileIconId } from '../fileIconUtils';
+import { ConfirmModal } from '../../modals/ConfirmModal';
+import { discoverWebResourceUrls } from '../../services/webResources/resourceDiscovery';
 
 type FileStyleTarget = { type: 'folder'; folderPath: string } | { type: 'files'; files: TFile[] };
+
+function addWebResourceUrlActions(menu: Menu, app: App, file: TFile): boolean {
+    const frontmatter = app.metadataCache.getFileCache(file)?.frontmatter;
+    if (!frontmatter) {
+        return false;
+    }
+
+    const candidates = discoverWebResourceUrls(frontmatter as Record<string, unknown>);
+    if (candidates.length === 0) {
+        return false;
+    }
+
+    for (const candidate of candidates) {
+        menu.addItem((item: MenuItem) => {
+            item.setTitle(`${strings.contextMenu.file.openInDefaultApp} (${candidate.property})`)
+                .setIcon('lucide-globe')
+                .onClick(() => {
+                    new ConfirmModal(
+                        app,
+                        strings.contextMenu.file.openInDefaultApp,
+                        candidate.url,
+                        () => {
+                            window.open(candidate.url, '_blank', 'noopener,noreferrer');
+                        },
+                        strings.commands.open,
+                        { confirmButtonClass: 'mod-cta' }
+                    ).open();
+                });
+        });
+    }
+
+    return true;
+}
 
 interface ResolveFileStyleTargetParams {
     file: TFile;
@@ -448,6 +483,10 @@ export function buildFileMenu(params: FileMenuBuilderParams): void {
         });
 
         if (addedCopyMenu) {
+            menu.addSeparator();
+        }
+
+        if (addWebResourceUrlActions(menu, app, file)) {
             menu.addSeparator();
         }
     }
