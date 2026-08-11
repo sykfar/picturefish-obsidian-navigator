@@ -18,7 +18,6 @@ settings:
         description: Apply the Venezia palette and typography to the Navigator. Disable to retain inherited Navigator theme overrides.
         type: class-toggle
         default: false
-        class: nn-venezia-theme
     -
         id: nn-theme-venezia-detail-font-size
         title: Detail and table text size
