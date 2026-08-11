@@ -152,6 +152,12 @@ export function shouldDisplayFile(file: TFile, visibility: FileVisibility, app: 
             return isPrimaryDocumentFile(file);
 
         case FILE_VISIBILITY.SUPPORTED: {
+            // HTML resources are intentionally supported as navigable files even when
+            // Obsidian has no registered HTML view. They are opened through the
+            // later Web Resource actions and are never rendered by the navigator.
+            if (file.extension.toLowerCase() === 'html' || file.extension.toLowerCase() === 'htm') {
+                return true;
+            }
             const extensions = getSupportedExtensions(app);
             return extensions.has(file.extension);
         }
