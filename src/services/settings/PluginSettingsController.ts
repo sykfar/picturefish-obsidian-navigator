@@ -562,6 +562,21 @@ export class PluginSettingsController {
         // Deep-clone the defaults so later in-place normalization (e.g. ensureVaultProfiles) cannot mutate DEFAULT_SETTINGS
         // through nested references when stored data omits a key.
         this.currentSettings = { ...structuredClone(DEFAULT_SETTINGS), ...(storedSettings ?? {}) };
+        const storedWebResourceProperties: unknown = storedData?.['webResourceUrlProperties'];
+        if (
+            !Array.isArray(storedWebResourceProperties) ||
+            !storedWebResourceProperties.every((property: unknown): property is string => typeof property === 'string')
+        ) {
+            this.currentSettings.webResourceUrlProperties = [...DEFAULT_SETTINGS.webResourceUrlProperties];
+        } else {
+            const normalizedWebResourceProperties = storedWebResourceProperties
+                .map(property => property.trim())
+                .filter(property => property.length > 0);
+            this.currentSettings.webResourceUrlProperties =
+                normalizedWebResourceProperties.length > 0
+                    ? normalizedWebResourceProperties
+                    : [...DEFAULT_SETTINGS.webResourceUrlProperties];
+        }
         const lastShownVersionResolution = isFirstLaunch
             ? { version: normalizeVersionMarker(this.currentSettings.lastShownVersion), needsSyncedRepair: false }
             : this.resolveLastShownVersion(this.currentSettings.lastShownVersion);
