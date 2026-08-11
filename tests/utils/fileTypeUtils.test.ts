@@ -24,6 +24,8 @@ import {
     isRasterImageFile,
     isSvgExtension,
     isSvgFile,
+    FILE_VISIBILITY,
+    shouldDisplayFile,
     shouldShowExtensionSuffix
 } from '../../src/utils/fileTypeUtils';
 import { createTestTFile } from './createTestTFile';
@@ -59,6 +61,12 @@ describe('fileTypeUtils', () => {
             expect(isPrimaryDocumentFile(createTestTFile('Board.canvas'))).toBe(true);
             expect(isPrimaryDocumentFile(createTestTFile('Data.base'))).toBe(true);
             expect(isPrimaryDocumentFile(createTestTFile('Asset.png'))).toBe(false);
+        });
+
+        it('shows local HTML resources in supported-file mode without an Obsidian HTML view', () => {
+            const app = {} as Parameters<typeof shouldDisplayFile>[2];
+            expect(shouldDisplayFile(createTestTFile('Mockups/Journey.html'), FILE_VISIBILITY.SUPPORTED, app)).toBe(true);
+            expect(shouldDisplayFile(createTestTFile('Mockups/Journey.txt'), FILE_VISIBILITY.SUPPORTED, app)).toBe(false);
         });
 
         it('excludes SVG files from raster image helpers', () => {
