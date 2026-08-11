@@ -39,6 +39,12 @@ export function createAdvancedSettingDefinitions(context: SettingsTabContext): S
             desc: strings.settings.items.checkForNewVersionOnStart.desc
         }),
         createRenderDefinition({
+            name: strings.contextMenu.file.openInDefaultApp,
+            desc: strings.settings.pages.advanced.description,
+            aliases: [strings.contextMenu.file.openInDefaultApp, strings.settings.pages.advanced.label],
+            render: setting => renderWebResourceSettings(setting, context)
+        }),
+        createRenderDefinition({
             name: getNotSyncedSettingName(strings.settings.items.startupDebugLogging.name),
             desc: strings.settings.items.startupDebugLogging.desc,
             aliases: [strings.settings.items.startupDebugLogging.name],
@@ -130,6 +136,28 @@ export function createAdvancedSettingDefinitions(context: SettingsTabContext): S
         createGroupDefinition(strings.settings.pages.advanced.groups.maintenance, maintenanceItems),
         createGroupDefinition(strings.settings.pages.advanced.groups.resetSettings, resetItems)
     ];
+}
+
+function renderWebResourceSettings(setting: Setting, context: SettingsTabContext): void {
+    const { plugin } = context;
+    setting
+        .setName(strings.contextMenu.file.openInDefaultApp)
+        .setDesc(strings.settings.pages.advanced.description)
+        .addToggle(toggle =>
+            toggle.setValue(plugin.settings.webResourcesEnabled).onChange(async value => {
+                plugin.settings.webResourcesEnabled = value;
+                await plugin.saveSettingsAndUpdate();
+            })
+        )
+        .addText(text =>
+            text.setValue(plugin.settings.webResourceUrlProperties.join(', ')).onChange(async value => {
+                plugin.settings.webResourceUrlProperties = value
+                    .split(',')
+                    .map(property => property.trim())
+                    .filter(property => property.length > 0);
+                await plugin.saveSettingsAndUpdate();
+            })
+        );
 }
 
 function renderDebugLoggingSetting(setting: Setting, context: SettingsTabContext): void {

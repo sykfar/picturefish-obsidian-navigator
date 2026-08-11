@@ -59,6 +59,27 @@ export function renderAdvancedTab(context: SettingsTabContext): void {
 
     advancedGroup.addSetting(setting => {
         setting
+            .setName(strings.contextMenu.file.openInDefaultApp)
+            .setDesc(strings.settings.pages.advanced.description)
+            .addToggle(toggle =>
+                toggle.setValue(plugin.settings.webResourcesEnabled).onChange(async value => {
+                    plugin.settings.webResourcesEnabled = value;
+                    await plugin.saveSettingsAndUpdate();
+                })
+            )
+            .addText(text =>
+                text.setValue(plugin.settings.webResourceUrlProperties.join(', ')).onChange(async value => {
+                    plugin.settings.webResourceUrlProperties = value
+                        .split(',')
+                        .map(property => property.trim())
+                        .filter(property => property.length > 0);
+                    await plugin.saveSettingsAndUpdate();
+                })
+            );
+    });
+
+    advancedGroup.addSetting(setting => {
+        setting
             .setName(getNotSyncedSettingName(strings.settings.items.startupDebugLogging.name))
             .setDesc(strings.settings.items.startupDebugLogging.desc)
             .addToggle(toggle =>

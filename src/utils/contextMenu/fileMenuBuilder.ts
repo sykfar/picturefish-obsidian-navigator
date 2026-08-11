@@ -51,13 +51,17 @@ import { discoverWebResourceUrls } from '../../services/webResources/resourceDis
 
 type FileStyleTarget = { type: 'folder'; folderPath: string } | { type: 'files'; files: TFile[] };
 
-function addWebResourceUrlActions(menu: Menu, app: App, file: TFile): boolean {
+function addWebResourceUrlActions(menu: Menu, app: App, file: TFile, settings: NotebookNavigatorSettings): boolean {
+    if (!settings.webResourcesEnabled) {
+        return false;
+    }
+
     const frontmatter = app.metadataCache.getFileCache(file)?.frontmatter;
     if (!frontmatter) {
         return false;
     }
 
-    const candidates = discoverWebResourceUrls(frontmatter);
+    const candidates = discoverWebResourceUrls(frontmatter, settings.webResourceUrlProperties);
     if (candidates.length === 0) {
         return false;
     }
@@ -486,7 +490,7 @@ export function buildFileMenu(params: FileMenuBuilderParams): void {
             menu.addSeparator();
         }
 
-        if (addWebResourceUrlActions(menu, app, file)) {
+        if (addWebResourceUrlActions(menu, app, file, settings)) {
             menu.addSeparator();
         }
     }
