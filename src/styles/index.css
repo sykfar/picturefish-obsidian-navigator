@@ -130,6 +130,8 @@ Keep this list ordered: later files override earlier ones.
 /* Theme + platform */
 /* theme-folder-colors.css: placeholder section for folder color rules (currently empty). */
 @import './sections/theme-folder-colors.css';
+/* theme-venezia.css: optional Venezia palette and typography integration with safe fallbacks. */
+@import './sections/theme-venezia.css';
 /* mobile-variables.css: mobile typography and spacing variables, mobile nav row padding adjustments. */
 @import './sections/mobile-variables.css';
 /* mobile-panes.css: shared mobile pane/scroller layout and overscroll behavior. */

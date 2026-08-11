@@ -139,6 +139,15 @@ Not currently exposed in the Style Settings UI:
 
 ## CSS Variables Reference
 
+### Venezia integration
+
+Enable the `Venezia integration` class toggle in Style Settings to opt in to the palette and typography mapping. When disabled,
+the Navigator keeps inherited `--nn-theme-*` overrides unchanged.
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--nn-theme-venezia-detail-font-size` | `12.5px` | Detail and table-like metadata text size; configurable in Style Settings from 11px to 14px in 0.5px steps. |
+
 ### Foreground colors
 
 | Variable | Default | Description |
@@ -413,6 +422,9 @@ supported by Notebook Navigator:
 
 ```css
 .theme-dark {
+  /* Venezia integration */
+  --nn-theme-venezia-detail-font-size: 12.5px;
+
   /* Foreground colors */
   --nn-theme-foreground: #a9b7c6;
   --nn-theme-foreground-muted: #7f8b91;

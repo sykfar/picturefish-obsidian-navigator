@@ -6,6 +6,30 @@ name: Picturefish Obsidian Navigator
 id: picturefish-obsidian-navigator-style-settings
 settings:
     -
+        id: nn-venezia-integration-heading
+        title: Venezia integration
+        description: Optional palette and typography alignment with the Venezia vault snippet.
+        type: heading
+        level: 1
+        collapsed: true
+    -
+        id: nn-venezia-integration
+        title: Enable Venezia integration
+        description: Apply the Venezia palette and typography to the Navigator. Disable to retain inherited Navigator theme overrides.
+        type: class-toggle
+        default: false
+        class: nn-venezia-theme
+    -
+        id: nn-theme-venezia-detail-font-size
+        title: Detail and table text size
+        description: Fine-tune the smaller Navigator text, including metadata rows and table-like settings views.
+        type: variable-number-slider
+        default: 12.5
+        min: 11
+        max: 14
+        step: 0.5
+        format: px
+    -
         id: nn-theme-foreground-heading
         title: Foreground colors
         description: Base colors for text, icons, and lines. Most other colors default to these.
