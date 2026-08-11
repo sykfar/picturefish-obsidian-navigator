@@ -1,10 +1,12 @@
 /* Optional Venezia integration. The fallback keeps the plugin independent of the vault snippet. */
-.nn-venezia-theme .notebook-navigator {
+.nn-venezia-integration .notebook-navigator {
     font-family: var(--venezia-font-body, var(--font-interface));
+    color: var(--venezia-ink, var(--text-normal));
+    background-color: var(--venezia-sand, var(--background-primary));
     --nn-theme-foreground: var(--venezia-ink, var(--text-normal));
     --nn-theme-foreground-muted: var(--venezia-ink-2, var(--text-muted));
     --nn-theme-foreground-faded: var(--venezia-asche, var(--text-faint));
-    --nn-theme-nav-bg: var(--venezia-sand-2, var(--background-secondary));
+    --nn-theme-nav-bg: var(--venezia-sand, var(--background-secondary));
     --nn-theme-list-bg: var(--venezia-sand, var(--background-primary));
     --nn-theme-navitem-hover-bg: var(--venezia-card-hover, var(--background-modifier-hover));
     --nn-theme-file-selected-bg: var(--venezia-lagune-soft, var(--text-selection));
@@ -14,8 +16,8 @@
     --nn-file-small-size: var(--nn-theme-venezia-detail-font-size, 12.5px);
 }
 
-.nn-venezia-theme .notebook-navigator .nn-list-title-content,
-.nn-venezia-theme .notebook-navigator .nn-list-group-header,
-.nn-venezia-theme .notebook-navigator .nn-navitem-name {
+.nn-venezia-integration .notebook-navigator .nn-list-title-content,
+.nn-venezia-integration .notebook-navigator .nn-list-group-header,
+.nn-venezia-integration .notebook-navigator .nn-navitem-name {
     font-family: var(--venezia-font-heading, var(--venezia-font-body, var(--font-interface)));
 }
