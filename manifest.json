@@ -1,7 +1,7 @@
 {
   "id": "picturefish-obsidian-navigator",
   "name": "Picturefish Obsidian Navigator",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "minAppVersion": "1.11.0",
   "description": "An independent, security-conscious Obsidian navigator based on Notebook Navigator, with a two-pane interface for folders, tags, properties, previews, and keyboard navigation.",
   "author": "Picturefish contributors; based on work by Johan Sanneblad",

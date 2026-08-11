@@ -107,6 +107,16 @@ export interface ReleaseNote {
  */
 const RELEASE_NOTES: ReleaseNote[] = [
     {
+        version: '0.2.0',
+        date: '2026-08-11',
+        showOnUpdate: true,
+        new: [
+            'Web Resource support now shows local `.html` and `.htm` files in the navigator when supported file types are enabled.',
+            'Configured web-resource URLs are discovered through a safe, explicit property allowlist.'
+        ],
+        changed: ['HTML resources remain non-Markdown files: tags, properties, tasks, and Markdown previews are not applied to them.']
+    },
+    {
         version: '0.1.0',
         date: '2026-08-10',
         showOnUpdate: false,
