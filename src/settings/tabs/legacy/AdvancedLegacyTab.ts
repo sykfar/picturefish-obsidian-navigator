@@ -68,15 +68,13 @@ export function renderAdvancedTab(context: SettingsTabContext): void {
                 })
             )
             .addText(text =>
-                text
-                    .setValue(plugin.settings.webResourceUrlProperties.join(', '))
-                    .onChange(async value => {
-                        plugin.settings.webResourceUrlProperties = value
-                            .split(',')
-                            .map(property => property.trim())
-                            .filter(property => property.length > 0);
-                        await plugin.saveSettingsAndUpdate();
-                    })
+                text.setValue(plugin.settings.webResourceUrlProperties.join(', ')).onChange(async value => {
+                    plugin.settings.webResourceUrlProperties = value
+                        .split(',')
+                        .map(property => property.trim())
+                        .filter(property => property.length > 0);
+                    await plugin.saveSettingsAndUpdate();
+                })
             );
     });
 
