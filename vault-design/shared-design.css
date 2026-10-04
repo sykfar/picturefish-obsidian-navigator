@@ -76,7 +76,6 @@ body:is(.pf-vault-surface-sand, .pf-vault-surface-white).pf-vault-appearance-dar
     color-scheme: dark;
 }
 
-body:is(.pf-vault-surface-sand, .pf-vault-surface-white) .workspace-leaf-content,
 body:is(.pf-vault-surface-sand, .pf-vault-surface-white) .markdown-preview-view,
 body:is(.pf-vault-surface-sand, .pf-vault-surface-white) .markdown-source-view {
     background-color: var(--pf-vault-ground);
