@@ -14,11 +14,11 @@ for r in rows:
  elif r['kind']=='pruefen':e['source']='Begrenzte konfigurierte Quellen: '+('Web-Clips' if 'Web-Clips' in e['path'] else 'Vault-Aktivität')
  config['entries'].append(e)
 # JSON flow values are valid YAML; serialized quoted Unicode values preserve links and arrays.
-hub='''---\ntype: dashboard\ncssclasses: [pf-home-note, wide-page]\nstatus: aktiv\ndate: 2026-10-05\nupdated: 2026-10-05\nvalid_from: 2026-10-05\nreviewed: 2026-10-05\nsuperseded_by: null\ncoauthored_by: "Codex GPT-6"\nevidence: ["Alexander, 2026-10-05: Dashboard-Mockup freigegeben", "[[UC-0135 – Dashboards über einen gemeinsamen Einstieg erreichen]]"]\npf_dashboards: '''+json.dumps(config,ensure_ascii=False)+'\n---\n\n```pf-dashboards\n```\n\n<details>\n<summary>Einstiegslinks ohne dynamische Ansicht</summary>\n\n[[Dashboard/Startseite|Startseite]] · [[Dashboard/Lose Enden|Pflegeübersicht]]\n\n'
+hub='''---\ntype: dashboard\ncssclasses: [pf-home-note, wide-page]\nstatus: aktiv\ndate: 2026-10-05\nupdated: 2026-10-05\nvalid_from: 2026-10-05\nreviewed: 2026-10-05\nsuperseded_by: null\ncoauthored_by: "Codex GPT-6"\nevidence: ["Alexander, 2026-10-05: Dashboard-Mockup freigegeben", "[[UC-0135 – Dashboards über einen gemeinsamen Einstieg erreichen]]"]\npf_dashboards: '''+json.dumps(config,ensure_ascii=False)+'\n---\n\n```pf-dashboards\n```\n\n> [!info]- Einstiegslinks ohne dynamische Ansicht\n> [[Dashboard/Startseite|Startseite]] · [[Dashboard/Lose Enden|Pflegeübersicht]]\n>\n'
 for g in ['projects','tasks','sources','publish','personal','care']:
  for e in config['entries']:
-  if e['area']==g:hub+=f"- [[{e['path'][:-3]}|{e['label']}]]\n"
-hub+='\n</details>\n'
+  if e['area']==g:hub+=f"> - [[{e['path'][:-3]}|{e['label']}]]\n"
+hub+='\n'
 def put(path,s):
  p=stage/path;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(s)
 put('Dashboard/Dashboards.md',hub)
