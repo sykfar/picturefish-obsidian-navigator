@@ -3,6 +3,8 @@ import { showNotice } from '../../utils/noticeUtils';
 import type NotebookNavigatorPlugin from '../../main';
 import { homeConfig, homeHeading, localDate, safeHomeFolder, type HomeConfig } from './config';
 import { getCurrentLanguage } from '../../i18n';
+import { careService } from '../vaultCare/service';
+import { CARE_NOTE } from '../vaultCare/model';
 
 const scalar = (value: unknown): string => (typeof value === 'string' || typeof value === 'number' ? String(value) : '');
 const text = () =>
@@ -21,6 +23,7 @@ const text = () =>
               inbox: 'Inbox sichten',
               reading: 'Leseliste und Quellen',
               freshness: 'Wissenspflege',
+              loose: 'Lose Enden',
               empty: 'Keine passenden Einträge in den gewählten Bereichen.',
               sources: 'Quellen',
               limit: 'Einträge je Modul',
@@ -61,6 +64,7 @@ const text = () =>
               inbox: 'Review inbox',
               reading: 'Reading and sources',
               freshness: 'Knowledge upkeep',
+              loose: 'Loose ends',
               empty: 'No matching entries in the selected folders.',
               sources: 'Sources',
               limit: 'Entries per module',
@@ -305,6 +309,35 @@ class HomeView extends MarkdownRenderChild {
             const content = card.createDiv({ cls: 'pf-home-list' });
             let count = 0;
             try {
+                if (module.id === 'loose') {
+                    const snapshot = await careService(this.plugin).scan();
+                    if (revision !== this.revision) return;
+                    const active = snapshot.findings.filter(f => !f.exception);
+                    const care = this.plugin.app.vault.getAbstractFileByPath(CARE_NOTE);
+                    if (care instanceof TFile) {
+                        const row = content.createDiv({ cls: 'pf-home-row' });
+                        this.link(
+                            row,
+                            care,
+                            getCurrentLanguage() === 'de'
+                                ? 'Pflegeübersicht und Notizwerkstatt öffnen'
+                                : 'Open care overview and note workshop'
+                        );
+                        row.createEl('small', {
+                            text: `${active.filter(f => f.rule === 'types').length} ${getCurrentLanguage() === 'de' ? 'ohne Typ' : 'without type'} · ${active.filter(f => f.rule === 'yaml').length} YAML · ${active.filter(f => f.rule === 'review').length} ${text().unknown}`
+                        });
+                        row.createEl('small', {
+                            text: `${snapshot.notes.filter(n => !n.path.startsWith('Templates/')).length} ${getCurrentLanguage() === 'de' ? 'Inhaltsnoten geprüft' : 'content notes checked'} · ${snapshot.time.toLocaleTimeString()} · ${getCurrentLanguage() === 'de' ? 'Bereiche und Prüfungen in Lose Enden konfigurierbar' : 'Scope and checks configured in Loose ends'}`
+                        });
+                        count++;
+                    }
+                    for (const warning of snapshot.warnings) card.createEl('p', { text: warning, cls: 'pf-home-warning' });
+                    card.createEl('small', {
+                        text:
+                            getCurrentLanguage() === 'de' ? 'Quelle: gemeinsame Live-Pflegeübersicht' : 'Source: shared live care overview'
+                    });
+                    continue;
+                }
                 const sorted = [...files].sort((a, b) => b.stat.mtime - a.stat.mtime);
                 const candidates = sorted.filter(file => {
                     const data = fm(file);

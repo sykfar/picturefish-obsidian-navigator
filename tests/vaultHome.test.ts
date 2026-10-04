@@ -25,7 +25,7 @@ it('keeps chosen order and disabled/empty modules and sanitizes malformed input'
     });
     expect(config.modules[0]).toEqual({ id: 'reading', enabled: true, folders: [] });
     expect(config.modules[1].enabled).toBe(false);
-    expect(config.modules).toHaveLength(6);
+    expect(config.modules).toHaveLength(7);
     expect(homeConfig({ limit: 1000 }).limit).toBe(5);
 });
 it('uses the local calendar date', () => {

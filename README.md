@@ -555,3 +555,7 @@ Read the [FAQ](FAQ.md) for answers to common questions.
 ## 14 License
 
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](https://github.com/johansan/notebook-navigator/blob/main/LICENSE) file for details.
+
+## Vault-Pflege
+
+[Pflegeübersicht und Notizwerkstatt](docs/vault-care.md) verwenden eine gemeinsame Vault-Notiz und ein versioniertes Typregister. Änderungen an einzelnen Typfeldern brauchen Vorschau und Bestätigung.

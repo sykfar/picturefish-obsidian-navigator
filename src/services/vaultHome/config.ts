@@ -1,5 +1,5 @@
 /** The home note is the only configuration source. */
-export const MODULES = ['tasks', 'recent', 'projects', 'inbox', 'reading', 'freshness'] as const;
+export const MODULES = ['tasks', 'recent', 'projects', 'inbox', 'reading', 'freshness', 'loose'] as const;
 export type ModuleId = (typeof MODULES)[number];
 export interface HomeModule {
     id: ModuleId;
@@ -18,7 +18,8 @@ const defaults: Record<ModuleId, string[]> = {
     projects: ['02 Projekte'],
     inbox: ['01 Inbox'],
     reading: ['04 Ressourcen/Bücher', '04 Ressourcen/Zeitschriften'],
-    freshness: ['02 Projekte', '04 Ressourcen/Software-Entwicklung']
+    freshness: ['02 Projekte', '04 Ressourcen/Software-Entwicklung'],
+    loose: []
 };
 export function safeHomeFolder(path: string): boolean {
     const parts = path.split('/');

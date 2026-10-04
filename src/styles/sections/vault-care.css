@@ -1,0 +1,256 @@
+.pf-order {
+    container-type: inline-size;
+    font-family: var(--font-interface);
+    color: var(--text-normal);
+    max-width: 1280px;
+    margin: 0 auto;
+    overflow-wrap: anywhere;
+}
+.pf-order-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: start;
+}
+.markdown-rendered .pf-order h1 {
+    margin: 8px 0 12px;
+    font-size: 32px;
+    font-weight: 600;
+}
+.markdown-rendered .pf-order h2 {
+    margin: 0 0 14px;
+    font-size: 20px;
+    font-weight: 500;
+}
+.markdown-rendered .pf-order h3 {
+    margin: 20px 0 10px;
+    font-size: 16px;
+}
+.pf-order-actions,
+.pf-order-tabs,
+.pf-order-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin: 12px 0;
+}
+.pf-order-tabs {
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--background-modifier-border);
+}
+.pf-order button,
+.pf-order select,
+.pf-order input:not([type='checkbox']) {
+    min-height: 34px;
+    max-width: 100%;
+    height: auto;
+    white-space: normal;
+}
+.pf-order button[aria-pressed='true'] {
+    background: var(--background-modifier-active-hover);
+    color: var(--link-color);
+}
+.pf-order-filters label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 13px;
+    min-width: 0;
+    max-width: 100%;
+}
+.pf-order-filters .pf-order-check {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 16px;
+}
+.pf-order-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+}
+.pf-order-card {
+    min-width: 0;
+    margin-bottom: 18px;
+    padding: 20px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 12px;
+    background: var(--venezia-card, var(--background-primary-alt));
+}
+.pf-order .pf-order-number {
+    font-size: 36px;
+    height: auto;
+    box-shadow: none;
+    background: transparent;
+    color: var(--text-normal);
+    padding: 0;
+    margin-bottom: 8px;
+}
+.pf-order-stats small,
+.pf-order-stats p {
+    display: block;
+    margin: 0 0 8px;
+}
+.pf-order table {
+    width: 100%;
+    table-layout: fixed;
+    margin: 14px 0;
+    font-size: var(--table-text-size, 13px);
+}
+.pf-order table td,
+.pf-order table th {
+    padding: var(--pf-vault-table-cell-space, 12px) 12px;
+    vertical-align: top;
+    overflow-wrap: anywhere;
+    white-space: normal;
+}
+.pf-order-compact {
+    --pf-vault-table-cell-space: 5px;
+}
+.pf-order .pf-order-heat {
+    width: 100%;
+    box-shadow: none;
+    border: 1px solid var(--background-modifier-border);
+    color: var(--text-normal);
+}
+.pf-order button.pf-order-heat.pf-order-heat-0 {
+    background: transparent;
+}
+.pf-order button.pf-order-heat.pf-order-heat-1 {
+    background: color-mix(in srgb, var(--link-color) 8%, var(--background-primary));
+}
+.pf-order button.pf-order-heat.pf-order-heat-2 {
+    background: color-mix(in srgb, var(--link-color) 16%, var(--background-primary));
+}
+.pf-order button.pf-order-heat.pf-order-heat-3 {
+    background: color-mix(in srgb, var(--link-color) 24%, var(--background-primary));
+}
+.pf-order button.pf-order-heat.pf-order-heat-4 {
+    background: color-mix(in srgb, var(--link-color) 32%, var(--background-primary));
+}
+.pf-order-findings td:first-child {
+    width: 15%;
+}
+.pf-order small,
+.pf-order-muted {
+    color: var(--text-muted);
+    font-size: 13px;
+}
+.pf-order small {
+    display: block;
+}
+.pf-order button.pf-order-link {
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    min-height: 24px;
+    color: var(--link-color);
+    text-align: left;
+}
+.pf-order .pf-order-link:hover {
+    text-decoration: underline;
+}
+.pf-order-error {
+    color: var(--text-error);
+}
+.pf-order-warning {
+    color: var(--text-warning);
+}
+.pf-order-progress {
+    width: 100%;
+    accent-color: var(--link-color);
+}
+.pf-order-workshop {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr);
+    gap: 20px;
+}
+.pf-order-queue-row,
+.pf-order-finding {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--background-modifier-border);
+}
+.pf-order-meta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: 6px 12px;
+    margin: 18px 0;
+}
+.pf-order-meta dd {
+    margin: 0;
+}
+.pf-order-use {
+    margin: 14px 0;
+}
+.pf-order-use a,
+.pf-order-coverage a {
+    display: block;
+    margin: 4px 0;
+    color: var(--link-color);
+}
+.pf-order pre {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    max-width: 100%;
+}
+.pf-order-coverage {
+    margin: 20px 0;
+    font-size: 13px;
+}
+.pf-order-settings textarea {
+    min-height: 100px;
+    width: 100%;
+}
+.markdown-reading-view .pf-order-note.markdown-preview-view .metadata-container,
+.markdown-reading-view .pf-order-note.markdown-preview-view .inline-title {
+    display: none;
+}
+.pf-order-note.markdown-preview-view .markdown-preview-sizer {
+    max-width: 1280px;
+    width: 100%;
+}
+@container (max-width: 640px) {
+    .pf-order-header {
+        flex-direction: column;
+        gap: 0;
+    }
+    .pf-order-stats,
+    .pf-order-workshop {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    .pf-order-card {
+        padding: 14px;
+    }
+    .pf-order table th,
+    .pf-order table td {
+        padding: 6px 3px;
+        font-size: 11px;
+    }
+    .pf-order .pf-order-heat {
+        padding: 3px;
+        min-height: 28px;
+    }
+    .pf-order .pf-order-filters label {
+        width: 100%;
+    }
+}
+/* These schemas have five / three columns. Preserve the common table palette,
+   font and spacing while overriding legacy four-column reference widths. */
+.markdown-rendered .pf-order table.pf-order-matrix > thead > tr > th:nth-child(n),
+.markdown-rendered .pf-order table.pf-order-matrix > tbody > tr > th:nth-child(n),
+.markdown-rendered .pf-order table.pf-order-matrix > tbody > tr > td:nth-child(n) {
+    width: 20%;
+}
+.markdown-rendered .pf-order table.pf-order-findings > thead > tr > th:nth-child(1),
+.markdown-rendered .pf-order table.pf-order-findings > tbody > tr > td:nth-child(1) {
+    width: 15%;
+}
+.markdown-rendered .pf-order table.pf-order-findings > thead > tr > th:nth-child(2),
+.markdown-rendered .pf-order table.pf-order-findings > tbody > tr > td:nth-child(2) {
+    width: 35%;
+}
+.markdown-rendered .pf-order table.pf-order-findings > thead > tr > th:nth-child(3),
+.markdown-rendered .pf-order table.pf-order-findings > tbody > tr > td:nth-child(3) {
+    width: 50%;
+}
