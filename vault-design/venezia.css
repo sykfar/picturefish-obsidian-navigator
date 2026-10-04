@@ -240,12 +240,12 @@ settings:
         title: Schrift für Fließtext
         description: Venezia Sans ist eingebettet und funktioniert deshalb auch mobil.
         type: variable-text
-        default: Picturefish Sans Obsidian
+        default: Picturefish Sans
     -
         id: venezia-font-heading
         title: Schrift für Überschriften
         type: variable-text
-        default: Picturefish Sans Obsidian
+        default: Picturefish Sans
     -
         id: venezia-font-weight-body
         title: Grundgewicht Fließtext
@@ -311,28 +311,28 @@ settings:
    mit diesem Snippet auf Desktop, iPhone und iPad übertragen kann. */
 
 @font-face {
-    font-family: 'Picturefish Sans Obsidian';
+    font-family: 'Picturefish Sans';
     src: url('__FONT_LIGHT__') format('woff2');
     font-weight: 300;
     font-style: normal;
     font-display: swap;
 }
 @font-face {
-    font-family: 'Picturefish Sans Obsidian';
+    font-family: 'Picturefish Sans';
     src: url('__FONT_REGULAR__') format('woff2');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
 }
 @font-face {
-    font-family: 'Picturefish Sans Obsidian';
+    font-family: 'Picturefish Sans';
     src: url('__FONT_SEMIBOLD__') format('woff2');
     font-weight: 600;
     font-style: normal;
     font-display: swap;
 }
 @font-face {
-    font-family: 'Picturefish Sans Obsidian';
+    font-family: 'Picturefish Sans';
     src: url('__FONT_BOLD__') format('woff2');
     font-weight: 700;
     font-style: normal;
@@ -340,7 +340,7 @@ settings:
 }
 
 :root {
-    --venezia-font-desktop: 'Picturefish Sans Obsidian', 'Picturefish Sans', system-ui, -apple-system, sans-serif;
+    --venezia-font-desktop: 'Picturefish Sans', system-ui, -apple-system, sans-serif;
 
     --venezia-font-body: var(--venezia-font-desktop);
     --venezia-font-heading: var(--venezia-font-desktop);
