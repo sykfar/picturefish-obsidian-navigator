@@ -16,6 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import { registerVaultHome } from './services/vaultHome/VaultHome';
 import { App, Platform, Plugin, TFile, FileView, TFolder, WorkspaceLeaf, addIcon } from 'obsidian';
 import type { NotebookNavigatorSettings } from './settings/types';
 import { LazyNotebookNavigatorSettingTab } from './settings/LazyNotebookNavigatorSettingTab';
@@ -669,6 +670,7 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
      * onLayoutReady callback executes immediately.
      */
     private async completeStartup(isFirstLaunch: boolean): Promise<void> {
+        registerVaultHome(this);
         this.preferencesController.syncMirrorsFromSettings();
         const storedLocalStorageVersion = this.settingsController.getStoredLocalStorageVersion();
         this.preferencesController.loadUXPreferences();
