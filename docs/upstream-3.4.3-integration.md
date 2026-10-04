@@ -45,4 +45,4 @@ Der abschließende npm-Audit vom 04.10.2026 meldet sechs hohe Entwicklungsabhän
 
 ## Auslieferungsgrenze
 
-Der Review-Stand behält die Manifest-Version 0.2.3. Er ist keine neue Auslieferung und kein Release. Vor einer Auslieferung sind Versionsnummer, Release Notes und die native Prüfung auf Desktop/iPad nötig. Der automatische Upstream-Merge-Workflow wird in diesem Port nicht geändert.
+Version 0.3.0 und die passenden Release Notes sind für die nächste Auslieferung vorbereitet. Das ist kein veröffentlichter Release. Vor einer Auslieferung sind die native Prüfung auf Desktop/iPad und der Auftrag zum Merge und Release nötig. Der automatische Upstream-Merge-Workflow wird in diesem Port nicht geändert.

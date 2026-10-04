@@ -107,6 +107,26 @@ export interface ReleaseNote {
  */
 const RELEASE_NOTES: ReleaseNote[] = [
     {
+        version: '0.3.0',
+        date: '2026-10-04',
+        showOnUpdate: true,
+        new: [
+            'Vorhandene Vault-Vorlagen einem Ordner zuordnen und optional an Unterordner vererben.',
+            'Vorlagenbefehle mit Zielordner, Dateinamenformat, optionalen Buttons und Cursorposition konfigurieren.',
+            'Neue Notizen vor dem Anlegen mit Titel, Vorlage und Zielpfad prüfen.'
+        ],
+        improved: [
+            'Datum, Elternordner und Tags je Listenkontext einstellen; Gruppierung ohne Gruppenüberschriften wählen.',
+            'Stabile Korrekturen aus Notebook Navigator bis Version 3.4.3 übernommen.'
+        ],
+        changed: ['Deutsch und Englisch werden lokal gebündelt; es werden keine Sprachpakete automatisch heruntergeladen.'],
+        fixed: [
+            'Abbruch, fehlende oder unlesbare Vorlagen und belegte feste Namen erzeugen keine Ersatznotiz.',
+            'Nummerierte Vorlagenbefehle reservieren bei paralleler Erstellung getrennte Dateinamen.',
+            'Venezia-Integration verwendet die bestätigte Integrationsklasse und Sand-Hintergründe.'
+        ]
+    },
+    {
         version: '0.2.3',
         date: '2026-08-11',
         showOnUpdate: true,
