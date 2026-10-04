@@ -28,7 +28,7 @@ import type {
 import { requireApiVersion } from 'obsidian';
 import { DEFAULT_SETTINGS } from './defaultSettings';
 import type { NotebookNavigatorSettings } from './types';
-import { normalizeCalendarCustomRootFolder } from '../utils/calendarCustomNotePatterns';
+import { normalizeOptionalVaultFolderPath } from '../utils/pathUtils';
 
 type SettingsKeyOfType<T> = Extract<
     {
@@ -115,6 +115,7 @@ const BOOLEAN_SETTING_KEYS = [
     'calendarShowOutsideMonthDays',
     'calendarShowYearCalendar',
     'useFrontmatterMetadata',
+    'showReleaseNotes',
     'checkForUpdatesOnStart',
     'showFileTaskProgress',
     'showFileTaskProgressBar',
@@ -156,6 +157,7 @@ const BOOLEAN_SETTING_KEYS = [
     'showParentFolderIcon',
     'showWordCountPercentage',
     'showSelectedNavigationPills',
+    'colorListPaneTitle',
     'stickyGroupHeaders',
     'showFolderGroupPaths',
     'showGroupHeaderItemCounts',
@@ -172,14 +174,14 @@ const BOOLEAN_SETTING_KEYS = [
     'collapseOtherBranchesOnExpand',
     'autoSelectFirstFileOnFocusChange',
     'autoExpandNavItems',
-    'springLoadedFolders'
+    'springLoadedFolders',
+    'showFolderTemplateIcons'
 ] as const satisfies readonly SettingsKeyOfType<boolean>[];
 
 const STRING_SETTING_KEYS = [
     'deleteAttachments',
     'moveFileConflicts',
     'folderNoteType',
-    'folderNoteName',
     'folderNoteNamePattern',
     'folderNoteOpenLocation',
     'shortcutBadgeDisplay',
@@ -187,6 +189,7 @@ const STRING_SETTING_KEYS = [
     'calendarWeekendDays',
     'calendarMonthHeadingFormat',
     'calendarTemplateFolder',
+    'templateEngine',
     'navCountLeaderStyle',
     'unfinishedTaskIcon',
     'textCountDisplay',
@@ -212,6 +215,7 @@ const STRING_SETTING_KEY_SET: ReadonlySet<string> = new Set(STRING_SETTING_KEYS)
 const STRING_SETTING_OPTIONS: Partial<Record<NativeStringControlKey, readonly string[]>> = {
     deleteAttachments: ['ask', 'always', 'never'],
     moveFileConflicts: ['ask', 'rename'],
+    templateEngine: ['automatic', 'builtin', 'templater'],
     folderNoteType: ['ask', 'markdown', 'canvas', 'base'],
     folderNoteOpenLocation: ['current-tab', 'new-tab', 'right-sidebar'],
     shortcutBadgeDisplay: ['index', 'count', 'none'],
@@ -483,7 +487,8 @@ function setStringSetting(settings: NotebookNavigatorSettings, key: NativeString
 
 function normalizeStringSettingValue(key: NativeStringControlKey, value: string): string {
     if (key === 'calendarTemplateFolder') {
-        return normalizeCalendarCustomRootFolder(value);
+        // The picker distinguishes an explicitly selected vault root from an unset template folder.
+        return normalizeOptionalVaultFolderPath(value) ?? '';
     }
 
     return value;

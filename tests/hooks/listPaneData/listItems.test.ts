@@ -1072,6 +1072,43 @@ describe('buildListItems pinned display scope', () => {
         expect(items.find(item => item.key === 'header-unsorted')?.groupFilePaths).toEqual([unsortedHeaderFile.path]);
     });
 
+    it('keeps the list flat when grouping is none', () => {
+        const app = createApp();
+        const headerFile = createTestTFile('notes/header.md');
+        const plainFile = createTestTFile('notes/plain.md');
+        app.metadataCache.getFileCache = (file: TFile) => ({
+            frontmatter: file.path === headerFile.path ? { group_header: 'Hidden header' } : {}
+        });
+        const db = createDb({
+            [headerFile.path]: { tags: null, properties: null },
+            [plainFile.path]: { tags: null, properties: null }
+        });
+
+        const items = buildListItems({
+            app,
+            dayKey: '2026-03-07',
+            fileVisibility: FILE_VISIBILITY.DOCUMENTS,
+            files: [headerFile, plainFile],
+            getDB: () => db,
+            getFileTimestamps: () => ({ created: 0, modified: 0 }),
+            hiddenFileState: new Map(),
+            hiddenTags: [],
+            listConfig: { ...createListConfig({}), groupBy: 'none' },
+            searchMetaMap: new Map(),
+            selectedFolder: null,
+            selectionType: ItemType.TAG,
+            showHiddenItems: false,
+            sortOption: 'title-asc',
+            manualSortGroupHeaderPropertyKey: 'group_header'
+        });
+
+        expect(getHeaderItems(items)).toEqual([]);
+        expect(getFileItems(items)).toEqual([
+            { path: headerFile.path, isPinned: false },
+            { path: plainFile.path, isPinned: false }
+        ]);
+    });
+
     it('adds manual sort custom header word counts and targets', () => {
         const app = createApp();
         const firstFile = createTestTFile('notes/first.md');
@@ -2066,6 +2103,64 @@ describe('buildListItems property grouping', () => {
         ]);
         expect(getFileItems(items).map(item => item.path)).toEqual([listValued.path]);
         expect(findCollapsedListGroupRevealTarget(items, scalar.path, true)).toEqual({ type: 'list-group', collapseKey });
+    });
+
+    it('labels link-valued groups with the link display text while keying groups by the raw value', () => {
+        const wikiLink = createTestTFile('notes/WikiLink.md');
+        const aliasLink = createTestTFile('notes/AliasLink.md');
+        const plain = createTestTFile('notes/Plain.md');
+        const listValued = createTestTFile('notes/List.md');
+        const app = createFrontmatterApp({
+            [wikiLink.path]: { related: '[[Project Note]]' },
+            [aliasLink.path]: { related: '[[Project Note|Alias]]' },
+            [plain.path]: { related: 'Project Note' },
+            [listValued.path]: { related: ['[[Zeta]]', '[Docs](https://example.com)'] }
+        });
+        const db = createDb({
+            [wikiLink.path]: { tags: null, properties: null },
+            [aliasLink.path]: { tags: null, properties: null },
+            [plain.path]: { tags: null, properties: null },
+            [listValued.path]: { tags: null, properties: null }
+        });
+
+        const items = buildListItems({
+            app,
+            dayKey: '2026-03-07',
+            fileVisibility: FILE_VISIBILITY.DOCUMENTS,
+            files: [wikiLink, aliasLink, plain, listValued],
+            getDB: () => db,
+            getFileTimestamps: () => ({ created: 0, modified: 0 }),
+            hiddenFileState: new Map(),
+            hiddenTags: [],
+            listConfig: {
+                ...createListConfig({}),
+                groupBy: 'property:related'
+            },
+            searchMetaMap: new Map(),
+            selectedFolder: null,
+            selectedTag: null,
+            selectionType: ItemType.FOLDER,
+            showHiddenItems: false,
+            sortOption: 'title-asc'
+        });
+
+        // Groups sort by their display label, and the raw value "Project Note" stays a separate
+        // group from the wiki link "[[Project Note]]" even though both render the same label.
+        expect(getHeaderItems(items)).toEqual([
+            { data: 'Alias', kind: 'property' },
+            { data: 'Project Note', kind: 'property' },
+            { data: 'Project Note', kind: 'property' },
+            { data: 'Zeta, Docs', kind: 'property' }
+        ]);
+
+        const projectNoteHeaders = items.filter(
+            item => item.type === ListPaneItemType.HEADER && item.headerKind === 'property' && item.data === 'Project Note'
+        );
+        expect(projectNoteHeaders.map(item => item.collapseKey)).toEqual([
+            createCollapseKey('property:related', 'property-value:Project Note'),
+            createCollapseKey('property:related', 'property-value:[[Project Note]]')
+        ]);
+        expect(projectNoteHeaders.map(item => item.groupFilePaths)).toEqual([[plain.path], [wikiLink.path]]);
     });
 
     it('orders number-valued groups numerically, including negatives, with strings in natural order', () => {

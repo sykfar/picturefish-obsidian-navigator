@@ -29,7 +29,7 @@ import {
     extractLegacyPeriodicNotesFolder,
     extractLegacyShortcuts,
     extractLegacyVisibilitySettings,
-    migrateFolderNoteTemplateSetting,
+    migrateFolderNoteSettings,
     migrateLegacySyncedSettings,
     migrateSearchShortcutNegationSyntax
 } from '../../settings/migrations/syncedSettings';
@@ -72,7 +72,10 @@ import {
     normalizeListSortOverride,
     resolveDeleteAttachmentsSetting,
     type NotebookNavigatorSettings,
-    resolveMoveFileConflictsSetting
+    isFolderTemplateMapping,
+    resolveMoveFileConflictsSetting,
+    resolveTemplateEngineSetting,
+    sanitizeTemplateCommands
 } from '../../settings/types';
 import { LEGACY_STORAGE_KEYS, LOCALSTORAGE_VERSION, localStorage } from '../../utils/localStorage';
 import { clearHiddenFileNameMatcherCache } from '../../utils/fileFilters';
@@ -199,27 +202,6 @@ const LEGACY_LOCAL_SYNC_MODE_SETTING_IDS = new Set<SyncModeSettingId>([
     'compactItemHeightScaleText',
     'uiScale'
 ]);
-
-function hasLegacyNoneGroupingInAppearanceMap(value: unknown): boolean {
-    if (!isRecord(value)) {
-        return false;
-    }
-
-    return Object.values(value).some(appearance => isRecord(appearance) && appearance.groupBy === 'none');
-}
-
-function containsLegacyNoneGroupingInStoredData(storedData: Record<string, unknown> | null): boolean {
-    if (!storedData) {
-        return false;
-    }
-
-    return (
-        storedData.noteGrouping === 'none' ||
-        hasLegacyNoneGroupingInAppearanceMap(storedData.folderAppearances) ||
-        hasLegacyNoneGroupingInAppearanceMap(storedData.tagAppearances) ||
-        hasLegacyNoneGroupingInAppearanceMap(storedData.propertyAppearances)
-    );
-}
 
 export class PluginSettingsController {
     private currentSettings: NotebookNavigatorSettings = structuredClone(DEFAULT_SETTINGS);
@@ -538,7 +520,6 @@ export class PluginSettingsController {
         const hadMissingPropertyGroupKeyInStoredData = Boolean(
             storedData && !Object.prototype.hasOwnProperty.call(storedData, 'propertyGroupKey')
         );
-        const hadLegacyNoneGroupingInStoredData = containsLegacyNoneGroupingInStoredData(storedData);
         const hadLegacyOpenFolderNotesInNewTabInStoredData = Boolean(
             storedData && Object.prototype.hasOwnProperty.call(storedData, 'openFolderNotesInNewTab')
         );
@@ -732,6 +713,10 @@ export class PluginSettingsController {
             this.currentSettings.moveFileConflicts,
             DEFAULT_SETTINGS.moveFileConflicts
         );
+        this.currentSettings.templateEngine = resolveTemplateEngineSetting(
+            this.currentSettings.templateEngine,
+            DEFAULT_SETTINGS.templateEngine
+        );
 
         let uiScaleMigrated = false;
         SYNC_MODE_SETTING_IDS.forEach(settingId => {
@@ -783,7 +768,11 @@ export class PluginSettingsController {
             })
         );
 
-        migrateFolderNoteTemplateSetting({ settings: this.currentSettings, defaultSettings: DEFAULT_SETTINGS });
+        const migratedFolderNoteSettings = migrateFolderNoteSettings({
+            settings: this.currentSettings,
+            storedData,
+            defaultSettings: DEFAULT_SETTINGS
+        });
         applyExistingUserDefaults({ settings: this.currentSettings });
 
         const legacyVisibility = extractLegacyVisibilitySettings({ settings: this.currentSettings, storedData });
@@ -836,7 +825,6 @@ export class PluginSettingsController {
             hadMissingPropertyGroupKeyInStoredData ||
             reconciledDefaultFolderSort.changed ||
             reconciledDefaultNoteGrouping.changed ||
-            hadLegacyNoneGroupingInStoredData ||
             hadLegacyOpenFolderNotesInNewTabInStoredData ||
             hadInvalidShiftEnterOpenContextInStoredData ||
             hadInvalidCmdCtrlEnterOpenContextInStoredData ||
@@ -845,6 +833,7 @@ export class PluginSettingsController {
             prunedUnavailablePropertyGroupingOverrides ||
             uiScaleMigrated ||
             migratedMomentFormats ||
+            migratedFolderNoteSettings ||
             migratedShortcutNegationSyntax;
 
         // A local marker newer than data.json repairs the shared high-water mark so other devices
@@ -1404,6 +1393,8 @@ export class PluginSettingsController {
             sanitizeRecord(record, isSettingSyncMode);
 
         this.currentSettings.folderColors = sanitizeStringMap(this.currentSettings.folderColors);
+        this.currentSettings.folderTemplates = sanitizeRecord(this.currentSettings.folderTemplates, isFolderTemplateMapping);
+        this.currentSettings.templateCommands = sanitizeTemplateCommands(this.currentSettings.templateCommands);
         this.currentSettings.folderBackgroundColors = sanitizeStringMap(this.currentSettings.folderBackgroundColors);
         this.currentSettings.fileColors = sanitizeStringMap(this.currentSettings.fileColors);
         this.currentSettings.fileBackgroundColors = sanitizeStringMap(this.currentSettings.fileBackgroundColors);

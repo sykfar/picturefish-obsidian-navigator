@@ -7,7 +7,7 @@
 
 import { evaluateWebResourceUrl, isLocalWebResourcePath } from './urlPolicy';
 
-export const DEFAULT_WEB_RESOURCE_URL_PROPERTIES = ['url', 'source', 'canonical_url'] as const;
+const DEFAULT_WEB_RESOURCE_URL_PROPERTIES = ['url', 'source', 'canonical_url'] as const;
 
 export interface LocalWebResourceCandidate {
     kind: 'local-html';

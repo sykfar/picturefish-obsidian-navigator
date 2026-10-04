@@ -24,6 +24,7 @@ import { runAsyncAction } from '../../utils/async';
 import { NOTEBOOK_NAVIGATOR_ICON_ID } from '../../constants/notebookNavigatorIcon';
 import { PRODUCT_NAME } from '../../constants/product';
 import { removeHiddenFolderExactMatches, updateHiddenFolderExactMatches } from '../../utils/vaultProfiles';
+import { applyPendingTemplaterCursorOnFileOpen } from '../../utils/templateCursor';
 import {
     invalidateVaultIconSvgCache,
     isVaultIconFile,
@@ -138,10 +139,17 @@ export default function registerWorkspaceEvents(plugin: NotebookNavigatorPlugin)
         runAsyncAction(() => plugin.activateView());
     });
 
-    // Track file opens for recent notes history
+    // Track file opens for recent notes history and place Templater cursors in notes that were opened in the background
     plugin.registerEvent(
         plugin.app.workspace.on('file-open', file => {
-            if (!(file instanceof TFile) || plugin.isFileInRightSidebar(file)) {
+            if (!(file instanceof TFile)) {
+                return;
+            }
+
+            // Runs before the right sidebar check because folder notes opened there are the notes this covers.
+            applyPendingTemplaterCursorOnFileOpen(plugin.app, file);
+
+            if (plugin.isFileInRightSidebar(file)) {
                 return;
             }
 

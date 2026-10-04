@@ -20,15 +20,15 @@ import { Setting } from 'obsidian';
 import { strings } from '../../../i18n';
 import { FilePathInputSuggest } from '../../../suggest/FilePathInputSuggest';
 import { isFolderNoteCreationPreference } from '../../../types/folderNote';
-import { FOLDER_NOTE_NAME_PATTERN_PLACEHOLDER } from '../../../utils/folderNoteName';
+import { FOLDER_NOTE_NAME_PATTERN_TOKEN } from '../../../utils/folderNoteName';
 import { isFolderNoteTemplateCompatible, isSupportedFolderNoteExtension } from '../../../utils/folderNotes';
 import { normalizeOptionalVaultFilePath } from '../../../utils/pathUtils';
-import { getTemplaterCreateNoteFromTemplate } from '../../../utils/templaterIntegration';
 import { setElementVisible, wireToggleSettingWithDependentSection } from '../../dependentSettings';
 import { createSettingGroupFactory } from '../../settingGroups';
 import { addSettingSyncModeToggle } from '../../syncModeToggle';
 import { isAlphaSortOrder, isFolderNoteOpenLocation } from '../../types';
 import type { SettingsTabContext } from '../SettingsTabContext';
+import { renderFolderNoteTemplateInfoSetting } from '../FoldersTab';
 
 /** Legacy settings renderer used only by Obsidian versions before native 1.13 setting definitions. */
 export function renderFoldersTab(context: SettingsTabContext, heading?: string): void {
@@ -195,20 +195,7 @@ export function renderFoldersTab(context: SettingsTabContext, heading?: string):
             setting,
             strings.settings.items.folderNoteName.name,
             strings.settings.items.folderNoteName.desc,
-            strings.settings.items.folderNoteName.placeholder,
-            () => plugin.settings.folderNoteName,
-            value => {
-                plugin.settings.folderNoteName = value;
-            }
-        );
-    });
-
-    folderNoteFilesGroup.addSetting(setting => {
-        context.configureDebouncedTextSetting(
-            setting,
-            strings.settings.items.folderNoteNamePattern.name,
-            strings.settings.items.folderNoteNamePattern.desc,
-            FOLDER_NOTE_NAME_PATTERN_PLACEHOLDER,
+            FOLDER_NOTE_NAME_PATTERN_TOKEN,
             () => plugin.settings.folderNoteNamePattern,
             value => {
                 plugin.settings.folderNoteNamePattern = value;
@@ -255,15 +242,4 @@ export function renderFoldersTab(context: SettingsTabContext, heading?: string):
     updateTemplateWarning();
 
     folderNoteFilesGroup.addSetting(setting => renderFolderNoteTemplateInfoSetting(setting, context));
-}
-
-function renderFolderNoteTemplateInfoSetting(setting: Setting, context: SettingsTabContext): void {
-    setting.setName('').setDesc('');
-    setting.settingEl.addClass('nn-setting-info-container');
-    setting.descEl.empty();
-
-    const templaterSupportText = getTemplaterCreateNoteFromTemplate(context.app)
-        ? strings.settings.items.templaterSupport.installed
-        : strings.settings.items.templaterSupport.missing;
-    setting.descEl.createEl('strong', { text: templaterSupportText });
 }
