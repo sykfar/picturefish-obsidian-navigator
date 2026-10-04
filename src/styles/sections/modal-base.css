@@ -156,3 +156,22 @@
 .is-mobile .modal.nn-search-help-modal .modal-content {
     padding-right: 12px;
 }
+
+.nn-note-creation-modal .nn-input {
+    height: auto;
+    min-height: 36px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.nn-note-creation-summary {
+    padding: 12px;
+    margin-block: 12px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 8px;
+    overflow-wrap: anywhere;
+}
+.nn-note-creation-error {
+    color: var(--text-error);
+    min-height: 1.5em;
+}

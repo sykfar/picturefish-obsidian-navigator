@@ -39,6 +39,7 @@ interface TestVault {
     getAbstractFileByPath(path: string): TFile | TFolder | null;
     getRoot(): TFolder;
     getAllLoadedFiles(): Array<TFile | TFolder>;
+    getMarkdownFiles(): TFile[];
     cachedRead(file: TFile): Promise<string>;
     adapter: {
         readBinary(path: string): Promise<ArrayBuffer>;
@@ -92,6 +93,9 @@ export class App {
             getAllLoadedFiles(): Array<TFile | TFolder> {
                 return [...folders.values(), ...files.values()];
             },
+            getMarkdownFiles(): TFile[] {
+                return Array.from(files.values()).filter(file => file.extension === 'md');
+            },
             cachedRead: async () => '',
             adapter: {
                 // Stubbed binary reads (tests that care about content typically override this).
@@ -123,6 +127,7 @@ export class TFile {
 
 export class TFolder {
     path = '';
+    children: Array<TFile | TFolder> = [];
 
     constructor(path = '') {
         this.path = path;
@@ -174,6 +179,32 @@ export class Modal {
 
     onClose(): void {}
 }
+
+/** Minimal suggest modal so modules that define fuzzy pickers can be imported in tests. */
+export class FuzzySuggestModal<T> {
+    inputEl = new StubElement();
+    scope = new Scope();
+
+    constructor(public app: App) {}
+
+    setPlaceholder(): void {}
+
+    setInstructions(): void {}
+
+    open(): void {}
+
+    close(): void {}
+
+    getSuggestions(): Array<{ item: T; match: { score: number; matches: number[][] } }> {
+        return [];
+    }
+}
+
+export function prepareSimpleSearch(): () => null {
+    return () => null;
+}
+
+export function renderMatches(): void {}
 
 export class Plugin {
     app: App;
@@ -236,6 +267,13 @@ export class SettingGroup {
 export class ButtonComponent {}
 export class SliderComponent {}
 export class WorkspaceLeaf {}
+export class FileSystemAdapter {}
+/** Minimal markdown view so cursor placement can locate editors in tests. */
+export class MarkdownView {
+    file: TFile | null = null;
+    editor: unknown = null;
+}
+
 export class FileView {
     file: TFile | null = null;
 }
@@ -250,6 +288,7 @@ export const Platform = {
 
 export const normalizePath = (value: string) => value;
 export const setIcon = () => {};
+export const addIcon = () => {};
 export const getIconIds = () => [
     'lucide-home',
     'lucide-user',

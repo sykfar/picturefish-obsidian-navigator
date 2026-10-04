@@ -44,3 +44,5 @@ web/
 # Obsidian
 .obsidian
 release-notes.md
+
+/vault-design/dist/

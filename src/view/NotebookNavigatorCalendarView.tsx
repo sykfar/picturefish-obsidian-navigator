@@ -28,6 +28,7 @@ import type NotebookNavigatorPlugin from '../main';
 import { PRODUCT_ID } from '../constants/product';
 import { NOTEBOOK_NAVIGATOR_CALENDAR_VIEW } from '../types';
 import { resolveUXIconForMenu } from '../utils/uxIcons';
+import { runAsyncAction } from '../utils/async';
 import {
     IOS_FLOATING_TOOLBARS_CLASS,
     setupNotebookNavigatorViewContainer,
@@ -115,6 +116,10 @@ export class NotebookNavigatorCalendarView extends ItemView {
                 </SettingsProvider>
             </React.StrictMode>
         );
+        // Obsidian creates the tab header before the loading boundary opens, so its cached English title must be refreshed.
+        runAsyncAction(async () => {
+            if (this.root) this.updateLeafHeader();
+        });
     }
 
     async onClose() {

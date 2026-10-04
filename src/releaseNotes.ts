@@ -32,7 +32,6 @@
  * used so synced devices normally share one display while stale settings cannot repeat it locally.
  */
 
-import { compareVersions } from './utils/versionUtils';
 export { compareVersions } from './utils/versionUtils';
 
 /**
@@ -76,6 +75,7 @@ export interface YoutubePlayButtonOptions {
  */
 export interface ReleaseNote {
     version: string;
+    banner?: string;
     date: string;
     /** If false, skip automatic modal display for this version during startup */
     showOnUpdate?: boolean;
@@ -106,6 +106,26 @@ export interface ReleaseNote {
  * 2. Categorize features into: new, improved, changed, or fixed arrays
  */
 const RELEASE_NOTES: ReleaseNote[] = [
+    {
+        version: '0.3.0',
+        date: '2026-10-04',
+        showOnUpdate: true,
+        new: [
+            'Vorhandene Vault-Vorlagen einem Ordner zuordnen und optional an Unterordner vererben.',
+            'Vorlagenbefehle mit Zielordner, Dateinamenformat, optionalen Buttons und Cursorposition konfigurieren.',
+            'Neue Notizen vor dem Anlegen mit Titel, Vorlage und Zielpfad prüfen.'
+        ],
+        improved: [
+            'Datum, Elternordner und Tags je Listenkontext einstellen; Gruppierung ohne Gruppenüberschriften wählen.',
+            'Stabile Korrekturen aus Notebook Navigator bis Version 3.4.3 übernommen.'
+        ],
+        changed: ['Deutsch und Englisch werden lokal gebündelt; es werden keine Sprachpakete automatisch heruntergeladen.'],
+        fixed: [
+            'Abbruch, fehlende oder unlesbare Vorlagen und belegte feste Namen erzeugen keine Ersatznotiz.',
+            'Nummerierte Vorlagenbefehle reservieren bei paralleler Erstellung getrennte Dateinamen.',
+            'Venezia-Integration verwendet die bestätigte Integrationsklasse und Sand-Hintergründe.'
+        ]
+    },
     {
         version: '0.2.3',
         date: '2026-08-11',
@@ -511,37 +531,4 @@ export function isReleaseAutoDisplayEnabled(version: string): boolean {
         return true;
     }
     return note.showOnUpdate !== false;
-}
-
-/**
- * Determines whether release notes should appear automatically when upgrading between two versions.
- *
- * Upgrade decision rule:
- * - Evaluate release notes in the semantic range (fromVersion, toVersion]
- * - Return true when at least one note in that range has showOnUpdate not explicitly set to false
- *
- * Range resolution:
- * - If both versions exist in RELEASE_NOTES, use their index range in the ordered list
- * - If either version is missing, resolve the range by semantic version comparisons
- *
- * Non-upgrade transitions (same version or downgrade) use the target version setting.
- */
-export function shouldAutoDisplayReleaseNotesForUpdate(fromVersion: string, toVersion: string): boolean {
-    if (compareVersions(toVersion, fromVersion) <= 0) {
-        return isReleaseAutoDisplayEnabled(toVersion);
-    }
-
-    const fromIndex = RELEASE_NOTES.findIndex(note => note.version === fromVersion);
-    const toIndex = RELEASE_NOTES.findIndex(note => note.version === toVersion);
-
-    const releaseNotesInUpgradePath =
-        fromIndex === -1 || toIndex === -1
-            ? RELEASE_NOTES.filter(note => compareVersions(note.version, fromVersion) > 0 && compareVersions(note.version, toVersion) <= 0)
-            : RELEASE_NOTES.slice(Math.min(fromIndex, toIndex), Math.max(fromIndex, toIndex));
-
-    if (releaseNotesInUpgradePath.length === 0) {
-        return isReleaseAutoDisplayEnabled(toVersion);
-    }
-
-    return releaseNotesInUpgradePath.some(note => note.showOnUpdate !== false);
 }

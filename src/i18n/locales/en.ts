@@ -21,6 +21,22 @@
  * Organized by feature/component for easy maintenance
  */
 export const STRINGS_EN = {
+    noteCreation: {
+        title: 'New note',
+        template: 'Template',
+        name: 'Title',
+        noTemplate: 'No template',
+        target: 'New file',
+        effect: 'The selected template is processed only after you confirm. No existing note will be overwritten.',
+        create: 'Create',
+        invalidName: 'Enter a title without path separators or reserved characters.',
+        exists: 'This file name already exists. Choose another title.'
+    },
+    language: {
+        downloading: 'Downloading languages…',
+        continueInEnglish: 'Continue in English',
+        downloadFailed: 'Language download failed. Notebook Navigator is using English.'
+    },
     // Common UI elements
     common: {
         cancel: 'Cancel', // Button text for canceling dialogs and operations (English: Cancel)
@@ -86,6 +102,7 @@ export const STRINGS_EN = {
         pinShortcutsAndRecentFiles: 'Pin shortcuts and recent files',
         unpinShortcuts: 'Unpin shortcuts',
         unpinShortcutsAndRecentFiles: 'Unpin shortcuts and recent files',
+        resizePinnedShortcuts: 'Resize pinned shortcuts',
         profileMenuAria: 'Change vault profile'
     },
 
@@ -111,8 +128,17 @@ export const STRINGS_EN = {
     },
 
     dailyNotes: {
-        templateReadFailed: 'Failed to read the daily note template.',
         createFailed: 'Unable to create daily note.'
+    },
+
+    templates: {
+        invalidTokens: 'Template "{name}" contains invalid tokens: {tokens}',
+        invalidFileNameTokens: 'The file name format of "{name}" contains invalid tokens: {tokens}',
+        readFailed: 'Failed to read the template "{name}". The note was created without it.',
+        folderNotSet: 'Set the template folder in File operations & templates > Templates before creating notes from templates.',
+        templateNotFound: 'Template "{name}" was not found.',
+        folderNotFound: 'Folder "{name}" was not found.',
+        templaterMissing: 'The Templater plugin is not installed. Change the template engine in File operations & templates > Templates.'
     },
 
     shortcuts: {
@@ -361,6 +387,9 @@ export const STRINGS_EN = {
             duplicateFolder: 'Duplicate folder',
             searchInFolder: 'Search in folder',
             createFolderNote: 'Create folder note',
+            setFolderTemplate: 'Set folder template...',
+            changeFolderTemplate: 'Change folder template...',
+            removeFolderTemplate: 'Remove folder template',
             detachFolderNote: 'Detach folder note',
             deleteFolderNote: 'Delete folder note',
             changeIcon: 'Change icon',
@@ -437,6 +466,8 @@ export const STRINGS_EN = {
         tags: 'Tags',
         properties: 'Properties',
         tasks: 'Tasks',
+        date: 'Date',
+        parentFolder: 'Parent folder',
         textCount: {
             label: 'Text count',
             options: {
@@ -487,7 +518,7 @@ export const STRINGS_EN = {
             wordCountTarget: 'Target word count',
             wordCountTargetPlaceholder: '10,000',
             wordCountTargetDescription:
-                'When this field is empty, the group goal uses the target property set in Settings > Notes > Word and character count. Override it by setting a target value for this group.',
+                'When this field is empty, the group goal uses the target property set in Settings > File display > Word and character count. Override it by setting a target value for this group.',
             description: 'Customize the group header for this note. Leave the title empty to remove the header.'
         },
         mergeNotes: {
@@ -708,7 +739,28 @@ export const STRINGS_EN = {
                 dismiss: 'to dismiss'
             }
         },
-        calendarTemplate: {
+        templateCommand: {
+            titleAdd: 'Add command',
+            titleEdit: 'Edit command',
+            name: 'Command name',
+            namePlaceholder: 'New meeting note',
+            template: 'Template',
+            templateDesc: 'Optional. Without a template, the folder template of the target folder applies when one is set.',
+            templatePlaceholder: 'Templates/Meeting.md',
+            fileNameFormat: 'File name format',
+            fileNameFormatDesc:
+                'Tokens such as {{date:YYYYMMDD}} and {{prompt:Title}} are replaced when the command runs. Each prompt asks for a value, and the same label in the template receives the same value. {{number}} is one higher than the highest number used by notes in the folder with the same name pattern, and {{number:00}} pads it with zeros. The template can use {{number}} as well, and {{title}} inserts the generated file name.',
+            fileNameFormatPlaceholder: '{{date:YYYYMMDD}} {{prompt:Title}}',
+            location: 'Location',
+            folder: 'Folder',
+            folderPlaceholder: 'Meetings',
+            icon: 'Icon',
+            placement: 'Button',
+            placementNone: 'None',
+            placementRibbon: 'Ribbon',
+            placementTabBar: 'Tab bar'
+        },
+        templateFile: {
             placeholder: 'Search templates...',
             instructions: {
                 navigate: 'to navigate',
@@ -1012,7 +1064,7 @@ export const STRINGS_EN = {
             label: 'General',
             description: 'Release notes, support, vault profile, file types, and property keys.',
             groups: {
-                vaultSetup: 'Vault setup'
+                about: 'About'
             }
         },
         pageGroups: {
@@ -1091,10 +1143,11 @@ export const STRINGS_EN = {
                 }
             },
             fileOperations: {
-                label: 'File operations',
-                description: 'Template folder, delete confirmations, attachments, and file move conflict behavior.',
+                label: 'File operations & templates',
+                description: 'Templates, create note commands, delete confirmations, attachments, and file move conflict behavior.',
                 groups: {
-                    templates: 'Templates'
+                    templates: 'Templates',
+                    templateCommands: 'Create note commands'
                 }
             },
             frontmatterFields: {
@@ -1154,6 +1207,10 @@ export const STRINGS_EN = {
                     listPane: 'Show in list pane',
                     hidden: 'Do not show'
                 }
+            },
+            colorListPaneTitle: {
+                name: 'Color list pane title',
+                desc: 'Apply the color of the selected folder, tag or property to the list pane title.'
             },
             defaultSortOrder: {
                 name: 'Default sort order',
@@ -1277,12 +1334,13 @@ export const STRINGS_EN = {
             },
             defaultGrouping: {
                 name: 'Default grouping',
-                desc: '**Headers** annotate the sorted list without changing its order: Custom shows headers defined in frontmatter, and Date inserts date headers. **Groups** reorder the list: folder and property groups are ordered on their own, and notes inside each group follow the sort order.',
+                desc: 'None keeps the sorted list flat. **Headers** annotate it without changing its order: Custom shows headers defined in frontmatter, and Date inserts date headers. **Groups** reorder the list: folder and property groups are ordered on their own, and notes inside each group follow the sort order.',
                 families: {
                     headers: 'Headers',
                     groups: 'Groups'
                 },
                 options: {
+                    none: 'None',
                     custom: 'Custom',
                     date: 'Date',
                     folder: 'Folder'
@@ -1470,8 +1528,8 @@ export const STRINGS_EN = {
                 desc: 'Applies only on iOS.'
             },
             defaultStartupView: {
-                name: 'Default startup view',
-                desc: 'Choose which pane is active when Notebook Navigator opens. Single-pane layout shows this pane first; dual-pane layout gives it keyboard focus.',
+                name: 'Single-pane startup view',
+                desc: 'Choose which pane is shown when Notebook Navigator opens in single-pane layout.',
                 options: {
                     navigation: 'Navigation pane',
                     listPane: 'List pane'
@@ -1701,11 +1759,11 @@ export const STRINGS_EN = {
                 name: 'Template folder location',
                 desc: 'Template file picker shows notes from this folder.',
                 placeholder: 'Templates',
-                usage: 'Used by calendar notes and folder notes. Configure templates in Calendar > Calendar integration and Folders & folder notes > Folder note files.'
+                usage: 'Templates in the template folder are used by calendar notes, folder notes, folder templates and New note from template. Configure calendar templates in Calendar > Calendar integration and folder note templates in Folders & folder notes > Folder note files.'
             },
             calendarDailyNotePattern: {
                 name: 'Daily notes',
-                desc: 'Format path using Moment date format. Wrap subfolder names in brackets, e.g., [Work]/YYYY. Click template icon to set template. Set template folder location in File operations > Templates.',
+                desc: 'Format path using Moment date format. Wrap subfolder names in brackets, e.g., [Work]/YYYY. Click template icon to set template. Set template folder location in File operations & templates > Templates.',
                 placeholder: 'YYYY/YYYYMMDD',
                 parsingError: 'Pattern must format and parse back to a full date (year, month, day).'
             },
@@ -1713,15 +1771,47 @@ export const STRINGS_EN = {
                 momentDescPrefix: 'Format path using ',
                 momentLinkText: 'Moment date format',
                 momentDescSuffix:
-                    '. Wrap subfolder names in brackets, e.g., [Work]/YYYY. Click template icon to set template. Set template folder location in File operations > Templates.',
-                templateTokenNoticeLabel: 'Important!',
-                templateTokenNotice:
-                    'Template support requires the Templater plugin. Built-in formats such as {{date}} and {{title}} can only be used when {source} is set to {option}.',
+                    '. Wrap subfolder names in brackets, e.g., [Work]/YYYY. Click template icon to set template. Set template folder location in File operations & templates > Templates.',
                 example: 'Current syntax: {path}'
             },
-            templaterSupport: {
-                installed: '✅ Templater plugin is installed with full template support.',
-                missing: '⚠️ Install Templater plugin for template support.'
+            templateEngine: {
+                name: 'Template engine',
+                desc: 'Engine that processes template files when Notebook Navigator creates notes. Automatic uses Templater for templates that contain <% when the Templater plugin is installed. All other templates use the built-in engine.',
+                options: {
+                    automatic: 'Automatic',
+                    builtin: 'Notebook Navigator',
+                    templater: 'Templater'
+                },
+                templaterInstalled: 'Templater plugin: installed',
+                templaterNotInstalled: 'Templater plugin: not installed',
+                templaterAutomatic:
+                    'Templates that contain Templater commands (<%) are processed by Templater. All other templates are processed by the built-in engine.',
+                templaterUsage: 'All templates are processed by Templater. Built-in tokens in template files are not replaced.',
+                templaterMissingWarning:
+                    'Notes cannot be created from templates. Change {setting} to {automatic} or {builtin} in {location}, or install and enable the Templater plugin.',
+                tokens: 'Built-in tokens: {{title}}, {{folder}}, {{path}}, {{date}}, {{date:FORMAT}}, {{date+1d}}, {{time}}, {{today}}, {{now}}, {{yesterday}}, {{tomorrow}}, {{monday}} to {{sunday}}, {{cursor}}. Write {{!date}} to keep {{date}} as text.',
+                usage: 'Template tokens such as {{title}} and {{date}} are replaced when the note is created. Configure the template engine in File operations & templates > Templates.'
+            },
+            showFolderTemplateIcons: {
+                name: 'Show folder template icons',
+                desc: 'Marks folders that have their own folder template with an icon in the navigation pane.'
+            },
+            templateCommands: {
+                name: 'Commands',
+                desc: 'Each command creates a note with a generated file name, from its own template or the folder template. Run it from the command palette, or bind it to a hotkey or a toolbar button.',
+                empty: 'No commands added.',
+                add: 'Add command',
+                edit: 'Edit',
+                unnamed: 'Unnamed command',
+                locationCurrent: 'Current folder',
+                locationFolder: 'Specific folder'
+            },
+            folderTemplates: {
+                name: 'Folder templates',
+                desc: 'New notes use the template of their folder or of the closest parent folder. Set templates from the folder context menu. Calendar, daily note and folder note templates take precedence.',
+                empty: 'No folder templates set.',
+                scopeSubfolders: 'Folder and subfolders',
+                scopeFolder: 'This folder only'
             },
             calendarWeeklyNotePattern: {
                 name: 'Weekly notes',
@@ -1754,9 +1844,13 @@ export const STRINGS_EN = {
                 name: 'Show path in tooltips',
                 desc: 'Display the folder path below note names in tooltips.'
             },
+            showTooltipTags: {
+                name: 'Show tags in tooltips',
+                desc: 'Display note tags in tooltips when the tags section is enabled.'
+            },
             showTooltipWordCount: {
                 name: 'Show word count in tooltips',
-                desc: 'Display note word counts in tooltips.'
+                desc: 'Display word counts in tooltips when word counts are enabled.'
             },
             resetPaneSeparator: {
                 name: 'Reset pane separator position',
@@ -1887,7 +1981,7 @@ export const STRINGS_EN = {
             },
             vaultProfiles: {
                 name: 'Vault profile',
-                desc: 'Profiles store file type visibility, hidden files, hidden folders, hidden tags, property rules for hidden notes, shortcuts, and navigation banner. Switch profiles from the navigation pane header.',
+                desc: 'Profiles store file type visibility, hidden files, hidden folders, hidden tags, property rules for hidden notes, shortcuts, and navigation banner. Switch profiles here or from the vault profile switcher in the navigation pane.',
                 defaultName: 'Default',
                 addButton: 'Add profile',
                 editProfilesButton: 'Edit profiles',
@@ -1907,9 +2001,9 @@ export const STRINGS_EN = {
                     duplicateName: 'Profile name already exists'
                 }
             },
-            vaultTitlePlacement: {
-                name: 'Vault title placement',
-                desc: 'Choose where the vault title is shown.',
+            vaultProfileSwitcher: {
+                name: 'Vault profile switcher',
+                desc: 'Choose where the vault profile switcher is shown.',
                 options: {
                     header: 'Show in header',
                     navigation: 'Show in navigation pane'
@@ -2026,6 +2120,20 @@ export const STRINGS_EN = {
             showTargetPercentage: {
                 name: 'Show target percentage',
                 desc: 'Display only the progress percentage when a target word count is available.'
+            },
+            textCountActiveNotice: {
+                title: 'Counting is still on',
+                summary: 'Word or character counts are still calculated for all notes because they are used by the following:',
+                more: 'and {count} more',
+                reasons: {
+                    appearance: 'File appearance',
+                    'group-header': 'Group header'
+                },
+                scopes: {
+                    folder: 'Folder: {name}',
+                    tag: 'Tag: #{name}',
+                    property: 'Property: {name}'
+                }
             },
             dateFormat: {
                 name: 'Date format',
@@ -2362,7 +2470,7 @@ export const STRINGS_EN = {
                 name: 'Show properties',
                 desc: 'Display properties section in the navigator.',
                 propertyKeysInfoPrefix: 'Configure properties in ',
-                propertyKeysInfoLinkText: 'Start > Property keys',
+                propertyKeysInfoLinkText: 'General > Property keys',
                 propertyKeysInfoSuffix: ''
             },
             showPropertyIcons: {
@@ -2418,16 +2526,11 @@ export const STRINGS_EN = {
             },
             folderNoteName: {
                 name: 'Folder note name',
-                desc: 'Name of the folder note without extension. Leave empty to use the same name as the folder.',
-                placeholder: 'index'
-            },
-            folderNoteNamePattern: {
-                name: 'Folder note name pattern',
-                desc: 'Name pattern for folder notes without extension. Use {{folder}} to insert the folder name. When set, Folder note name does not apply.'
+                desc: 'Name of the folder note without extension. {{folder}} inserts the folder name; omit it for a fixed name such as index.'
             },
             folderNoteTemplate: {
                 name: 'Folder note template',
-                desc: 'Template file used when creating folder notes. Markdown templates can use Templater. Canvas and Base templates are copied as file content. Set template folder location in File operations > Templates.',
+                desc: 'Template file used when creating folder notes. Markdown templates can use Templater. Canvas and Base templates are copied as file content. Set template folder location in File operations & templates > Templates.',
                 formatWarning: 'Template format must match the selected folder note type: .md, .canvas, or .base.'
             },
             folderNamesOpenFolderNotes: {
@@ -2563,6 +2666,11 @@ export const STRINGS_EN = {
                 buttonText: '❤️ Sponsor',
                 coffeeButton: '☕️ Buy me a coffee'
             },
+            otherPlugins: {
+                name: 'Check out my other plugins',
+                betterPaste: 'Clean up pasted text, links and images',
+                pixelPerfectImage: 'Exact image resizing and more'
+            },
             checkForNewVersionOnStart: {
                 name: 'Check for new version on start',
                 desc: 'Checks for new plugin releases on startup and shows a notification when an update is available. Checks occur at most once per day.',
@@ -2576,6 +2684,10 @@ export const STRINGS_EN = {
                 name: "What's new in Notebook Navigator {version}",
                 desc: 'See recent updates and improvements',
                 buttonText: 'View recent updates'
+            },
+            showReleaseNotes: {
+                name: 'Show release notes after updating',
+                desc: "Disable to stop the What's new dialog from opening automatically after updates."
             },
             masteringVideo: {
                 name: 'Mastering Notebook Navigator (video)',

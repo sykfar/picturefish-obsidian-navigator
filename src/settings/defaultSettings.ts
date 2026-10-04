@@ -27,7 +27,8 @@ import {
     SYNC_MODE_SETTING_IDS,
     type NavRainbowSettings,
     type NotebookNavigatorSettings,
-    type SettingSyncMode
+    type SettingSyncMode,
+    type FolderTemplateMapping
 } from './types';
 import { sanitizeRecord } from '../utils/recordUtils';
 import {
@@ -38,6 +39,7 @@ import {
     DEFAULT_CALENDAR_CUSTOM_YEAR_PATTERN
 } from '../utils/calendarCustomNotePatterns';
 import { DEFAULT_FILE_TYPE_ICON_PRESET } from '../utils/fileTypeIconPresets';
+import { FOLDER_NOTE_NAME_PATTERN_TOKEN } from '../utils/folderNoteName';
 
 const defaultSettingsSync = sanitizeRecord<SettingSyncMode>(undefined);
 SYNC_MODE_SETTING_IDS.forEach(settingId => {
@@ -181,6 +183,7 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     narrowSidebarCustomWidth: NARROW_SIDEBAR_CUSTOM_WIDTH_DEFAULT,
     showTooltips: false,
     showTooltipPath: true,
+    showTooltipTags: false,
     showTooltipWordCount: false,
     desktopBackground: 'separate',
     desktopScale: DEFAULT_UI_SCALE,
@@ -220,6 +223,10 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     dateFormat: 'MMM D, YYYY',
     timeFormat: 'h:mm a',
     calendarTemplateFolder: '',
+    templateEngine: 'automatic',
+    folderTemplates: sanitizeRecord<FolderTemplateMapping>(undefined),
+    showFolderTemplateIcons: true,
+    templateCommands: [],
 
     // Files tab
     confirmBeforeDelete: true,
@@ -228,6 +235,9 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
 
     // Icon packs tab
     externalIconProviders: sanitizeRecord<boolean>(undefined),
+
+    // About
+    showReleaseNotes: true,
 
     // Advanced tab
     checkForUpdatesOnStart: true,
@@ -271,8 +281,7 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     folderSortOrder: 'alpha-asc',
     enableFolderNotes: false,
     folderNoteType: 'markdown',
-    folderNoteName: '',
-    folderNoteNamePattern: '',
+    folderNoteNamePattern: FOLDER_NOTE_NAME_PATTERN_TOKEN,
     folderNoteTemplate: null,
     enableFolderNoteLinks: true,
     hideFolderNoteInList: true,
@@ -312,6 +321,7 @@ export const DEFAULT_SETTINGS: NotebookNavigatorSettings = {
     confirmBeforeManualSort: true,
     revealFileOnListChanges: true,
     listPaneTitle: 'header',
+    colorListPaneTitle: false,
     noteGrouping: 'date',
     showSelectedNavigationPills: false,
     stickyGroupHeaders: true,

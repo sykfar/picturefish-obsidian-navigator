@@ -21,6 +21,22 @@
  * Organized by feature/component for easy maintenance
  */
 export const STRINGS_KO = {
+    noteCreation: {
+        title: 'New note',
+        template: 'Template',
+        name: 'Title',
+        noTemplate: 'No template',
+        target: 'New file',
+        effect: 'The selected template is processed only after you confirm. No existing note will be overwritten.',
+        create: 'Create',
+        invalidName: 'Enter a title without path separators or reserved characters.',
+        exists: 'This file name already exists. Choose another title.'
+    },
+    language: {
+        downloading: '언어 다운로드 중…',
+        continueInEnglish: '영어로 계속',
+        downloadFailed: '언어를 다운로드하지 못했습니다. Notebook Navigator가 영어를 사용합니다.'
+    },
     // Common UI elements
     common: {
         cancel: '취소', // Button text for canceling dialogs and operations (English: Cancel)
@@ -76,31 +92,32 @@ export const STRINGS_KO = {
         folders: '폴더',
         tags: '태그',
         calendar: '달력',
-        reorderRootFoldersTitle: '내비게이션 재정렬',
+        reorderRootFoldersTitle: '탐색 재정렬',
         reorderRootFoldersHint: '화살표 또는 드래그로 재정렬',
         vaultRootLabel: '보관함',
-        resetRootToAlpha: '알파벳 순서로 리셋',
-        resetRootToFrequency: '빈도 순으로 리셋',
+        resetRootToAlpha: '알파벳 순서로 재설정',
+        resetRootToFrequency: '빈도 순으로 재설정',
         pinShortcuts: '바로가기를 고정',
         pinShortcutsAndRecentFiles: '바로가기와 최근 파일을 고정',
         unpinShortcuts: '바로가기 고정을 해제',
         unpinShortcutsAndRecentFiles: '바로가기와 최근 파일 고정을 해제',
-        profileMenuAria: '보관소 프로필 변경'
+        resizePinnedShortcuts: '고정된 바로가기 크기 조정',
+        profileMenuAria: '보관함 프로필 변경'
     },
 
     navigationCalendar: {
         ariaLabel: '달력',
-        dailyNotesNotEnabled: '데일리 노트 코어 플러그인이 활성화되어 있지 않습니다.',
+        dailyNotesNotEnabled: '일일 노트 코어 플러그인이 활성화되어 있지 않습니다.',
         noteHiddenByProfile: '캘린더 노트가 현재 보관함 프로필에서 숨겨져 있습니다.',
         createDailyNote: {
-            title: '새 데일리 노트',
+            title: '새 일일 노트',
             message: '파일 {filename}이(가) 존재하지 않습니다. 생성하시겠습니까?',
             confirmButton: '생성'
         },
         helpModal: {
             title: '캘린더 단축키',
             items: [
-                '아무 날이나 클릭하여 일간 노트를 열거나 만듭니다. 주, 월, 분기, 연도도 같은 방식으로 작동합니다.',
+                '아무 날이나 클릭하여 일일 노트를 열거나 만듭니다. 주, 월, 분기, 연도도 같은 방식으로 작동합니다.',
                 '날짜 아래 채워진 점은 노트가 있음을 의미합니다. 빈 점은 미완료 작업이 있음을 의미합니다.',
                 '노트에 대표 이미지가 있으면 해당 날짜의 배경으로 표시됩니다.'
             ],
@@ -110,8 +127,17 @@ export const STRINGS_KO = {
     },
 
     dailyNotes: {
-        templateReadFailed: '데일리 노트 템플릿을 읽을 수 없습니다.',
-        createFailed: '데일리 노트를 생성할 수 없습니다.'
+        createFailed: '일일 노트를 생성할 수 없습니다.'
+    },
+
+    templates: {
+        invalidTokens: '템플릿 "{name}"에 잘못된 토큰이 있습니다: {tokens}',
+        invalidFileNameTokens: '"{name}"의 파일 이름 형식에 잘못된 토큰이 있습니다: {tokens}',
+        readFailed: '템플릿 "{name}"을(를) 읽을 수 없습니다. 노트는 템플릿 없이 만들어졌습니다.',
+        folderNotSet: '템플릿으로 노트를 만들기 전에 파일 작업 및 템플릿 > 템플릿에서 템플릿 폴더를 설정하세요.',
+        templateNotFound: '템플릿 "{name}"을(를) 찾을 수 없습니다.',
+        folderNotFound: '폴더 "{name}"을(를) 찾을 수 없습니다.',
+        templaterMissing: 'Templater 플러그인이 설치되어 있지 않습니다. 파일 작업 및 템플릿 > 템플릿에서 템플릿 엔진을 변경하세요.'
     },
 
     shortcuts: {
@@ -158,7 +184,7 @@ export const STRINGS_KO = {
         applyAppearanceToDescendants: (target: string) => `${target}에 모양 적용`,
         resetAppearanceInDescendants: (target: string) => `${target}의 모양 재설정`,
         showFolders: '탐색 표시', // Tooltip for button to show the navigation pane (English: Show navigation)
-        reorderRootFolders: '내비게이션 재정렬',
+        reorderRootFolders: '탐색 재정렬',
         finishRootFolderReorder: '완료',
         showExcludedItems: '숨긴 폴더, 태그, 노트 표시', // Tooltip for button to show hidden items (English: Show hidden items)
         hideExcludedItems: '숨긴 폴더, 태그, 노트 숨기기', // Tooltip for button to hide hidden items (English: Hide hidden items)
@@ -177,7 +203,7 @@ export const STRINGS_KO = {
     // Search input
     searchInput: {
         placeholder: '검색...', // Placeholder text for search input (English: Search...)
-        placeholderVault: '보관소 검색...',
+        placeholderVault: '보관함 검색...',
         placeholderOmnisearch: 'Omnisearch...', // Placeholder text when Omnisearch provider is active (English: Omnisearch...)
         clearSearch: '검색 지우기', // Tooltip for clear search button (English: Clear search)
         switchToFilterSearch: '필터 검색으로 전환',
@@ -196,7 +222,7 @@ export const STRINGS_KO = {
             activeFilterSearch: '필터 검색이 활성화되어 있습니다.',
             activeOmnisearch: 'Omnisearch가 활성화되어 있습니다.',
             omnisearchIntro:
-                'Omnisearch는 보관소 전체의 노트 내용에서 전체 텍스트 검색을 수행합니다. Notebook Navigator는 현재 폴더, 태그 또는 선택 항목에 속하는 일치 항목을 표시합니다.',
+                'Omnisearch는 보관함 전체의 노트 내용에서 전체 텍스트 검색을 수행합니다. Notebook Navigator는 현재 폴더, 태그 또는 선택 항목에 속하는 일치 항목을 표시합니다.',
             sections: {
                 fileNames: {
                     title: '파일 이름과 별칭',
@@ -241,7 +267,7 @@ export const STRINGS_KO = {
                         '`-has:task` 미완료 작업이 있는 노트를 제외.',
                         '`folder:meetings` 폴더 이름에 `meetings`를 포함하는 노트를 포함.',
                         '`folder:/work/meetings` `work/meetings` 내의 노트만 포함 (하위 폴더 제외).',
-                        '`folder:/` 보관소 루트에 있는 노트만 포함.',
+                        '`folder:/` 보관함 루트에 있는 노트만 포함.',
                         '`-folder:archive` 폴더 이름에 `archive`를 포함하는 노트를 제외.',
                         '`-folder:/archive` `archive` 내의 노트만 제외 (하위 폴더 제외).',
                         '`ext:md` 확장자가 `md`인 노트를 포함 (`ext:.md`도 지원).',
@@ -281,8 +307,8 @@ export const STRINGS_KO = {
                         '쿼리는 Omnisearch 플러그인으로 전송되며 Omnisearch 쿼리 구문을 따릅니다. `#tag`, `.property`, `@date`와 같은 필터 검색 토큰은 특별한 의미가 없습니다.',
                         '폴더를 선택하면 Omnisearch가 해당 폴더와 하위 폴더 내에서 일치하도록 쿼리에 `path:"<folder>/"`가 추가됩니다. 이미 `path:`가 포함된 쿼리는 그대로 전송됩니다.',
                         'Omnisearch는 관련성 순으로 최대 50개의 결과를 반환합니다. 일치 항목이 그보다 많은 검색에서는 순위가 낮은 노트가 표시되지 않습니다.',
-                        '비ASCII 문자가 포함된 폴더 경로를 범위로 지정하려면 Omnisearch 1.30.0 이상이 필요합니다. 이전 버전에서는 보관소 전체를 검색한 후 결과가 폴더로 필터링됩니다.',
-                        '대규모 보관소에서는 3자 미만의 쿼리가 느릴 수 있습니다.',
+                        '비ASCII 문자가 포함된 폴더 경로를 범위로 지정하려면 Omnisearch 1.30.0 이상이 필요합니다. 이전 버전에서는 보관함 전체를 검색한 후 결과가 폴더로 필터링됩니다.',
+                        '대규모 보관함에서는 3자 미만의 쿼리가 느릴 수 있습니다.',
                         '노트 미리보기에 기본 미리보기 텍스트 대신 Omnisearch 발췌문이 표시됩니다.'
                     ]
                 }
@@ -360,6 +386,9 @@ export const STRINGS_KO = {
             duplicateFolder: '폴더 복제',
             searchInFolder: '폴더에서 검색',
             createFolderNote: '폴더 노트 만들기',
+            setFolderTemplate: '폴더 템플릿 설정...',
+            changeFolderTemplate: '폴더 템플릿 변경...',
+            removeFolderTemplate: '폴더 템플릿 제거',
             detachFolderNote: '폴더 노트 해제',
             deleteFolderNote: '폴더 노트 삭제',
             changeIcon: '아이콘 변경',
@@ -401,7 +430,7 @@ export const STRINGS_KO = {
             noteEmbed: '노트 임베드',
             fileEmbed: '파일 임베드',
             obsidianUrl: 'Obsidian URL',
-            pathFromVaultFolder: 'Vault 폴더 기준 경로',
+            pathFromVaultFolder: '보관함 폴더 기준 경로',
             pathFromSystemRoot: '시스템 루트 기준 경로'
         },
         style: {
@@ -436,6 +465,8 @@ export const STRINGS_KO = {
         tags: '태그',
         properties: '속성',
         tasks: '작업',
+        date: '날짜',
+        parentFolder: '상위 폴더',
         textCount: {
             label: '텍스트 수',
             options: {
@@ -455,7 +486,7 @@ export const STRINGS_KO = {
             applyButton: '적용',
             applySortAndGroupTitle: (target: string) => `${target}에 정렬 및 그룹을 적용하시겠습니까?`,
             applyAppearanceTitle: (target: string) => `${target}에 모양을 적용하시겠습니까?`,
-            resetAppearanceTitle: (target: string) => `${target}의 모양을 재설정할까요?`,
+            resetAppearanceTitle: (target: string) => `${target}의 모양을 재설정하시겠습니까?`,
             applyAppearanceMessage: (count: number, replacedCount: number) =>
                 `${count}개 항목의 모양이 변경됩니다. 교체되는 기존 사용자 지정 모양: ${replacedCount}개. 저장된 모양 설정이 한 번 복사되며 정렬과 그룹화는 유지됩니다. 이후 변경 사항과 새 하위 항목은 연결되지 않습니다.`,
             resetAppearanceMessage: (count: number) =>
@@ -486,13 +517,13 @@ export const STRINGS_KO = {
             wordCountTarget: '목표 단어 수',
             wordCountTargetPlaceholder: '10,000',
             wordCountTargetDescription:
-                '이 필드가 비어 있으면 그룹 목표는 설정 > 노트 > 단어 및 문자 수에 설정된 목표 속성을 사용합니다. 이 그룹의 목표 값을 설정하여 재정의하세요.',
+                '이 필드가 비어 있으면 그룹 목표는 설정 > 파일 표시 > 단어 및 문자 수에 설정된 목표 속성을 사용합니다. 이 그룹의 목표 값을 설정하여 재정의하세요.',
             description: '이 노트의 그룹 머리글을 사용자 지정합니다. 머리글을 제거하려면 제목을 비워 두세요.'
         },
         mergeNotes: {
             title: '노트 병합',
             summary: '{folder}의 {count}개 노트에서 하나의 노트를 만듭니다.',
-            frontmatterRule: '첫 번째 노트의 프론트매터는 유지됩니다. 다른 노트의 프론트매터는 제거됩니다.',
+            frontmatterRule: '첫 번째 노트의 frontmatter는 유지됩니다. 다른 노트의 frontmatter는 제거됩니다.',
             crossFolderWarning: '원본 노트가 서로 다른 폴더에 있습니다. 병합된 노트에서 상대 링크와 임베드가 작동하지 않을 수 있습니다.',
             outputName: '출력 이름',
             outputNameDesc: '병합된 노트는 위에 표시된 폴더에 생성됩니다.',
@@ -571,17 +602,17 @@ export const STRINGS_KO = {
         },
         colorPicker: {
             currentColor: '현재',
-            newColor: '새로운',
+            newColor: '새 색상',
             paletteDefault: '기본',
-            paletteCustom: '사용자 정의',
+            paletteCustom: '사용자 지정',
             copyColors: '색상 복사',
             colorsCopied: '클립보드에 복사됨',
             pasteColors: '색상 붙여넣기',
             pasteClipboardError: '클립보드를 읽을 수 없습니다',
             pasteInvalidFormat: '16진수 색상 값이 필요합니다',
             colorsPasted: '색상을 붙여넣었습니다',
-            resetUserColors: '사용자 정의 색상 지우기',
-            clearCustomColorsConfirm: '모든 사용자 정의 색상을 제거하시겠습니까?',
+            resetUserColors: '사용자 지정 색상 지우기',
+            clearCustomColorsConfirm: '모든 사용자 지정 색상을 제거하시겠습니까?',
             userColorSlot: '색상 {slot}',
             recentColors: '최근 색상',
             clearRecentColors: '최근 색상 지우기',
@@ -605,9 +636,9 @@ export const STRINGS_KO = {
             apply: '적용'
         },
         selectVaultProfile: {
-            title: '보관소 프로필 변경',
+            title: '보관함 프로필 선택',
             currentBadge: '활성',
-            emptyState: '사용 가능한 보관소 프로필이 없습니다.'
+            emptyState: '사용 가능한 보관함 프로필이 없습니다.'
         },
         tagOperation: {
             renameTitle: '태그 {tag} 이름 변경',
@@ -623,12 +654,12 @@ export const STRINGS_KO = {
             renameUnchanged: '{tag} 변경 없음',
             renameNoChanges: '{oldTag} → {newTag} ({countLabel})',
             renameBatchNotFinalized:
-                '{renamed}/{total} 이름 변경됨. 업데이트되지 않음: {notUpdated}. 메타데이터와 단축키가 업데이트되지 않았습니다.',
+                '{renamed}/{total} 이름 변경됨. 업데이트되지 않음: {notUpdated}. 메타데이터와 바로가기가 업데이트되지 않았습니다.',
             invalidTagName: '유효한 태그 이름을 입력하세요.',
             descendantRenameError: '태그를 자신 또는 하위 태그로 이동할 수 없습니다.',
             confirmDelete: '태그 삭제',
             deleteBatchNotFinalized:
-                '{removed}/{total}에서 제거됨. 업데이트되지 않음: {notUpdated}. 메타데이터와 단축키가 업데이트되지 않았습니다.',
+                '{removed}/{total}에서 제거됨. 업데이트되지 않음: {notUpdated}. 메타데이터와 바로가기가 업데이트되지 않았습니다.',
             checkConsoleForDetails: '자세한 내용은 콘솔을 확인하세요.',
             file: '파일',
             files: '파일',
@@ -666,10 +697,10 @@ export const STRINGS_KO = {
             deleteFileAttachmentsTitle: '파일 첨부 파일을 삭제하시겠습니까?',
             moveFileConflictTitle: '이동 충돌',
             folderNamePrompt: '폴더 이름 입력:',
-            hideInOtherVaultProfiles: '다른 보관소 프로필에서 숨기기',
+            hideInOtherVaultProfiles: '다른 보관함 프로필에서 숨기기',
             renamePrompt: '새 이름 입력:',
             renameVaultTitle: '보관함 표시 이름 변경',
-            renameVaultPrompt: '사용자 정의 표시 이름 입력 (기본값을 사용하려면 비워두세요):',
+            renameVaultPrompt: '사용자 지정 표시 이름 입력 (기본값을 사용하려면 비워두세요):',
             deleteFolderConfirm: '이 폴더와 모든 내용을 삭제하시겠습니까?',
             deleteFileConfirm: '이 파일을 삭제하시겠습니까?',
             deleteFileAttachmentsDescriptionSingle: '이 첨부 파일은 더 이상 어떤 노트에서도 사용되지 않습니다. 삭제하시겠습니까?',
@@ -692,7 +723,7 @@ export const STRINGS_KO = {
             folderLabel: '폴더: {name}'
         },
         folderSuggest: {
-            placeholder: (name: string) => `${name}를 폴더로 이동...`,
+            placeholder: (name: string) => `${name}을(를) 폴더로 이동...`,
             multipleFilesLabel: (count: number) => `${count}개의 파일`,
             navigatePlaceholder: '폴더로 이동...',
             instructions: {
@@ -710,7 +741,28 @@ export const STRINGS_KO = {
                 dismiss: '닫기'
             }
         },
-        calendarTemplate: {
+        templateCommand: {
+            titleAdd: '명령 추가',
+            titleEdit: '명령 편집',
+            name: '명령 이름',
+            namePlaceholder: '새 회의 노트',
+            template: '템플릿',
+            templateDesc: '선택 사항입니다. 템플릿이 없으면 대상 폴더에 폴더 템플릿이 설정된 경우 그 템플릿이 적용됩니다.',
+            templatePlaceholder: 'Templates/Meeting.md',
+            fileNameFormat: '파일 이름 형식',
+            fileNameFormatDesc:
+                '{{date:YYYYMMDD}}, {{prompt:Title}} 같은 토큰은 명령을 실행할 때 치환됩니다. 각 프롬프트는 값을 묻고, 템플릿의 같은 레이블은 같은 값을 받습니다. {{number}}는 폴더에서 같은 이름 패턴을 사용하는 노트의 가장 큰 번호보다 1 큰 값이고, {{number:00}}은 0으로 자릿수를 채웁니다. 템플릿에서도 {{number}}를 사용할 수 있고, {{title}}은 생성된 파일 이름을 삽입합니다.',
+            fileNameFormatPlaceholder: '{{date:YYYYMMDD}} {{prompt:Title}}',
+            location: '위치',
+            folder: '폴더',
+            folderPlaceholder: 'Meetings',
+            icon: '아이콘',
+            placement: '버튼',
+            placementNone: '없음',
+            placementRibbon: '리본',
+            placementTabBar: '탭 바'
+        },
+        templateFile: {
             placeholder: '템플릿 검색...',
             instructions: {
                 navigate: '이동',
@@ -767,7 +819,7 @@ export const STRINGS_KO = {
         welcome: {
             title: '{pluginName}에 오신 것을 환영합니다',
             introText:
-                '안녕하세요. Obsidian을 위한 더 나은 파일 브라우저이자 캘린더인 Notebook Navigator에 오신 것을 환영합니다. 시작하기 전에 아래의 Mastering Notebook Navigator 영상에서 적어도 처음 세 챕터는 꼭 시청해 보시길 권합니다. 두 패널이 어떻게 작동하는지 소개하고 빠르게 사용을 시작할 수 있도록 안내합니다.',
+                '안녕하세요. Obsidian을 위한 더 나은 파일 브라우저이자 캘린더인 Notebook Navigator에 오신 것을 환영합니다. 시작하기 전에 아래의 Mastering Notebook Navigator 영상에서 적어도 처음 세 챕터는 꼭 시청해 보시길 권합니다. 두 창이 어떻게 작동하는지 소개하고 빠르게 사용을 시작할 수 있도록 안내합니다.',
             continueText:
                 '10분 정도 더 여유가 있다면 초기 설정과 일상 사용 흐름 챕터도 이어서 시청하세요. 시작에 필요한 내용을 모두 익힌 뒤, 나중에 돌아와 자세한 내용을 더 볼 수 있습니다. 영상 링크는 Notebook Navigator 설정 상단에서도 찾을 수 있습니다.',
             thanksText: 'Notebook Navigator를 즐겁게 사용하세요!',
@@ -806,7 +858,7 @@ export const STRINGS_KO = {
             folderNoteNotFound: '선택한 폴더에 폴더 노트가 없습니다',
             folderNoteUnsupportedExtension: '지원되지 않는 파일 확장자: {extension}',
             folderNoteMoveFailed: '변환 중 파일 이동 실패: {error}',
-            folderNoteRenameConflict: '"{name}"이라는 이름의 파일이 이미 폴더에 존재합니다',
+            folderNoteRenameConflict: '폴더에 "{name}" 파일이 이미 존재합니다',
             folderNoteConversionFailed: '폴더 노트로 변환 실패',
             folderNoteConversionFailedWithReason: '폴더 노트로 변환 실패: {error}',
             folderNoteOpenFailed: '파일은 변환되었지만 폴더 노트 열기 실패: {error}',
@@ -830,7 +882,7 @@ export const STRINGS_KO = {
         },
         notifications: {
             deletedMultipleFiles: '{count}개의 파일이 삭제됨',
-            movedMultipleFiles: '{count}개의 파일이 {folder}로 이동됨',
+            movedMultipleFiles: '{count}개의 파일이 {folder}(으)로 이동됨',
             folderNoteConversionSuccess: '"{name}"에서 파일을 폴더 노트로 변환함',
             folderMoved: '폴더 "{name}"이(가) 이동됨',
             deepLinkCopied: 'Obsidian URL이 클립보드에 복사됨',
@@ -867,7 +919,7 @@ export const STRINGS_KO = {
             deleteConfirmation: '이 작업은 취소할 수 없습니다.'
         },
         defaultNames: {
-            untitled: '제목 없음'
+            untitled: '무제'
         }
     },
 
@@ -914,17 +966,17 @@ export const STRINGS_KO = {
         openYearlyNote: '연간 노트 열기',
         revealFile: '파일 표시', // Command palette: Reveals and selects the currently active file in the navigator (English: Reveal file)
         search: '검색', // Command palette: Toggle search in the file list (English: Search)
-        searchVaultRoot: '보관소 전체 검색', // Command palette: Selects the vault root folder and focuses search with subfolders included (English: Search whole vault)
+        searchVaultRoot: '보관함 전체 검색', // Command palette: Selects the vault root folder and focuses search with subfolders included (English: Search whole vault)
         toggleDualPane: '이중 창 레이아웃 전환', // Command palette: Toggles between single-pane and dual-pane layout (English: Toggle dual pane layout)
         toggleDualPaneOrientation: '이중 창 방향 전환', // Command palette: Toggles dual-pane orientation between horizontal and vertical (English: Toggle dual pane orientation)
         toggleCalendar: '캘린더 전환', // Command palette: Toggles showing the calendar overlay in the navigation pane (English: Toggle calendar)
-        selectVaultProfile: '보관소 프로필 변경', // Command palette: Opens a modal to choose a different vault profile (English: Switch vault profile)
-        selectVaultProfile1: '보관소 프로필 1 선택', // Command palette: Activates the first vault profile without opening the modal (English: Select vault profile 1)
-        selectVaultProfile2: '보관소 프로필 2 선택', // Command palette: Activates the second vault profile without opening the modal (English: Select vault profile 2)
-        selectVaultProfile3: '보관소 프로필 3 선택', // Command palette: Activates the third vault profile without opening the modal (English: Select vault profile 3)
+        selectVaultProfile: '보관함 프로필 선택', // Command palette: Opens a modal to choose a different vault profile (English: Switch vault profile)
+        selectVaultProfile1: '보관함 프로필 1 선택', // Command palette: Activates the first vault profile without opening the modal (English: Select vault profile 1)
+        selectVaultProfile2: '보관함 프로필 2 선택', // Command palette: Activates the second vault profile without opening the modal (English: Select vault profile 2)
+        selectVaultProfile3: '보관함 프로필 3 선택', // Command palette: Activates the third vault profile without opening the modal (English: Select vault profile 3)
         deleteFile: '파일 삭제', // Command palette: Deletes the currently active file (English: Delete file)
         createNewNote: '새 노트 만들기', // Command palette: Creates a new note in the currently selected folder (English: Create new note)
-        createNewNoteFromTemplate: '템플릿으로 새 노트', // Command palette: Creates a new note from a template in the currently selected folder (English: Create new note from template)
+        createNewNoteFromTemplate: '템플릿으로 새 노트 만들기', // Command palette: Creates a new note from a template in the currently selected folder (English: Create new note from template)
         moveFiles: '파일 이동', // Command palette: Move selected files to another folder (English: Move files)
         mergeNotes: '노트 병합', // Command palette: Creates one note from selected Markdown notes (English: Merge notes)
         selectNextFile: '다음 파일 선택', // Command palette: Selects the next file in the current view (English: Select next file)
@@ -967,19 +1019,19 @@ export const STRINGS_KO = {
         ribbonTooltip: 'Notebook Navigator', // Tooltip for the ribbon icon in the left sidebar (English: Notebook Navigator)
         revealInNavigator: 'Notebook Navigator에서 표시', // Context menu item to reveal a file in the navigator (English: Reveal in Notebook Navigator)
         settingsUnavailableNotice:
-            'Notebook Navigator가 설정을 읽을 수 없어 시작되지 않았습니다. 보관소가 동기화 중이라면 동기화가 끝난 후 Obsidian을 다시 시작하세요. 기본 설정으로 새로 시작하려면 "기본 설정 복원" 명령을 실행하세요.', // Notice shown when startup is aborted because the settings file is missing or cannot be read (English: Notebook Navigator could not read its settings and did not start. If your vault is syncing, restart Obsidian after the sync completes. To start over with default settings, run the command "Restore default settings".)
+            'Notebook Navigator가 설정을 읽을 수 없어 시작되지 않았습니다. 보관함이 동기화 중이라면 동기화가 끝난 후 Obsidian을 다시 시작하세요. 기본 설정으로 새로 시작하려면 "기본 설정 복원" 명령을 실행하세요.', // Notice shown when startup is aborted because the settings file is missing or cannot be read (English: Notebook Navigator could not read its settings and did not start. If your vault is syncing, restart Obsidian after the sync completes. To start over with default settings, run the command "Restore default settings".)
         settingsMissingConfirm: {
-            title: '기본 설정으로 시작할까요?', // Title of the dialog shown when the plugin is enabled while its settings file is missing (English: Start with default settings?)
+            title: '기본 설정으로 시작하시겠습니까?', // Title of the dialog shown when the plugin is enabled while its settings file is missing (English: Start with default settings?)
             messageRecentInstall:
                 'Notebook Navigator가 방금 설치되었고 설정 파일이 없습니다. 새로 설치했거나 다시 설치한 경우 기본 설정으로 계속하세요. 설정이 동기화 서비스에서 오는 경우 취소하고 동기화가 끝날 때까지 기다린 후 Obsidian을 다시 시작하세요.', // Dialog message when the plugin folder was written recently (English: Notebook Navigator was just installed and has no settings file. If this is a new install or a reinstall, continue with default settings. If your settings come from a sync service, cancel, wait for the sync to complete, and restart Obsidian.)
             messageExistingInstall:
-                'Notebook Navigator가 이 기기에 설치된 지 시간이 지났지만 설정 파일이 없습니다. 보관소가 아직 동기화 중이라면 취소하고 동기화가 끝난 후 Obsidian을 다시 시작하면 기존 설정을 유지할 수 있습니다. 기본 설정으로 새로 시작하려는 경우에만 계속하세요.', // Dialog message when the plugin folder has existed for a while (English: Notebook Navigator has been installed on this device for a while, but its settings file is missing. If your vault is still syncing, cancel, wait for the sync to complete, and restart Obsidian to keep your existing settings. Continue only to start over with default settings.)
+                'Notebook Navigator가 이 기기에 설치된 지 시간이 지났지만 설정 파일이 없습니다. 보관함이 아직 동기화 중이라면 취소하고 동기화가 끝난 후 Obsidian을 다시 시작하면 기존 설정을 유지할 수 있습니다. 기본 설정으로 새로 시작하려는 경우에만 계속하세요.', // Dialog message when the plugin folder has existed for a while (English: Notebook Navigator has been installed on this device for a while, but its settings file is missing. If your vault is still syncing, cancel, wait for the sync to complete, and restart Obsidian to keep your existing settings. Continue only to start over with default settings.)
             confirmButton: '기본 설정 사용' // Confirm button label in the missing-settings dialog (English: Use default settings)
         },
         settingsRecovery: {
             confirmTitle: '기본 설정 복원', // Title of the confirmation dialog for the settings recovery command (English: Restore default settings)
             confirmMessage:
-                'Notebook Navigator 설정 파일을 기본 설정으로 교체합니다. 보관소가 아직 동기화 중이라면 복원된 기본 설정이 다른 기기에 저장된 설정을 덮어쓸 수 있습니다. 읽을 수 있는 설정 파일은 교체 전에 플러그인 폴더의 타임스탬프가 포함된 백업으로 복사됩니다.', // Body of the confirmation dialog for the settings recovery command
+                'Notebook Navigator 설정 파일을 기본 설정으로 교체합니다. 보관함이 아직 동기화 중이라면 복원된 기본 설정이 다른 기기에 저장된 설정을 덮어쓸 수 있습니다. 읽을 수 있는 설정 파일은 교체 전에 플러그인 폴더의 타임스탬프가 포함된 백업으로 복사됩니다.', // Body of the confirmation dialog for the settings recovery command
             confirmButton: '기본값 복원', // Confirm button label in the settings recovery dialog (English: Restore defaults)
             failedNotice: '설정 복원을 완료할 수 없습니다. 로컬 환경설정은 유지되었습니다.', // Notice shown when settings recovery cannot be completed (English: Could not complete settings recovery. Local preferences were kept.)
             completedNotice: '기본 설정이 복원되었습니다. 완료하려면 Obsidian을 다시 시작하세요.' // Notice shown after the settings file was replaced with defaults (English: Default settings restored. Restart Obsidian to finish.)
@@ -1008,14 +1060,14 @@ export const STRINGS_KO = {
     settings: {
         changeDefaultSettings: '기본 설정 변경',
         metadataReport: {
-            exportSuccess: '메타데이터 보고서 내보내기 실패: {filename}',
+            exportSuccess: '메타데이터 오류 보고서를 내보냈습니다: {filename}',
             exportFailed: '메타데이터 보고서 내보내기 실패'
         },
         index: {
             label: '일반',
-            description: '릴리스 노트, 지원, 보관소 프로필, 파일 유형, 속성 키.',
+            description: '릴리스 노트, 지원, 보관함 프로필, 파일 유형, 속성 키.',
             groups: {
-                vaultSetup: '보관소 설정'
+                about: '정보'
             }
         },
         pageGroups: {
@@ -1036,7 +1088,7 @@ export const STRINGS_KO = {
                     startup: '시작',
                     keyboardNavigation: '키보드 탐색',
                     mouseButtons: '마우스 버튼',
-                    desktopAppearance: '데스크톱 모양새',
+                    desktopAppearance: '데스크톱 모양',
                     mobileAppearance: '모바일 모양',
                     appearance: '모양',
                     icons: '아이콘',
@@ -1056,8 +1108,8 @@ export const STRINGS_KO = {
                 }
             },
             shortcutsAndRecentFiles: {
-                label: '바로 가기 및 최근 파일',
-                description: '바로 가기 표시, 배지, 최근 파일 및 고정된 항목.',
+                label: '바로가기 및 최근 파일',
+                description: '바로가기 표시, 배지, 최근 파일 및 고정된 항목.',
                 groups: {
                     shortcuts: '바로가기',
                     recentFiles: '최근 파일'
@@ -1094,15 +1146,16 @@ export const STRINGS_KO = {
                 }
             },
             fileOperations: {
-                label: '파일 작업',
-                description: '템플릿, 삭제 확인, 첨부 파일 및 파일 이동 충돌 동작.',
+                label: '파일 작업 및 템플릿',
+                description: '템플릿, 노트 만들기 명령, 삭제 확인, 첨부 파일, 파일 이동 충돌 동작.',
                 groups: {
-                    templates: '템플릿'
+                    templates: '템플릿',
+                    templateCommands: '노트 만들기 명령'
                 }
             },
             frontmatterFields: {
-                label: '프런트매터 필드',
-                description: '표시 이름, 타임스탬프, 아이콘, 색상에 대한 프런트매터 필드.'
+                label: 'frontmatter 필드',
+                description: '표시 이름, 타임스탬프, 아이콘, 색상에 대한 frontmatter 필드.'
             },
             fileDisplay: {
                 label: '파일 표시',
@@ -1157,6 +1210,10 @@ export const STRINGS_KO = {
                     listPane: '목록 창에 표시',
                     hidden: '표시하지 않음'
                 }
+            },
+            colorListPaneTitle: {
+                name: '목록 창 제목에 색상 적용',
+                desc: '선택한 폴더, 태그 또는 속성의 색상을 목록 창 제목에 적용합니다.'
             },
             defaultSortOrder: {
                 name: '기본 정렬 순서',
@@ -1280,23 +1337,24 @@ export const STRINGS_KO = {
             },
             defaultGrouping: {
                 name: '기본 그룹화',
-                desc: '**머리글**은 순서를 바꾸지 않고 정렬된 목록에 표시를 더합니다. 사용자 지정은 frontmatter에 정의된 머리글을 표시하고, 날짜는 날짜 머리글을 삽입합니다. **그룹**은 목록을 다시 정렬합니다. 폴더와 속성 그룹은 자체적으로 정렬되며 각 그룹 내의 노트는 정렬 순서를 따릅니다.',
+                desc: '그룹화 안 함을 선택하면 정렬된 목록이 그룹 없이 표시됩니다. **머리글**은 순서를 바꾸지 않고 목록에 표시를 더합니다. 사용자 지정은 frontmatter에 정의된 머리글을 표시하고, 날짜는 날짜 머리글을 삽입합니다. **그룹**은 목록을 다시 정렬합니다. 폴더와 속성 그룹은 자체적으로 정렬되며 각 그룹 내의 노트는 정렬 순서를 따릅니다.',
                 families: {
                     headers: '머리글',
                     groups: '그룹'
                 },
                 options: {
+                    none: '그룹화 안 함',
                     custom: '사용자 지정',
                     date: '날짜',
                     folder: '폴더'
                 }
             },
             alwaysShowAllTagAndPropertyPills: {
-                name: '태그 및 속성 필을 항상 표시',
-                desc: '비활성화하면 현재 탐색 선택과 일치하는 필이 숨겨집니다(예: "레시피" 태그를 탐색할 때 "레시피" 태그 필이 숨겨짐). 활성화하면 모든 필이 항상 표시됩니다.'
+                name: '태그 및 속성 배지를 항상 표시',
+                desc: '비활성화하면 현재 탐색 선택과 일치하는 배지가 숨겨집니다(예: "레시피" 태그를 탐색할 때 "레시피" 태그 배지가 숨겨짐). 활성화하면 모든 배지가 항상 표시됩니다.'
             },
             stickyGroupHeaders: {
-                name: '그룹 헤더 고정',
+                name: '그룹 머리글 고정',
                 desc: '스크롤하는 동안 현재 날짜, 폴더, 속성 또는 고정된 섹션 헤더를 계속 표시합니다.'
             },
             showSubfolderPaths: {
@@ -1305,7 +1363,7 @@ export const STRINGS_KO = {
             },
             showGroupHeaderItemCounts: {
                 name: '항목 수 표시',
-                desc: '목록 창의 각 그룹 헤더에 항목 수를 표시합니다.'
+                desc: '목록 창의 각 그룹 머리글에 항목 수를 표시합니다.'
             },
             showCurrentFolderFilesAtBottom: {
                 name: '폴더 그룹화: 현재 폴더 파일을 하단에 표시',
@@ -1313,7 +1371,7 @@ export const STRINGS_KO = {
             },
             defaultListMode: {
                 name: '기본 목록 모드',
-                desc: '기본 목록 레이아웃을 선택합니다. 표준은 제목, 날짜, 설명, 미리보기 텍스트를 표시합니다. 컴팩트는 제목만 표시합니다. 외형은 폴더별로 덮어쓸 수 있습니다.',
+                desc: '기본 목록 레이아웃을 선택합니다. 표준은 제목, 날짜, 설명, 미리보기 텍스트를 표시합니다. 컴팩트는 제목만 표시합니다. 모양은 폴더별로 덮어쓸 수 있습니다.',
                 options: {
                     standard: '표준',
                     compact: '컴팩트'
@@ -1389,13 +1447,13 @@ export const STRINGS_KO = {
                 editTooltip: '매핑 편집'
             },
             compactItemHeight: {
-                name: '슬림 항목 높이',
-                desc: '데스크톱과 모바일에서 슬림 목록 항목 높이를 설정합니다(픽셀).',
+                name: '컴팩트 항목 높이',
+                desc: '데스크톱과 모바일에서 컴팩트 목록 항목 높이를 설정합니다(픽셀).',
                 resetTooltip: '기본값으로 복원 (28px)'
             },
             compactItemHeightScaleText: {
-                name: '슬림 항목 높이에 맞춰 텍스트 크기 조정',
-                desc: '항목 높이를 줄이면 슬림 목록 텍스트 크기를 조정합니다.'
+                name: '컴팩트 항목 높이에 맞춰 텍스트 크기 조정',
+                desc: '항목 높이를 줄이면 컴팩트 목록 텍스트 크기를 조정합니다.'
             },
             showParentFolder: {
                 name: '상위 폴더 표시',
@@ -1426,8 +1484,8 @@ export const STRINGS_KO = {
                 desc: '탐색 창과 목록 창을 나란히 표시합니다.'
             },
             dualPaneOrientation: {
-                name: '듀얼 창 방향',
-                desc: '듀얼 창이 활성화된 경우 가로 또는 세로 레이아웃을 선택합니다.',
+                name: '이중 창 방향',
+                desc: '이중 창이 활성화된 경우 가로 또는 세로 레이아웃을 선택합니다.',
                 options: {
                     horizontal: '가로 분할',
                     vertical: '세로 분할'
@@ -1457,7 +1515,7 @@ export const STRINGS_KO = {
             },
             paneBackgroundColor: {
                 name: '배경색',
-                desc: '탐색 및 목록 패널의 배경색을 선택합니다.',
+                desc: '탐색 및 목록 창의 배경색을 선택합니다.',
                 options: {
                     separate: '분리된 배경',
                     listBackground: '목록 배경 사용',
@@ -1465,16 +1523,16 @@ export const STRINGS_KO = {
                 }
             },
             zoomLevel: {
-                name: '확대 수준',
-                desc: 'Notebook Navigator의 전체 확대 수준을 제어합니다(백분율).'
+                name: '배율',
+                desc: 'Notebook Navigator의 전체 배율을 제어합니다(백분율).'
             },
             useFloatingToolbarsOnIOS: {
                 name: 'iOS에서 플로팅 툴바 사용',
                 desc: 'iOS에서만 적용됩니다.'
             },
             defaultStartupView: {
-                name: '기본 시작 보기',
-                desc: 'Notebook Navigator를 열 때 활성화되는 창을 선택하세요. 단일 창 레이아웃에서는 이 창이 먼저 표시되고, 이중 창 레이아웃에서는 이 창에 키보드 포커스가 이동합니다.',
+                name: '단일 창 시작 보기',
+                desc: '단일 창 레이아웃에서 Notebook Navigator를 열 때 표시할 창을 선택하세요.',
                 options: {
                     navigation: '탐색 창',
                     listPane: '목록 창'
@@ -1515,11 +1573,11 @@ export const STRINGS_KO = {
             },
             disableShortcutAutoScroll: {
                 name: '바로가기 자동 스크롤 비활성화',
-                desc: '바로가기 내 항목을 클릭할 때 탐색 패널을 스크롤하지 않습니다.'
+                desc: '바로가기 내 항목을 클릭할 때 탐색 창을 스크롤하지 않습니다.'
             },
             expandOnSelection: {
                 name: '선택 시 확장',
-                desc: '선택 시 폴더와 태그를 확장합니다. 단일 창 모드에서는 첫 번째 선택이 확장하고 두 번째 선택이 파일을 표시합니다.'
+                desc: '선택 시 폴더, 태그, 속성을 확장합니다. 단일 창 모드에서는 첫 번째 선택이 확장하고 두 번째 선택이 파일을 표시합니다.'
             },
             collapseOtherBranchesOnExpand: {
                 name: '하나의 펼친 분기',
@@ -1538,8 +1596,8 @@ export const STRINGS_KO = {
                 desc: '같은 드래그 작업 중 추가 폴더 또는 태그가 확장되기 전 지연(초).'
             },
             navigationBanner: {
-                name: '탐색 배너 (저장소 프로필)',
-                desc: '탐색 창 상단에 이미지를 표시합니다. 선택한 저장소 프로필에 따라 변경됩니다.',
+                name: '탐색 배너 (보관함 프로필)',
+                desc: '탐색 창 상단에 이미지를 표시합니다. 선택한 보관함 프로필에 따라 변경됩니다.',
                 current: '현재 배너: {path}',
                 chooseButton: '이미지 선택'
             },
@@ -1669,21 +1727,21 @@ export const STRINGS_KO = {
             },
             calendarConfirmBeforeCreate: {
                 name: '생성 전 확인',
-                desc: '새 데일리 노트를 생성할 때 확인 대화 상자를 표시합니다.'
+                desc: '새 일일 노트를 생성할 때 확인 대화 상자를 표시합니다.'
             },
             calendarShowHiddenItems: {
                 name: '숨겨진 항목 표시',
                 desc: '활성화하면 캘린더에 항상 모든 캘린더 노트가 표시되며, 보관함 프로필 필터로 숨겨진 노트도 포함됩니다.'
             },
             dailyNoteSource: {
-                name: '데일리 노트 소스',
+                name: '일일 노트 소스',
                 desc: '캘린더 노트 소스.',
                 options: {
-                    dailyNotes: '데일리 노트(코어 플러그인)',
+                    dailyNotes: '일일 노트(코어 플러그인)',
                     notebookNavigator: 'Notebook Navigator'
                 },
                 info: {
-                    dailyNotes: '폴더 및 날짜 형식은 데일리 노트 코어 플러그인에서 설정됩니다.'
+                    dailyNotes: '폴더 및 날짜 형식은 일일 노트 코어 플러그인에서 설정됩니다.'
                 }
             },
             calendarPeriodicNotesLocale: {
@@ -1696,19 +1754,19 @@ export const STRINGS_KO = {
             },
 
             periodicNotesRootFolder: {
-                name: '루트 폴더',
-                desc: '정기 노트의 기본 폴더. 날짜 패턴에 하위 폴더를 포함할 수 있습니다. 선택한 보관소 프로필에 따라 변경됩니다.',
-                placeholder: 'Personal/Diary'
+                name: '루트 폴더 (보관함 프로필)',
+                desc: '정기 노트의 기본 폴더. 날짜 패턴에 하위 폴더를 포함할 수 있습니다. 선택한 보관함 프로필에 따라 변경됩니다.',
+                placeholder: '개인/일기'
             },
             templateFolderLocation: {
                 name: '템플릿 폴더 위치',
                 desc: '템플릿 파일 선택기가 이 폴더의 노트를 표시합니다.',
-                placeholder: 'Templates',
-                usage: '달력 노트와 폴더 노트에서 사용됩니다. 템플릿은 달력 > 캘린더 연동 및 폴더 및 폴더 노트 > 폴더 노트 파일에서 설정하세요.'
+                placeholder: '템플릿',
+                usage: '템플릿 폴더의 템플릿은 캘린더 노트, 폴더 노트, 폴더 템플릿, 템플릿으로 새 노트에서 사용됩니다. 캘린더 템플릿은 달력 > 캘린더 연동에서, 폴더 노트 템플릿은 폴더 및 폴더 노트 > 폴더 노트 파일에서 설정하세요.'
             },
             calendarDailyNotePattern: {
                 name: '일일 노트',
-                desc: 'Moment 날짜 형식을 사용하여 경로 지정. 하위 폴더 이름은 대괄호로 감싸세요, 예: [Work]/YYYY. 템플릿 아이콘을 클릭하여 템플릿을 설정하세요. 템플릿 폴더 위치는 파일 작업 > 템플릿에서 설정하세요.',
+                desc: 'Moment 날짜 형식을 사용하여 경로 지정. 하위 폴더 이름은 대괄호로 감싸세요, 예: [Work]/YYYY. 템플릿 아이콘을 클릭하여 템플릿을 설정하세요. 템플릿 폴더 위치는 파일 작업 및 템플릿 > 템플릿에서 설정하세요.',
                 placeholder: 'YYYY/YYYYMMDD',
                 parsingError: '패턴은 전체 날짜(연, 월, 일)로 포맷되고 다시 파싱될 수 있어야 합니다.'
             },
@@ -1716,15 +1774,46 @@ export const STRINGS_KO = {
                 momentDescPrefix: '',
                 momentLinkText: 'Moment 날짜 형식',
                 momentDescSuffix:
-                    '을 사용하여 경로 지정. 하위 폴더 이름은 대괄호로 감싸세요, 예: [Work]/YYYY. 템플릿 아이콘을 클릭하여 템플릿을 설정하세요. 템플릿 폴더 위치는 파일 작업 > 템플릿에서 설정하세요.',
-                templateTokenNoticeLabel: '중요!',
-                templateTokenNotice:
-                    '템플릿 지원에는 Templater 플러그인이 필요합니다. {{date}}, {{title}} 같은 기본 형식은 {source}이(가) {option}으로 설정된 경우에만 사용할 수 있습니다.',
+                    '을 사용하여 경로 지정. 하위 폴더 이름은 대괄호로 감싸세요, 예: [Work]/YYYY. 템플릿 아이콘을 클릭하여 템플릿을 설정하세요. 템플릿 폴더 위치는 파일 작업 및 템플릿 > 템플릿에서 설정하세요.',
                 example: '현재 구문: {path}'
             },
-            templaterSupport: {
-                installed: '✅ Templater 플러그인이 설치되어 전체 템플릿 지원을 사용할 수 있습니다.',
-                missing: '⚠️ 템플릿 지원을 사용하려면 Templater 플러그인을 설치하세요.'
+            templateEngine: {
+                name: '템플릿 엔진',
+                desc: 'Notebook Navigator가 노트를 만들 때 템플릿 파일을 처리하는 엔진입니다. 자동은 Templater 플러그인이 설치된 경우 <%를 포함한 템플릿에 Templater를 사용합니다. 그 외 템플릿은 내장 엔진을 사용합니다.',
+                options: {
+                    automatic: '자동',
+                    builtin: 'Notebook Navigator',
+                    templater: 'Templater'
+                },
+                templaterInstalled: 'Templater 플러그인: 설치됨',
+                templaterNotInstalled: 'Templater 플러그인: 설치되지 않음',
+                templaterAutomatic: 'Templater 명령(<%)이 포함된 템플릿은 Templater가 처리합니다. 그 외 템플릿은 내장 엔진이 처리합니다.',
+                templaterUsage: '모든 템플릿은 Templater가 처리합니다. 템플릿 파일의 내장 토큰은 치환되지 않습니다.',
+                templaterMissingWarning:
+                    '템플릿으로 노트를 만들 수 없습니다. {location}에서 {setting}을 {automatic} 또는 {builtin}로 변경하거나 Templater 플러그인을 설치하고 활성화하세요.',
+                tokens: '내장 토큰: {{title}}, {{folder}}, {{path}}, {{date}}, {{date:FORMAT}}, {{date+1d}}, {{time}}, {{today}}, {{now}}, {{yesterday}}, {{tomorrow}}, {{monday}}~{{sunday}}, {{cursor}}. {{date}}를 텍스트로 유지하려면 {{!date}}로 작성하세요.',
+                usage: '{{title}}, {{date}} 같은 템플릿 토큰은 노트를 만들 때 치환됩니다. 템플릿 엔진은 파일 작업 및 템플릿 > 템플릿에서 설정하세요.'
+            },
+            showFolderTemplateIcons: {
+                name: '폴더 템플릿 아이콘 표시',
+                desc: '자체 폴더 템플릿이 있는 폴더를 탐색 창에 아이콘으로 표시합니다.'
+            },
+            templateCommands: {
+                name: '명령',
+                desc: '각 명령은 자체 템플릿 또는 폴더 템플릿으로 생성된 파일 이름의 노트를 만듭니다. 명령 팔레트에서 실행하거나 단축키 또는 버튼에 연결하세요.',
+                empty: '추가된 명령이 없습니다.',
+                add: '명령 추가',
+                edit: '편집',
+                unnamed: '이름 없는 명령',
+                locationCurrent: '현재 폴더',
+                locationFolder: '특정 폴더'
+            },
+            folderTemplates: {
+                name: '폴더 템플릿',
+                desc: '새 노트는 해당 폴더 또는 가장 가까운 상위 폴더의 템플릿을 사용합니다. 템플릿은 폴더 컨텍스트 메뉴에서 설정합니다. 캘린더, 일일 노트, 폴더 노트 템플릿이 우선합니다.',
+                empty: '설정된 폴더 템플릿이 없습니다.',
+                scopeSubfolders: '폴더 및 하위 폴더',
+                scopeFolder: '이 폴더만'
             },
             calendarWeeklyNotePattern: {
                 name: '주간 노트',
@@ -1757,9 +1846,13 @@ export const STRINGS_KO = {
                 name: '도구 설명에 경로 표시',
                 desc: '도구 설명에서 노트 이름 아래에 폴더 경로를 표시합니다.'
             },
+            showTooltipTags: {
+                name: '도구 설명에 태그 표시',
+                desc: '태그 섹션이 활성화된 경우 도구 설명에 노트의 태그를 표시합니다.'
+            },
             showTooltipWordCount: {
                 name: '도구 설명에 단어 수 표시',
-                desc: '도구 설명에 노트의 단어 수를 표시합니다.'
+                desc: '단어 수가 활성화된 경우 도구 설명에 단어 수를 표시합니다.'
             },
             resetPaneSeparator: {
                 name: '창 구분선 위치 초기화',
@@ -1783,8 +1876,8 @@ export const STRINGS_KO = {
                     confirmButtonText: '가져오기',
                     confirmTitle: '설정을 가져오시겠습니까?',
                     confirmMessage: '가져오면 현재 Notebook Navigator 설정이 대체됩니다.',
-                    backupToggleName: '가져오기 전에 현재 설정을 보관소 루트에 저장',
-                    backupToggleDesc: '보관소 루트에 타임스탬프가 있는 JSON 파일을 만듭니다.',
+                    backupToggleName: '가져오기 전에 현재 설정을 보관함 루트에 저장',
+                    backupToggleDesc: '보관함 루트에 타임스탬프가 있는 JSON 파일을 만듭니다.',
                     successWithBackupNotice: '설정을 가져왔습니다. 이전 설정은 {path}에 저장되었습니다.',
                     backupError: '현재 설정을 저장할 수 없습니다: {message}',
                     successNotice: '설정을 가져왔습니다.',
@@ -1842,12 +1935,12 @@ export const STRINGS_KO = {
                 desc: '데스크톱에서 마우스 뒤로/앞으로 버튼의 동작.',
                 options: {
                     systemDefault: '시스템 기본값 사용',
-                    singlePaneSwitch: '패널 전환 (단일 패널)',
+                    singlePaneSwitch: '창 전환 (단일 창)',
                     history: '기록 탐색'
                 }
             },
             showFileTypes: {
-                name: '파일 유형 표시 (볼트 프로필)',
+                name: '파일 유형 표시 (보관함 프로필)',
                 desc: '네비게이터에 표시할 파일 유형을 필터링합니다. Obsidian에서 지원하지 않는 파일 유형은 외부 응용 프로그램에서 열릴 수 있습니다.',
                 options: {
                     documents: '문서 (.md, .canvas, .base)',
@@ -1863,7 +1956,7 @@ export const STRINGS_KO = {
                 options: {
                     none: '없음',
                     file: '파일',
-                    dailyNote: '일간 노트',
+                    dailyNote: '일일 노트',
                     weeklyNote: '주간 노트',
                     monthlyNote: '월간 노트',
                     quarterlyNote: '분기 노트',
@@ -1879,18 +1972,18 @@ export const STRINGS_KO = {
                 }
             },
             hideNotesWithPropertyRules: {
-                name: '속성 규칙으로 노트 숨기기 (볼트 프로필)',
+                name: '속성 규칙으로 노트 숨기기 (보관함 프로필)',
                 desc: '쉼표로 구분된 frontmatter 규칙 목록입니다. `key` 또는 `key=value` 항목을 사용합니다 (예: status=done, published=true, archived).',
                 placeholder: 'status=done, published=true, archived'
             },
             hideFiles: {
-                name: '파일 숨기기 (볼트 프로필)',
+                name: '파일 숨기기 (보관함 프로필)',
                 desc: '숨길 파일 이름 패턴의 쉼표로 구분된 목록입니다. * 와일드카드와 / 경로를 지원합니다 (예: temp-*, *.png, /assets/*).',
                 placeholder: 'temp-*, *.png, /assets/*'
             },
             vaultProfiles: {
-                name: '보관소 프로필',
-                desc: '프로필은 파일 유형 가시성, 숨겨진 파일, 숨겨진 폴더, 숨겨진 태그, 숨겨진 노트용 속성 규칙, 바로가기, 탐색 배너를 저장합니다. 탐색 창 헤더에서 프로필을 전환합니다.',
+                name: '보관함 프로필',
+                desc: '프로필은 파일 유형 가시성, 숨겨진 파일, 숨겨진 폴더, 숨겨진 태그, 숨겨진 노트용 속성 규칙, 바로가기, 탐색 배너를 저장합니다. 여기 또는 탐색 창의 보관함 프로필 전환기에서 프로필을 전환합니다.',
                 defaultName: '기본',
                 addButton: '프로필 추가',
                 editProfilesButton: '프로필 편집',
@@ -1910,23 +2003,23 @@ export const STRINGS_KO = {
                     duplicateName: '프로필 이름이 이미 존재합니다'
                 }
             },
-            vaultTitlePlacement: {
-                name: '볼트 제목 위치',
-                desc: '볼트 제목이 표시되는 위치를 선택합니다.',
+            vaultProfileSwitcher: {
+                name: '보관함 프로필 전환기',
+                desc: '보관함 프로필 전환기가 표시되는 위치를 선택합니다.',
                 options: {
                     header: '헤더에 표시',
                     navigation: '탐색 창에 표시'
                 }
             },
             hideFolders: {
-                name: '폴더 숨기기 (볼트 프로필)',
-                desc: '숨길 폴더의 쉼표로 구분된 목록입니다. 이름 패턴: assets* (assets로 시작하는 폴더), *_temp (_temp로 끝나는). 경로 패턴: /archive (루트 archive만), /res* (res로 시작하는 루트 폴더), /*/temp (한 레벨 깊이의 temp 폴더), /projects/* (projects 내부의 모든 폴더).',
-                placeholder: 'templates, assets*, /archive, /res*'
+                name: '폴더 숨기기 (보관함 프로필)',
+                desc: '숨길 폴더의 쉼표로 구분된 목록입니다. 이름 패턴: assets* (assets로 시작하는 폴더), *_temp (_temp로 끝나는). 경로 패턴: /아카이브 (루트 아카이브만), /res* (res로 시작하는 루트 폴더), /*/temp (한 레벨 깊이의 temp 폴더), /프로젝트/* (프로젝트 내부의 모든 폴더).',
+                placeholder: '템플릿, assets*, /아카이브, /res*'
             },
             descendantExcludedFolders: {
-                name: '하위 폴더 노트에서 폴더 제외(볼트 프로필)',
+                name: '하위 폴더 노트에서 폴더 제외 (보관함 프로필)',
                 desc: '하위 폴더에서 노트를 모을 때 제외할 폴더의 쉼표로 구분된 목록입니다. 폴더는 계속 표시되며, 선택하면 해당 노트가 계속 표시됩니다. 폴더 숨기기와 같은 패턴을 사용합니다.',
-                placeholder: '일지, 자료, /archive'
+                placeholder: '일지, 자료, /아카이브'
             },
             showFileDate: {
                 name: '날짜 표시',
@@ -1957,7 +2050,7 @@ export const STRINGS_KO = {
                 desc: '색상 태그를 다른 태그보다 먼저 정렬합니다.'
             },
             showFileTagsInCompactMode: {
-                name: '슬림 모드에서 파일 태그 표시',
+                name: '컴팩트 모드에서 파일 태그 표시',
                 desc: '날짜, 미리보기, 이미지가 숨겨져 있을 때 태그를 표시합니다.'
             },
             showFileProperties: {
@@ -1973,8 +2066,8 @@ export const STRINGS_KO = {
                 desc: '파일 항목에서 색상 속성을 다른 속성보다 먼저 정렬합니다.'
             },
             showFilePropertiesInCompactMode: {
-                name: '간결 모드에서 속성 표시',
-                desc: '간결 모드가 활성화되면 속성을 표시합니다.'
+                name: '컴팩트 모드에서 속성 표시',
+                desc: '컴팩트 모드가 활성화되면 속성을 표시합니다.'
             },
             textCountType: {
                 name: '카운트 유형',
@@ -2003,16 +2096,30 @@ export const STRINGS_KO = {
                 }
             },
             wordCountTargetProperty: {
-                name: '대상 속성',
-                desc: '목표 단어 수가 들어 있는 프런트매터 속성 키입니다. 대상을 숨기려면 비워 두세요.'
+                name: '목표 속성',
+                desc: '목표 단어 수가 들어 있는 frontmatter 속성 키입니다. 목표를 숨기려면 비워 두세요.'
             },
             showTargetPercentage: {
-                name: '대상 백분율 표시',
+                name: '목표 백분율 표시',
                 desc: '목표 단어 수가 있을 때 진행률 백분율만 표시합니다.'
+            },
+            textCountActiveNotice: {
+                title: '카운트 계산이 계속 활성화되어 있습니다',
+                summary: '다음 항목에서 사용하므로 모든 노트의 단어 수 또는 문자 수를 계속 계산합니다:',
+                more: '외 {count}개',
+                reasons: {
+                    appearance: '파일 모양',
+                    'group-header': '그룹 머리글'
+                },
+                scopes: {
+                    folder: '폴더: {name}',
+                    tag: '태그: #{name}',
+                    property: '속성: {name}'
+                }
             },
             propertyKeys: {
                 name: '속성 키 (보관함 프로필)',
-                desc: '프론트매터 속성 키. 키별로 탐색 창 및 파일 목록의 표시 여부를 설정할 수 있습니다.',
+                desc: 'frontmatter 속성 키. 키별로 탐색 창 및 파일 목록의 표시 여부를 설정할 수 있습니다.',
                 addButtonTooltip: '속성 키 구성',
                 noneConfigured: '구성된 속성 없음',
                 singleConfigured: '1개 속성 구성됨: {properties}',
@@ -2023,12 +2130,12 @@ export const STRINGS_KO = {
                 desc: '각 속성을 개별 행에 표시합니다.'
             },
             linkPropertyPillsToNotes: {
-                name: '속성 필을 노트에 연결',
-                desc: '속성 필을 클릭하여 연결된 노트를 엽니다.'
+                name: '속성 배지를 노트에 연결',
+                desc: '속성 배지를 클릭하여 연결된 노트를 엽니다.'
             },
             linkPropertyPillsToUrls: {
-                name: '속성 필을 URL에 연결',
-                desc: '속성 필을 클릭하여 연결된 URL을 엽니다.'
+                name: '속성 배지를 URL에 연결',
+                desc: '속성 배지를 클릭하여 연결된 URL을 엽니다.'
             },
             dateFormat: {
                 name: '날짜 형식',
@@ -2146,15 +2253,15 @@ export const STRINGS_KO = {
             },
             hideExportedPreviewImages: {
                 name: '내보낸 미리보기 이미지 숨기기',
-                desc: '내보낸 그리기 미리보기 PNG 파일을 숨깁니다. 표시하려면 "숨김 항목 표시"를 켜세요.'
+                desc: '내보낸 그림 미리보기 PNG 파일을 숨깁니다. 표시하려면 "숨겨진 항목 표시"를 켜세요.'
             },
             drawingIntegrationInfo: {
-                intro: 'Notebook Navigator는 Excalidraw가 내보낸 PNG 파일을 드로잉 미리보기로 표시합니다.',
+                intro: 'Notebook Navigator는 Excalidraw가 내보낸 PNG 파일을 그림 미리보기로 표시합니다.',
                 items: [
                     '**Excalidraw 설정**에서 **Embedding Excalidraw into your Notes and Exporting**, 그다음 **Export Settings**, 그다음 **Auto-export Settings**를 엽니다.',
                     '**Auto-export PNG**를 활성화합니다. 선택적으로 **Export both dark- and light-themed image**를 활성화하세요.',
                     'Notebook Navigator는 **Drawing.excalidraw.png**, **Drawing.excalidraw.dark.png** 또는 **Drawing.excalidraw.light.png**를 찾습니다.',
-                    '**내보낸 미리보기 이미지 숨기기**가 켜져 있는 동안에는 **숨김 항목 표시**도 켜져 있을 때만 PNG 파일이 나타납니다.'
+                    '**내보낸 미리보기 이미지 숨기기**가 켜져 있는 동안에는 **숨겨진 항목 표시**도 켜져 있을 때만 PNG 파일이 나타납니다.'
                 ]
             },
             showRootFolder: {
@@ -2182,8 +2289,8 @@ export const STRINGS_KO = {
                 desc: '폴더, 태그, 속성 옆에 파일 수를 표시합니다.'
             },
             showShortcutAndRecentItemIcons: {
-                name: '바로 가기 및 최근 항목 아이콘 표시',
-                desc: '바로 가기 및 최근 섹션의 항목 옆에 아이콘을 표시합니다.'
+                name: '바로가기 및 최근 항목 아이콘 표시',
+                desc: '바로가기 및 최근 섹션의 항목 옆에 아이콘을 표시합니다.'
             },
             interfaceIcons: {
                 name: '인터페이스 아이콘',
@@ -2195,7 +2302,7 @@ export const STRINGS_KO = {
                 desc: '활성화하면 사용자 지정 색상이 아이콘에만 적용됩니다. 비활성화하면 아이콘과 텍스트 레이블 모두에 색상이 적용됩니다.'
             },
             navRainbowMode: {
-                name: '무지개 색상 모드 (보관소 프로필)',
+                name: '무지개 색상 모드 (보관함 프로필)',
                 desc: '탐색 창에 무지개 색상을 적용합니다.',
                 options: {
                     off: '끄기',
@@ -2290,8 +2397,8 @@ export const STRINGS_KO = {
                 desc: '접을 때 선택한 항목과 상위 항목을 펼친 상태로 유지합니다.'
             },
             excludeVaultRootFromCollapse: {
-                name: '접을 때 보관소 루트 건너뛰기',
-                desc: '모든 항목을 접을 때 보관소 루트 폴더를 현재 상태로 둡니다.'
+                name: '접을 때 보관함 루트 건너뛰기',
+                desc: '모든 항목을 접을 때 보관함 루트 폴더를 현재 상태로 둡니다.'
             },
             treeIndentation: {
                 name: '트리 들여쓰기',
@@ -2360,13 +2467,13 @@ export const STRINGS_KO = {
             },
             keepEmptyTagsProperty: {
                 name: '마지막 태그 제거 후 tags 속성 유지',
-                desc: '모든 태그가 제거될 때 frontmatter 의 tags 속성을 유지합니다. 비활성화하면 tags 속성이 frontmatter 에서 삭제됩니다.'
+                desc: '모든 태그가 제거될 때 frontmatter의 tags 속성을 유지합니다. 비활성화하면 tags 속성이 frontmatter에서 삭제됩니다.'
             },
             showProperties: {
                 name: '속성 표시',
-                desc: '탐색기에 속성 섹션을 표시합니다.',
+                desc: '네비게이터에 속성 섹션을 표시합니다.',
                 propertyKeysInfoPrefix: '',
-                propertyKeysInfoLinkText: '시작 > 속성 키',
+                propertyKeysInfoLinkText: '일반 > 속성 키',
                 propertyKeysInfoSuffix: '에서 속성 구성'
             },
             showPropertyIcons: {
@@ -2397,14 +2504,14 @@ export const STRINGS_KO = {
                 desc: '선택한 폴더 또는 태그 내 노트에 있는 속성만 표시합니다.'
             },
             hideTags: {
-                name: '태그 숨기기 (볼트 프로필)',
-                desc: '쉼표로 구분된 태그 패턴 목록입니다. 이름 패턴: tag* (시작), *tag (끝). 경로 패턴: archive (태그와 하위), archive/* (하위만), projects/*/drafts (중간 와일드카드).',
-                placeholder: 'archive*, *draft, projects/*/old'
+                name: '태그 숨기기 (보관함 프로필)',
+                desc: '쉼표로 구분된 태그 패턴 목록입니다. 이름 패턴: tag* (시작), *tag (끝). 경로 패턴: 아카이브 (태그와 하위), 아카이브/* (하위만), 프로젝트/*/초안 (중간 와일드카드).',
+                placeholder: '아카이브*, *초안, 프로젝트/*/과거'
             },
             hideNotesWithTags: {
-                name: '태그가 있는 노트 숨기기 (볼트 프로필)',
-                desc: 'Comma-separated list of tag patterns. Notes containing matching tags are hidden. Name patterns: tag* (starting with), *tag (ending with). Path patterns: archive (tag and descendants), archive/* (descendants only), projects/*/drafts (mid-segment wildcard).',
-                placeholder: 'archive*, *draft, projects/*/old'
+                name: '태그가 있는 노트 숨기기 (보관함 프로필)',
+                desc: '쉼표로 구분된 태그 패턴 목록입니다. 일치하는 태그가 포함된 노트는 숨겨집니다. 이름 패턴: tag* (시작), *tag (끝). 경로 패턴: 아카이브 (태그와 하위), 아카이브/* (하위만), 프로젝트/*/초안 (중간 와일드카드).',
+                placeholder: '아카이브*, *초안, 프로젝트/*/과거'
             },
             enableFolderNotes: {
                 name: '폴더 노트 활성화',
@@ -2422,16 +2529,11 @@ export const STRINGS_KO = {
             },
             folderNoteName: {
                 name: '폴더 노트 이름',
-                desc: '확장자 없는 폴더 노트의 이름입니다. 폴더와 같은 이름을 사용하려면 비워 두세요.',
-                placeholder: 'index'
-            },
-            folderNoteNamePattern: {
-                name: '폴더 노트 이름 패턴',
-                desc: '확장자 없는 폴더 노트 이름 패턴. {{folder}}을 사용하여 폴더 이름을 삽입합니다. 설정하면 폴더 노트 이름이 적용되지 않습니다.'
+                desc: '확장자 없는 폴더 노트 이름입니다. {{folder}}를 사용하여 폴더 이름을 삽입하거나 index와 같은 고정 이름을 입력하세요.'
             },
             folderNoteTemplate: {
                 name: '폴더 노트 템플릿',
-                desc: '폴더 노트를 만들 때 사용하는 템플릿 파일입니다. Markdown 템플릿은 Templater를 사용할 수 있습니다. Canvas 및 Base 템플릿은 파일 내용으로 복사됩니다. 템플릿 폴더 위치는 파일 작업 > 템플릿에서 설정하세요.',
+                desc: '폴더 노트를 만들 때 사용하는 템플릿 파일입니다. Markdown 템플릿은 Templater를 사용할 수 있습니다. Canvas 및 Base 템플릿은 파일 내용으로 복사됩니다. 템플릿 폴더 위치는 파일 작업 및 템플릿 > 템플릿에서 설정하세요.',
                 formatWarning: '템플릿 형식은 선택한 폴더 노트 유형과 일치해야 합니다: .md, .canvas 또는 .base.'
             },
             folderNamesOpenFolderNotes: {
@@ -2465,7 +2567,7 @@ export const STRINGS_KO = {
             },
             deleteAttachments: {
                 name: '파일 삭제 시 첨부 파일 삭제',
-                desc: '연결된 첨부 파일과 생성된 그림 미리 보기가 다른 곳에서 사용되지 않는 경우 자동으로 제거',
+                desc: '연결된 첨부 파일과 생성된 그림 미리보기가 다른 곳에서 사용되지 않는 경우 자동으로 제거',
                 options: {
                     ask: '매번 확인',
                     always: '항상',
@@ -2514,7 +2616,7 @@ export const STRINGS_KO = {
                 desc: '노트 이름, 타임스탬프, 아이콘, 색상에 frontmatter 사용'
             },
             frontmatterNameFields: {
-                name: '이름 필드들',
+                name: '이름 필드',
                 desc: '쉼표로 구분된 frontmatter 필드 목록. 첫 번째 비어 있지 않은 값을 사용. 파일 이름으로 대체.',
                 placeholder: 'title, name'
             },
@@ -2566,6 +2668,11 @@ export const STRINGS_KO = {
                 buttonText: '❤️ 후원하기',
                 coffeeButton: '☕️ 커피 한 잔 사주기'
             },
+            otherPlugins: {
+                name: '제가 만든 다른 플러그인 보기',
+                betterPaste: '붙여넣은 텍스트, 링크, 이미지를 정리',
+                pixelPerfectImage: '정확한 이미지 크기 조정 등'
+            },
             checkForNewVersionOnStart: {
                 name: '시작 시 새 버전 확인',
                 desc: '시작 시 새로운 플러그인 릴리스를 확인하고 업데이트가 있으면 알림을 표시합니다. 확인은 하루에 최대 한 번 수행됩니다.',
@@ -2573,12 +2680,16 @@ export const STRINGS_KO = {
             },
             startupDebugLogging: {
                 name: '시작 디버그 로그',
-                desc: '시작 진단 정보를 보관소 루트의 타임스탬프가 있는 Markdown 파일에 기록한 뒤 시작이 안정되면 중지합니다. 이 파일은 동기화될 수 있으며 파일 경로를 포함할 수 있습니다.'
+                desc: '시작 진단 정보를 보관함 루트의 타임스탬프가 있는 Markdown 파일에 기록한 뒤 시작이 안정되면 중지합니다. 이 파일은 동기화될 수 있으며 파일 경로를 포함할 수 있습니다.'
             },
             whatsNew: {
                 name: 'Notebook Navigator {version}의 새로운 기능',
                 desc: '최근 업데이트와 개선 사항 보기',
                 buttonText: '최근 업데이트 보기'
+            },
+            showReleaseNotes: {
+                name: '업데이트 후 새로운 기능 표시',
+                desc: '비활성화하면 업데이트 후 새로운 기능 대화상자가 자동으로 열리지 않습니다.'
             },
             masteringVideo: {
                 name: 'Notebook Navigator 마스터하기 (동영상)',

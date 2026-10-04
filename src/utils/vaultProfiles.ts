@@ -818,9 +818,9 @@ function dedupeCanonicalHiddenTagPatterns(patterns: string[]): string[] {
     return uniquePatterns;
 }
 
-// Returns the localized name for the default profile, falling back to English if not available
+// Profile normalization persists this name before a download can finish, so use the bundled requested-language default.
 export function getLocalizedDefaultVaultProfileName(): string {
-    const localizedName = strings.settings.items.vaultProfiles.defaultName?.trim();
+    const localizedName = strings.settings.items.vaultProfiles.defaultName.trim();
     if (localizedName && localizedName.length > 0) {
         return localizedName;
     }
