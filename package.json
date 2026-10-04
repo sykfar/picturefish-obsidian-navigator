@@ -21,7 +21,8 @@
     "test:watch": "vitest",
     "lint:fix": "eslint \"src/**/*.{ts,tsx}\" \"tests/**/*.{ts,tsx}\" --fix",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "build:vault-design": "node scripts/build-vault-design.mjs"
   },
   "keywords": [],
   "author": "Picturefish contributors; based on work by Johan Sanneblad",

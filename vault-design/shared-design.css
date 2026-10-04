@@ -1,0 +1,145 @@
+/* CF-PFNAV-0005: approved shared surfaces and neutral report tables.
+ * The legacy palette remains available for comparison. Scoped view overrides,
+ * including ObsidianCLI's own appearance, keep their local variables.
+ */
+/* Restore the former theme surfaces even when the optional Navigator
+ * integration is enabled in Style Settings. */
+body.pf-vault-surface-current .picturefish-obsidian-navigator {
+    --nn-theme-nav-bg: var(--background-secondary);
+    --nn-theme-list-bg: var(--background-primary);
+    --nn-theme-foreground: var(--text-normal);
+    --nn-theme-foreground-muted: var(--text-muted);
+    --nn-theme-foreground-faded: var(--text-faint);
+    --nn-theme-file-selected-bg: var(--text-selection);
+    --nn-theme-navitem-selected-bg: var(--text-selection);
+    background-color: var(--background-primary);
+    color: var(--text-normal);
+}
+
+body:is(.pf-vault-surface-sand, .pf-vault-surface-white) {
+    color-scheme: light dark;
+    --pf-vault-ground: var(--venezia-sand);
+    --venezia-sand: light-dark(var(--pf-vault-sand-light, #f0eee9), var(--pf-vault-sand-dark, #0f1517)) !important;
+    --venezia-sand-2: light-dark(var(--pf-vault-sand-2-light, #e7e5df), var(--pf-vault-sand-2-dark, #1a2225)) !important;
+    --venezia-card: light-dark(var(--pf-vault-card-light, #ffffff), var(--pf-vault-card-dark, #1a2225)) !important;
+    --venezia-card-hover: light-dark(var(--pf-vault-card-hover-light, #faf9f6), var(--pf-vault-card-hover-dark, #223034)) !important;
+    --venezia-ink: light-dark(var(--pf-vault-ink-light, #2e2f2f), var(--pf-vault-ink-dark, #e6e9e4)) !important;
+    --venezia-ink-2: light-dark(var(--pf-vault-ink-2-light, #5a5b5b), var(--pf-vault-ink-2-dark, #96a6aa)) !important;
+    --venezia-asche: light-dark(var(--pf-vault-asche-light, #6f7070), var(--pf-vault-asche-dark, #7f9094)) !important;
+    --venezia-line: light-dark(var(--pf-vault-line-light, #d5d5d8), var(--pf-vault-line-dark, #344347)) !important;
+    --venezia-lagune: light-dark(var(--pf-vault-lagune-light, #2f6d9e), var(--pf-vault-lagune-dark, #6ba9de)) !important;
+    --venezia-lagune-deep: light-dark(var(--pf-vault-lagune-deep-light, #285f8a), var(--pf-vault-lagune-deep-dark, #8fbeed)) !important;
+    --venezia-lagune-soft: light-dark(var(--pf-vault-lagune-soft-light, #d3e4f1), var(--pf-vault-lagune-soft-dark, #203749)) !important;
+    --venezia-terra: light-dark(var(--pf-vault-terra-light, #b33456), var(--pf-vault-terra-dark, #b33456)) !important;
+    --venezia-terra-soft: light-dark(var(--pf-vault-terra-soft-light, #ecd8dc), var(--pf-vault-terra-soft-dark, #3a2a24)) !important;
+    --venezia-success: light-dark(var(--pf-vault-success-light, #4f6b2b), var(--pf-vault-success-dark, #8fbf6f)) !important;
+    --venezia-warning: light-dark(var(--pf-vault-warning-light, #8a6a15), var(--pf-vault-warning-dark, #e0c063)) !important;
+    --venezia-on-accent: light-dark(var(--pf-vault-on-accent-light, #ffffff), var(--pf-vault-on-accent-dark, #0f1517)) !important;
+    --venezia-nav-bg: var(--pf-vault-ground);
+    --venezia-selection: var(--venezia-lagune-soft);
+    --venezia-tag-bg: var(--venezia-lagune-soft);
+
+    --background-primary: var(--pf-vault-ground);
+    --background-primary-alt: var(--venezia-card);
+    --background-secondary: var(--pf-vault-ground);
+    --background-secondary-alt: var(--venezia-sand-2);
+    --background-modifier-border: var(--venezia-line);
+    --background-modifier-hover: var(--venezia-card-hover);
+    --background-modifier-active-hover: var(--venezia-lagune-soft);
+    --background-modifier-form-field: var(--venezia-card);
+    --text-normal: var(--venezia-ink);
+    --text-muted: var(--venezia-ink-2);
+    --text-faint: var(--venezia-asche);
+    --text-on-accent: var(--venezia-on-accent);
+    --interactive-normal: var(--venezia-card);
+    --interactive-hover: var(--venezia-card-hover);
+    --interactive-accent: var(--venezia-lagune);
+    --interactive-accent-hover: var(--venezia-lagune-deep);
+    --h1-color: var(--venezia-ink);
+    --h2-color: var(--venezia-ink);
+    --h3-color: var(--venezia-ink);
+    --h4-color: var(--venezia-ink);
+    --h5-color: var(--venezia-ink);
+    --h6-color: var(--venezia-ink);
+    color: var(--venezia-ink);
+}
+
+body.pf-vault-surface-white {
+    --pf-vault-ground: light-dark(#ffffff, #15191b);
+}
+
+body:is(.pf-vault-surface-sand, .pf-vault-surface-white).pf-vault-appearance-light {
+    color-scheme: light;
+}
+
+body:is(.pf-vault-surface-sand, .pf-vault-surface-white).pf-vault-appearance-dark {
+    color-scheme: dark;
+}
+
+body:is(.pf-vault-surface-sand, .pf-vault-surface-white) .workspace-leaf-content,
+body:is(.pf-vault-surface-sand, .pf-vault-surface-white) .markdown-preview-view,
+body:is(.pf-vault-surface-sand, .pf-vault-surface-white) .markdown-source-view {
+    background-color: var(--pf-vault-ground);
+}
+
+body:is(.pf-vault-surface-sand, .pf-vault-surface-white) .picturefish-obsidian-navigator {
+    --nn-theme-foreground: var(--venezia-ink);
+    --nn-theme-foreground-muted: var(--venezia-ink-2);
+    --nn-theme-foreground-faded: var(--venezia-asche);
+    --nn-theme-nav-bg: var(--pf-vault-ground);
+    --nn-theme-list-bg: var(--pf-vault-ground);
+    --nn-theme-mobile-bg: var(--pf-vault-ground);
+    --nn-theme-navitem-name-color: var(--venezia-ink);
+    --nn-theme-navitem-selected-name-color: var(--venezia-ink);
+    --nn-theme-file-name-color: var(--venezia-ink);
+    --nn-theme-file-preview-color: var(--venezia-ink-2);
+    --nn-theme-file-date-color: var(--venezia-asche);
+    --nn-theme-file-selected-bg: var(--venezia-lagune-soft);
+    --nn-theme-file-selected-inactive-bg: var(--venezia-lagune-soft);
+    --nn-theme-navitem-selected-bg: var(--venezia-lagune-soft);
+    --nn-theme-navitem-selected-inactive-bg: var(--venezia-lagune-soft);
+    --nn-theme-list-separator-color: var(--venezia-line);
+    --nn-theme-nav-separator-color: var(--venezia-line);
+    background-color: var(--pf-vault-ground);
+    color: var(--venezia-ink);
+}
+
+/* Match both table renderers without imposing reference-table column widths
+ * or a minimum width on unrelated tables. Body cells stay neutral on hover.
+ */
+body:is(.pf-vault-surface-sand, .pf-vault-surface-white) .markdown-rendered table,
+body:is(.pf-vault-surface-sand, .pf-vault-surface-white) table.table-view-table {
+    min-width: 0 !important;
+    width: 100%;
+    font-size: var(--venezia-dataview-table-font-size, 13px);
+}
+
+body:is(.pf-vault-surface-sand, .pf-vault-surface-white) .markdown-rendered table > tbody > tr > td,
+body:is(.pf-vault-surface-sand, .pf-vault-surface-white) table.table-view-table > tbody > tr > td {
+    font-size: var(--venezia-dataview-table-font-size, 13px) !important;
+    font-family: var(--venezia-font-body) !important;
+    padding: var(--pf-vault-table-cell-space, 12px) 12px !important;
+    background: var(--venezia-card) !important;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.45;
+}
+
+body:is(.pf-vault-surface-sand, .pf-vault-surface-white) .markdown-rendered table > thead > tr > th,
+body:is(.pf-vault-surface-sand, .pf-vault-surface-white) table.table-view-table > thead > tr > th {
+    width: auto;
+    padding: 10px 12px !important;
+    background: var(--venezia-lagune) !important;
+    color: var(--venezia-on-accent) !important;
+    font-family: var(--venezia-font-heading, var(--venezia-font-body)) !important;
+}
+
+body:is(.pf-vault-surface-sand, .pf-vault-surface-white) .markdown-rendered table > tbody > tr > td {
+    width: auto;
+}
+
+body:is(.pf-vault-surface-sand, .pf-vault-surface-white) .markdown-rendered table code,
+body:is(.pf-vault-surface-sand, .pf-vault-surface-white) table.table-view-table code {
+    background: transparent !important;
+    color: var(--venezia-lagune-deep);
+}

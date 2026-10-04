@@ -1,0 +1,1263 @@
+/* @settings
+name: Vault-Design
+id: venezia
+settings:
+    - id: pf-vault-heading
+      title: Gemeinsames Vault-Design
+      description: CF-PFNAV-0005. Navigator, Notizen und Tabellen aus einer Palette.
+      type: heading
+      level: 1
+      collapsed: false
+    - id: pf-vault-surface
+      title: Grundfläche
+      description: Sand ist die freigegebene Empfehlung. Die Vergleichsoption behält den bisherigen Farbmix.
+      type: class-select
+      allowEmpty: false
+      default: pf-vault-surface-sand
+      options:
+        - label: Sand — Empfehlung
+          value: pf-vault-surface-sand
+        - label: Weiß — Neutral
+          value: pf-vault-surface-white
+        - label: Bisheriger Farbmix
+          value: pf-vault-surface-current
+    - id: pf-vault-appearance
+      title: Darstellung
+      description: Gestaltung der gemeinsamen Vault-Flächen. System folgt der Betriebssystem-Darstellung; eigene Plugin-Themes bleiben gesondert.
+      type: class-select
+      allowEmpty: false
+      default: pf-vault-appearance-system
+      options:
+        - label: System folgen
+          value: pf-vault-appearance-system
+        - label: Hell
+          value: pf-vault-appearance-light
+        - label: Dunkel
+          value: pf-vault-appearance-dark
+    - id: pf-vault-tables-heading
+      title: Tabellen
+      type: heading
+      level: 2
+      collapsed: false
+    - id: venezia-dataview-table-font-size
+      title: Gemeinsame Tabellenschriftgröße
+      description: Gilt für Markdown- und Dataview-Inhalte. Zeilenflächen bleiben neutral.
+      type: variable-number-slider
+      default: 13
+      min: 12
+      max: 16
+      step: 0.5
+      format: px
+    - id: pf-vault-table-cell-space
+      title: Zellabstand
+      type: variable-select
+      default: 12px
+      options:
+        - label: Kompakt
+          value: 8px
+        - label: Standard
+          value: 12px
+        - label: Großzügig
+          value: 16px
+    - id: pf-vault-colors-light
+      title: Farben — Hell
+      type: heading
+      level: 2
+      collapsed: true
+    - id: pf-vault-sand-light
+      title: Grundfläche Sand
+      type: variable-color
+      format: hex
+      default: "#F0EEE9"
+    - id: pf-vault-sand-2-light
+      title: Nebenfläche
+      type: variable-color
+      format: hex
+      default: "#E7E5DF"
+    - id: pf-vault-card-light
+      title: Karten und Tabellen
+      type: variable-color
+      format: hex
+      default: "#FFFFFF"
+    - id: pf-vault-card-hover-light
+      title: Hover-Fläche
+      type: variable-color
+      format: hex
+      default: "#FAF9F6"
+    - id: pf-vault-ink-light
+      title: Text
+      type: variable-color
+      format: hex
+      default: "#2E2F2F"
+    - id: pf-vault-ink-2-light
+      title: Nebentext
+      type: variable-color
+      format: hex
+      default: "#5A5B5B"
+    - id: pf-vault-asche-light
+      title: Feiner Text
+      type: variable-color
+      format: hex
+      default: "#6F7070"
+    - id: pf-vault-line-light
+      title: Trennlinien
+      type: variable-color
+      format: hex
+      default: "#D5D5D8"
+    - id: pf-vault-lagune-light
+      title: Lagune — Akzent
+      type: variable-color
+      format: hex
+      default: "#2F6D9E"
+    - id: pf-vault-lagune-deep-light
+      title: Lagune vertieft
+      type: variable-color
+      format: hex
+      default: "#285F8A"
+    - id: pf-vault-lagune-soft-light
+      title: Auswahlfläche
+      type: variable-color
+      format: hex
+      default: "#D3E4F1"
+    - id: pf-vault-terra-light
+      title: Terra — Fehler
+      type: variable-color
+      format: hex
+      default: "#B33456"
+    - id: pf-vault-terra-soft-light
+      title: Fehlerfläche
+      type: variable-color
+      format: hex
+      default: "#ECD8DC"
+    - id: pf-vault-success-light
+      title: Erfolg
+      type: variable-color
+      format: hex
+      default: "#4F6B2B"
+    - id: pf-vault-warning-light
+      title: Warnung
+      type: variable-color
+      format: hex
+      default: "#8A6A15"
+    - id: pf-vault-on-accent-light
+      title: Text auf Akzent
+      type: variable-color
+      format: hex
+      default: "#FFFFFF"
+    - id: pf-vault-colors-dark
+      title: Farben — Dunkel
+      type: heading
+      level: 2
+      collapsed: true
+    - id: pf-vault-sand-dark
+      title: Grundfläche Sand
+      type: variable-color
+      format: hex
+      default: "#0F1517"
+    - id: pf-vault-sand-2-dark
+      title: Nebenfläche
+      type: variable-color
+      format: hex
+      default: "#1A2225"
+    - id: pf-vault-card-dark
+      title: Karten und Tabellen
+      type: variable-color
+      format: hex
+      default: "#1A2225"
+    - id: pf-vault-card-hover-dark
+      title: Hover-Fläche
+      type: variable-color
+      format: hex
+      default: "#223034"
+    - id: pf-vault-ink-dark
+      title: Text
+      type: variable-color
+      format: hex
+      default: "#E6E9E4"
+    - id: pf-vault-ink-2-dark
+      title: Nebentext
+      type: variable-color
+      format: hex
+      default: "#96A6AA"
+    - id: pf-vault-asche-dark
+      title: Feiner Text
+      type: variable-color
+      format: hex
+      default: "#7F9094"
+    - id: pf-vault-line-dark
+      title: Trennlinien
+      type: variable-color
+      format: hex
+      default: "#344347"
+    - id: pf-vault-lagune-dark
+      title: Lagune — Akzent
+      type: variable-color
+      format: hex
+      default: "#6BA9DE"
+    - id: pf-vault-lagune-deep-dark
+      title: Lagune vertieft
+      type: variable-color
+      format: hex
+      default: "#8FBEED"
+    - id: pf-vault-lagune-soft-dark
+      title: Auswahlfläche
+      type: variable-color
+      format: hex
+      default: "#203749"
+    - id: pf-vault-terra-dark
+      title: Terra — Fehler
+      type: variable-color
+      format: hex
+      default: "#B33456"
+    - id: pf-vault-terra-soft-dark
+      title: Fehlerfläche
+      type: variable-color
+      format: hex
+      default: "#3A2A24"
+    - id: pf-vault-success-dark
+      title: Erfolg
+      type: variable-color
+      format: hex
+      default: "#8FBF6F"
+    - id: pf-vault-warning-dark
+      title: Warnung
+      type: variable-color
+      format: hex
+      default: "#E0C063"
+    - id: pf-vault-on-accent-dark
+      title: Text auf Akzent
+      type: variable-color
+      format: hex
+      default: "#0F1517"
+    -
+        id: venezia-fonts
+        title: Typografie — normale Picturefish Sans
+        type: heading
+        level: 2
+        collapsed: true
+    -
+        id: venezia-font-body
+        title: Schrift für Fließtext
+        description: Venezia Sans ist eingebettet und funktioniert deshalb auch mobil.
+        type: variable-text
+        default: Picturefish Sans Obsidian
+    -
+        id: venezia-font-heading
+        title: Schrift für Überschriften
+        type: variable-text
+        default: Picturefish Sans Obsidian
+    -
+        id: venezia-font-weight-body
+        title: Grundgewicht Fließtext
+        type: variable-number
+        default: 400
+    -
+        id: venezia-font-weight-heading
+        title: Grundgewicht Überschriften
+        type: variable-number
+        default: 600
+    -
+        id: venezia-layout
+        title: Lesebreite
+        type: heading
+        level: 2
+        collapsed: true
+    -
+        id: venezia-reading-width
+        title: Maximale Breite normaler Notizen
+        description: Mittelweg zwischen klassischer Lesespalte und voller Fensterbreite. Dashboards bleiben davon ausgenommen.
+        type: variable-number-slider
+        default: 1040
+        min: 760
+        max: 1600
+        step: 20
+        format: px
+    -
+        id: venezia-page-margin
+        title: Seitenabstand
+        type: variable-number-slider
+        default: 28
+        min: 12
+        max: 64
+        step: 2
+        format: px
+    -
+        id: venezia-shape
+        title: Form & Tiefe
+        type: heading
+        level: 2
+        collapsed: true
+    -
+        id: venezia-radius
+        title: Kartenradius
+        type: variable-number
+        default: 14
+        format: px
+    -
+        id: venezia-transition
+        title: Übergang
+        type: variable-text
+        default: '0.16s ease'
+    -
+        id: venezia-shadow
+        title: Kartenschatten
+        type: variable-text
+        default: '0 2px 14px rgba(27,30,28,0.06)'
+
+*/
+
+/* Picturefish Sans — OFL 1.1, abgeleitet von Open Sans.
+   Die Web-Schnitte sind direkt eingebettet, damit Obsidian Sync sie zusammen
+   mit diesem Snippet auf Desktop, iPhone und iPad übertragen kann. */
+
+@font-face {
+    font-family: 'Picturefish Sans Obsidian';
+    src: url('__FONT_LIGHT__') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Picturefish Sans Obsidian';
+    src: url('__FONT_REGULAR__') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Picturefish Sans Obsidian';
+    src: url('__FONT_SEMIBOLD__') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Picturefish Sans Obsidian';
+    src: url('__FONT_BOLD__') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --venezia-font-desktop: 'Picturefish Sans Obsidian', 'Picturefish Sans', system-ui, -apple-system, sans-serif;
+
+    --venezia-font-body: var(--venezia-font-desktop);
+    --venezia-font-heading: var(--venezia-font-desktop);
+    --venezia-font-weight-body: 400;
+    --venezia-font-weight-heading: 600;
+    --venezia-reading-width: 1040px;
+    --venezia-page-margin: 28px;
+    --venezia-radius: 14px;
+    --venezia-transition: 0.16s ease;
+}
+
+body.theme-light,
+[data-theme='light'] {
+    --venezia-sand: #f0eee9;
+    --venezia-sand-2: #e7e5df;
+    --venezia-card: #ffffff;
+    --venezia-card-hover: #faf9f6;
+    --venezia-ink: #2e2f2f;
+    --venezia-ink-2: #5a5b5b;
+    --venezia-asche: #6f7070;
+    --venezia-line: #d5d5d8;
+    --venezia-lagune: #2f6d9e;
+    --venezia-lagune-deep: #285f8a;
+    --venezia-lagune-soft: #d3e4f1;
+    --venezia-terra: #b33456;
+    --venezia-terra-soft: #ecd8dc;
+    --venezia-success: #4f6b2b;
+    --venezia-warning: #8a6a15;
+    --venezia-on-accent: #ffffff;
+    --venezia-nav-bg: rgba(240, 238, 233, 0.94);
+    --venezia-tag-bg: rgba(47, 109, 158, 0.1);
+    --venezia-selection: rgba(47, 109, 158, 0.2);
+    --venezia-shadow: 0 2px 14px rgba(27, 30, 28, 0.06);
+    --venezia-accent-rgb: 47, 109, 158;
+}
+
+body.theme-dark,
+[data-theme='dark'] {
+    --venezia-sand: #0f1517;
+    --venezia-sand-2: #1a2225;
+    --venezia-card: #1a2225;
+    --venezia-card-hover: #223034;
+    --venezia-ink: #e6e9e4;
+    --venezia-ink-2: #96a6aa;
+    --venezia-asche: #7f9094;
+    --venezia-line: #223034;
+    --venezia-lagune: #59b3ab;
+    --venezia-lagune-deep: #7cc7c0;
+    --venezia-lagune-soft: #1a3334;
+    --venezia-terra: #e08a6f;
+    --venezia-terra-soft: #3a2a24;
+    --venezia-success: #8fbf6f;
+    --venezia-warning: #e0c063;
+    --venezia-on-accent: #0f1517;
+    --venezia-nav-bg: rgba(15, 21, 23, 0.95);
+    --venezia-tag-bg: rgba(89, 179, 171, 0.13);
+    --venezia-selection: rgba(89, 179, 171, 0.24);
+    --venezia-shadow: 0 2px 12px rgba(0, 0, 0, 0.34);
+    --venezia-accent-rgb: 89, 179, 171;
+}
+
+/* Obsidian-Tokens — Lagune & Sand */
+
+body {
+    --file-line-width: var(--venezia-reading-width);
+    --file-margins: var(--venezia-page-margin);
+
+    --background-primary: var(--venezia-sand);
+    --background-primary-alt: var(--venezia-card);
+    --background-secondary: var(--venezia-card);
+    --background-secondary-alt: var(--venezia-sand-2);
+    --background-modifier-border: var(--venezia-line);
+    --background-modifier-border-hover: var(--venezia-lagune);
+    --background-modifier-hover: var(--venezia-card-hover);
+    --background-modifier-active-hover: var(--venezia-lagune-soft);
+    --background-modifier-form-field: var(--venezia-card);
+    --background-modifier-form-field-highlighted: var(--venezia-card-hover);
+    --background-modifier-error: var(--venezia-terra-soft);
+    --background-modifier-error-hover: var(--venezia-terra-soft);
+    --background-modifier-success: var(--venezia-lagune-soft);
+
+    --text-normal: var(--venezia-ink);
+    --text-muted: var(--venezia-ink-2);
+    --text-faint: var(--venezia-asche);
+    --text-accent: var(--venezia-lagune);
+    --text-accent-hover: var(--venezia-lagune-deep);
+    --text-on-accent: var(--venezia-on-accent);
+    --text-error: var(--venezia-terra);
+    --text-warning: var(--venezia-warning);
+    --text-success: var(--venezia-success);
+    --text-selection: var(--venezia-selection);
+
+    --interactive-normal: var(--venezia-card);
+    --interactive-hover: var(--venezia-card-hover);
+    --interactive-accent: var(--venezia-lagune);
+    --interactive-accent-hover: var(--venezia-lagune-deep);
+    --interactive-accent-rgb: var(--venezia-accent-rgb);
+
+    --link-color: var(--venezia-lagune);
+    --link-color-hover: var(--venezia-lagune-deep);
+    --link-external-color: var(--venezia-terra);
+    --link-external-color-hover: var(--venezia-lagune);
+
+    --tag-background: var(--venezia-tag-bg);
+    --tag-background-hover: var(--venezia-lagune-soft);
+    --tag-color: var(--venezia-lagune-deep);
+    --tag-color-hover: var(--venezia-lagune-deep);
+
+    --nav-item-color: var(--venezia-ink-2);
+    --nav-item-color-hover: var(--venezia-ink);
+    --nav-item-color-active: var(--venezia-lagune-deep);
+    --nav-item-background-hover: var(--venezia-card-hover);
+    --nav-item-background-active: var(--venezia-lagune-soft);
+
+    --icon-color: var(--venezia-ink-2);
+    --icon-color-hover: var(--venezia-lagune);
+    --icon-color-active: var(--venezia-terra);
+
+    --titlebar-background: var(--venezia-nav-bg);
+    --titlebar-background-focused: var(--venezia-nav-bg);
+    --ribbon-background: var(--venezia-nav-bg);
+    --status-bar-background: var(--venezia-nav-bg);
+    --divider-color: var(--venezia-line);
+    --scrollbar-bg: transparent;
+    --scrollbar-thumb-bg: var(--venezia-line);
+    --scrollbar-active-thumb-bg: var(--venezia-lagune);
+
+    --checkbox-color: var(--venezia-lagune);
+    --checkbox-color-hover: var(--venezia-lagune-deep);
+    --toggle-thumb-color: var(--venezia-on-accent);
+    --toggle-border-width: 1px;
+
+    --radius-s: calc(var(--venezia-radius) * 0.5);
+    --radius-m: var(--venezia-radius);
+    --radius-l: calc(var(--venezia-radius) * 1.55);
+
+    --font-text: var(--venezia-font-body);
+    --font-interface: var(--venezia-font-body);
+    --font-text-theme: var(--venezia-font-body);
+    --font-interface-theme: var(--venezia-font-body);
+}
+
+/* Typografie */
+
+body,
+.app-container,
+.markdown-preview-view,
+.markdown-source-view,
+.cm-editor,
+input,
+textarea,
+button,
+select {
+    font-family: var(--venezia-font-body);
+    font-weight: var(--venezia-font-weight-body);
+}
+
+.inline-title,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.markdown-preview-view h1,
+.markdown-preview-view h2,
+.markdown-preview-view h3,
+.markdown-preview-view h4,
+.markdown-preview-view h5,
+.markdown-preview-view h6,
+.cm-header {
+    font-family: var(--venezia-font-heading);
+    font-weight: var(--venezia-font-weight-heading);
+    letter-spacing: -0.018em;
+}
+
+.inline-title {
+    font-weight: 300;
+    letter-spacing: -0.012em;
+}
+
+strong,
+.cm-strong {
+    font-weight: 700;
+}
+
+.markdown-preview-view blockquote {
+    font-weight: 300;
+}
+
+/* Flächen und App-Chrome */
+
+.workspace-leaf-content,
+.markdown-preview-view,
+.markdown-source-view {
+    background: var(--venezia-sand);
+    color: var(--venezia-ink);
+}
+
+.workspace-ribbon,
+.titlebar,
+.mod-left-split .workspace-tabs,
+.mod-right-split .workspace-tabs,
+.status-bar {
+    background: var(--venezia-nav-bg);
+}
+
+.status-bar {
+    border-top: 1px solid var(--venezia-line);
+}
+
+.workspace-tab-header {
+    transition:
+        color var(--venezia-transition),
+        background var(--venezia-transition);
+}
+
+.workspace-tab-header.is-active {
+    color: var(--venezia-ink);
+}
+
+.workspace-tab-header.is-active::before,
+.workspace-tab-header.is-active::after {
+    box-shadow: none;
+}
+
+/* Navigation */
+
+.nav-folder-title,
+.nav-file-title,
+.tree-item-self {
+    border-radius: calc(var(--venezia-radius) * 0.55);
+    transition:
+        background var(--venezia-transition),
+        color var(--venezia-transition),
+        border-color var(--venezia-transition);
+}
+
+.nav-folder-title:hover,
+.nav-file-title:hover,
+.tree-item-self:hover {
+    background: var(--venezia-card-hover);
+}
+
+.tree-item-self.is-active,
+.nav-file-title.is-active {
+    background: var(--venezia-lagune-soft);
+    color: var(--venezia-lagune-deep);
+}
+
+/* Karten, Dialoge und Eingaben */
+
+.callout,
+.markdown-preview-view blockquote,
+.modal,
+.menu,
+.prompt,
+.suggestion-container,
+.popover {
+    border: 1px solid var(--venezia-line);
+    border-radius: var(--venezia-radius);
+    background: var(--venezia-card);
+    box-shadow: var(--venezia-shadow);
+}
+
+.callout {
+    --callout-color: var(--venezia-accent-rgb);
+}
+
+input,
+textarea,
+select,
+.dropdown {
+    border-color: var(--venezia-line);
+    border-radius: calc(var(--venezia-radius) * 0.65);
+    background: var(--venezia-card);
+    color: var(--venezia-ink);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--venezia-lagune);
+    box-shadow: 0 0 0 2px var(--venezia-lagune-soft);
+}
+
+/* Code */
+
+.markdown-preview-view pre,
+.markdown-source-view .cm-line pre,
+.markdown-rendered pre {
+    border: 1px solid var(--venezia-line);
+    border-radius: calc(var(--venezia-radius) * 0.75);
+    background: var(--venezia-card);
+}
+
+code,
+.cm-inline-code {
+    border-radius: 5px;
+    background: var(--venezia-sand-2);
+    color: var(--venezia-terra);
+}
+
+/* Tags und Eigenschaften */
+
+.tag,
+a.tag,
+.cm-hashtag {
+    border: 1px solid transparent;
+    border-radius: 999px;
+    background: var(--venezia-tag-bg);
+    color: var(--venezia-lagune-deep);
+    font-weight: 600;
+}
+
+.tag:hover,
+a.tag:hover {
+    border-color: var(--venezia-lagune);
+    background: var(--venezia-lagune-soft);
+}
+
+.metadata-property,
+.metadata-container {
+    --metadata-label-background-active: var(--venezia-lagune-soft);
+    --metadata-input-background-active: var(--venezia-card);
+}
+
+/* Buttons und Links */
+
+button,
+.clickable-icon {
+    border-radius: calc(var(--venezia-radius) * 0.65);
+    transition:
+        background var(--venezia-transition),
+        color var(--venezia-transition),
+        border-color var(--venezia-transition);
+}
+
+button.mod-cta {
+    border-color: var(--venezia-lagune);
+    border-radius: 999px;
+    background: var(--venezia-lagune);
+    color: var(--venezia-on-accent);
+    box-shadow: 0 9px 20px -11px rgba(var(--venezia-accent-rgb), 0.75);
+}
+
+button.mod-cta:hover {
+    background: var(--venezia-lagune-deep);
+}
+
+button.mod-warning {
+    border-color: var(--venezia-terra);
+    background: var(--venezia-terra);
+    color: var(--venezia-on-accent);
+}
+
+a.internal-link {
+    color: var(--venezia-lagune);
+    text-decoration-color: var(--venezia-line);
+    text-underline-offset: 3px;
+}
+
+a.external-link {
+    color: var(--venezia-terra);
+    text-decoration-color: var(--venezia-terra-soft);
+    text-underline-offset: 3px;
+}
+
+a.internal-link:hover,
+a.external-link:hover {
+    color: var(--venezia-lagune-deep);
+}
+
+/* Tabellen und Trennlinien */
+
+.markdown-rendered table {
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border: 1px solid var(--venezia-line);
+    border-radius: calc(var(--venezia-radius) * 0.75);
+    background: var(--venezia-card);
+}
+
+.markdown-rendered th {
+    background: var(--venezia-sand-2);
+    color: var(--venezia-ink);
+    font-weight: 600;
+}
+
+.markdown-rendered td,
+.markdown-rendered th,
+.markdown-rendered hr {
+    border-color: var(--venezia-line);
+}
+
+::selection {
+    background: var(--venezia-selection);
+}
+
+/* Mobile: Normale Picturefish Sans und touchfreundliche Formen */
+
+@media (max-width: 840px) {
+    body {
+        --venezia-font-body: var(--venezia-font-desktop);
+        --venezia-font-heading: var(--venezia-font-desktop);
+        --venezia-reading-width: 100%;
+        --venezia-page-margin: 14px;
+        --venezia-radius: 12px;
+    }
+
+    .inline-title {
+        font-weight: 600;
+    }
+
+    button,
+    .clickable-icon,
+    .nav-folder-title,
+    .nav-file-title {
+        min-height: 38px;
+    }
+
+    .modal {
+        width: min(94vw, 560px);
+    }
+}
+
+/* Venezia Report Tables
+   Scoped with the `venezia-table` frontmatter class so ordinary Vault tables
+   retain their existing appearance. */
+
+.markdown-preview-view.venezia-table table {
+    width: 100%;
+    min-width: 760px;
+    margin: 1.5rem 0 2.4rem;
+    border: 1px solid var(--venezia-line);
+    border-radius: var(--venezia-radius);
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    background: var(--venezia-card);
+    box-shadow: var(--venezia-shadow);
+    font-size: var(--venezia-dataview-table-font-size, 15px);
+    line-height: 1.45;
+}
+
+.markdown-preview-view.venezia-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    padding: 0.85rem 1rem;
+    background: linear-gradient(135deg, var(--venezia-lagune-soft), var(--venezia-sand-2));
+    color: var(--venezia-ink);
+    border-bottom: 2px solid var(--venezia-lagune);
+    font-size: 0.78em;
+    font-weight: 700;
+    letter-spacing: 0.045em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.markdown-preview-view.venezia-table tbody td {
+    padding: 0.95rem 1rem;
+    vertical-align: top;
+    border-bottom: 1px solid var(--venezia-line);
+    color: var(--venezia-ink);
+}
+
+.markdown-preview-view.venezia-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.markdown-preview-view.venezia-table tbody tr:nth-child(even) {
+    background: color-mix(in srgb, var(--venezia-sand-2) 38%, var(--venezia-card));
+}
+
+.markdown-preview-view.venezia-table tbody tr:hover {
+    background: var(--venezia-lagune-soft);
+    transition: background var(--venezia-transition);
+}
+
+.markdown-preview-view.venezia-table th:first-child,
+.markdown-preview-view.venezia-table td:first-child {
+    width: 19%;
+}
+
+.markdown-preview-view.venezia-table tbody td:first-child {
+    border-left: 4px solid var(--venezia-lagune);
+    background: color-mix(in srgb, var(--venezia-lagune-soft) 42%, var(--venezia-card));
+    color: var(--venezia-lagune-deep);
+    font-weight: 700;
+}
+
+.markdown-preview-view.venezia-table td a {
+    font-weight: 600;
+}
+
+.markdown-preview-view.venezia-table td code {
+    padding: 0.12em 0.35em;
+    border-radius: 5px;
+    background: var(--venezia-sand-2);
+    color: var(--venezia-terra);
+    font-size: 0.9em;
+}
+
+@media (max-width: 840px) {
+    .markdown-preview-view.venezia-table table {
+        min-width: 680px;
+        font-size: 0.86em;
+    }
+
+    .markdown-preview-view.venezia-table thead th,
+    .markdown-preview-view.venezia-table tbody td {
+        padding: 0.75rem 0.8rem;
+    }
+}
+
+/* Dataview tables — same Venezia report language as Markdown tables */
+
+.markdown-preview-view.venezia-table .block-language-dataview {
+    max-width: 100%;
+    margin: 1.5rem 0 2.4rem;
+    overflow-x: auto;
+}
+
+.markdown-preview-view.venezia-table .block-language-dataview .table-view-table {
+    width: 100%;
+    min-width: 680px;
+    margin: 0;
+    border: 1px solid var(--venezia-line);
+    border-radius: var(--venezia-radius);
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    background: var(--venezia-card);
+    box-shadow: var(--venezia-shadow);
+    font-size: 0.91em;
+    line-height: 1.45;
+}
+
+.markdown-preview-view.venezia-table .block-language-dataview .table-view-table > thead > tr > th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    padding: 0.85rem 1rem;
+    background: linear-gradient(135deg, var(--venezia-lagune-soft), var(--venezia-sand-2));
+    color: var(--venezia-ink);
+    border: 0;
+    border-bottom: 2px solid var(--venezia-lagune);
+    font-size: 0.78em;
+    font-weight: 700;
+    letter-spacing: 0.045em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.markdown-preview-view.venezia-table .block-language-dataview .table-view-table > tbody > tr > td {
+    padding: 0.9rem 1rem;
+    vertical-align: top;
+    border: 0;
+    border-bottom: 1px solid var(--venezia-line);
+    color: var(--venezia-ink);
+}
+
+.markdown-preview-view.venezia-table .block-language-dataview .table-view-table > tbody > tr:last-child > td {
+    border-bottom: 0;
+}
+
+.markdown-preview-view.venezia-table .block-language-dataview .table-view-table > tbody > tr:nth-child(even) {
+    background: color-mix(in srgb, var(--venezia-sand-2) 38%, var(--venezia-card));
+}
+
+.markdown-preview-view.venezia-table .block-language-dataview .table-view-table > tbody > tr:hover {
+    background: var(--venezia-lagune-soft);
+}
+
+/* Identifier column */
+
+.markdown-preview-view.venezia-table .block-language-dataview .table-view-table > thead > tr > th:first-child,
+.markdown-preview-view.venezia-table .block-language-dataview .table-view-table > tbody > tr > td:first-child {
+    width: 12%;
+}
+
+.markdown-preview-view.venezia-table .block-language-dataview .table-view-table > tbody > tr > td:first-child {
+    border-left: 4px solid var(--venezia-lagune);
+    background: color-mix(in srgb, var(--venezia-lagune-soft) 42%, var(--venezia-card));
+    color: var(--venezia-lagune-deep);
+    font-family: var(--font-monospace);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* Dataview lists become compact product/status chips */
+
+.markdown-preview-view.venezia-table .block-language-dataview .table-view-table ul,
+.markdown-preview-view.venezia-table .block-language-dataview .table-view-table ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    padding: 0;
+    list-style: none;
+}
+
+.markdown-preview-view.venezia-table .block-language-dataview .table-view-table li {
+    margin: 0;
+    padding: 0.2rem 0.55rem;
+    border: 1px solid var(--venezia-line);
+    border-radius: 999px;
+    background: var(--venezia-tag-bg);
+    color: var(--venezia-lagune-deep);
+    font-size: 0.88em;
+    font-weight: 600;
+}
+
+.markdown-preview-view.venezia-table .block-language-dataview .table-view-table a {
+    font-weight: 600;
+}
+
+@media (max-width: 840px) {
+    .markdown-preview-view.venezia-table .block-language-dataview .table-view-table {
+        min-width: 620px;
+        font-size: 0.86em;
+    }
+
+    .markdown-preview-view.venezia-table .block-language-dataview .table-view-table > thead > tr > th,
+    .markdown-preview-view.venezia-table .block-language-dataview .table-view-table > tbody > tr > td {
+        padding: 0.75rem 0.8rem;
+    }
+}
+
+/* Fallback: Dataview does not consistently inherit frontmatter cssclasses
+   across Obsidian versions, so rendered Dataview tables receive the Venezia
+   treatment directly as well. */
+
+.markdown-preview-view .block-language-dataview .table-view-table {
+    width: 100%;
+    min-width: 680px;
+    border: 1px solid var(--venezia-line);
+    border-radius: var(--venezia-radius);
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    background: var(--venezia-card);
+    box-shadow: var(--venezia-shadow);
+    color: var(--venezia-ink);
+}
+
+.markdown-preview-view .block-language-dataview .table-view-table > thead > tr > th {
+    padding: 0.85rem 1rem;
+    background: linear-gradient(135deg, var(--venezia-lagune-soft), var(--venezia-sand-2));
+    color: var(--venezia-ink);
+    border: 0;
+    border-bottom: 2px solid var(--venezia-lagune);
+    font-size: 0.78em;
+    letter-spacing: 0.045em;
+    text-transform: uppercase;
+}
+
+.markdown-preview-view .block-language-dataview .table-view-table > tbody > tr > td {
+    padding: 0.9rem 1rem;
+    border: 0;
+    border-bottom: 1px solid var(--venezia-line);
+    color: var(--venezia-ink);
+    vertical-align: top;
+}
+
+.markdown-preview-view .block-language-dataview .table-view-table > tbody > tr:nth-child(even) {
+    background: color-mix(in srgb, var(--venezia-sand-2) 38%, var(--venezia-card));
+}
+
+.markdown-preview-view .block-language-dataview .table-view-table > tbody > tr:hover {
+    background: var(--venezia-lagune-soft);
+}
+
+.markdown-preview-view .block-language-dataview .table-view-table > tbody > tr > td:first-child {
+    border-left: 4px solid var(--venezia-lagune);
+    color: var(--venezia-lagune-deep);
+    font-family: var(--font-monospace);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.markdown-preview-view .block-language-dataview .table-view-table ul,
+.markdown-preview-view .block-language-dataview .table-view-table ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    padding: 0;
+    list-style: none;
+}
+
+.markdown-preview-view .block-language-dataview .table-view-table li {
+    margin: 0;
+    padding: 0.2rem 0.55rem;
+    border: 1px solid var(--venezia-line);
+    border-radius: 999px;
+    background: var(--venezia-tag-bg);
+    color: var(--venezia-lagune-deep);
+    font-size: 0.88em;
+    font-weight: 600;
+}
+
+/* Direct Dataview table override.
+   Dataview can render the table outside `.block-language-dataview` depending
+   on the query renderer/version, so target the generated table class itself. */
+
+table.table-view-table {
+    width: 100% !important;
+    min-width: 680px;
+    margin: 1.5rem 0 2.4rem;
+    border: 1px solid var(--venezia-line) !important;
+    border-radius: var(--venezia-radius);
+    border-collapse: separate !important;
+    border-spacing: 0;
+    overflow: hidden;
+    background: var(--venezia-card) !important;
+    box-shadow: var(--venezia-shadow);
+    font-size: var(--venezia-dataview-table-font-size, 15px);
+    color: var(--venezia-ink);
+}
+
+table.table-view-table > thead > tr > th {
+    padding: 0.8rem 1rem !important;
+    background: var(--venezia-lagune) !important;
+    color: var(--venezia-on-accent) !important;
+    border: 0 !important;
+    border-bottom: 3px solid var(--venezia-lagune-deep) !important;
+    font-size: 0.78em;
+    font-weight: 700;
+    letter-spacing: 0.055em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+table.table-view-table > tbody > tr > td {
+    padding: 0.9rem 1rem !important;
+    border: 0 !important;
+    border-bottom: 1px solid var(--venezia-line) !important;
+    color: var(--venezia-ink);
+    vertical-align: top;
+}
+
+table.table-view-table > tbody > tr:nth-child(even) > td {
+    background: var(--venezia-sand-2) !important;
+}
+
+table.table-view-table > tbody > tr:hover > td {
+    background: var(--venezia-lagune-soft) !important;
+}
+
+table.table-view-table > tbody > tr > td:first-child {
+    width: 12%;
+    border-left: 5px solid var(--venezia-lagune) !important;
+    background: color-mix(in srgb, var(--venezia-lagune-soft) 58%, var(--venezia-card)) !important;
+    color: var(--venezia-lagune-deep) !important;
+    font-family: var(--font-monospace);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+table.table-view-table ul,
+table.table-view-table ol {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+}
+
+table.table-view-table ul > li,
+table.table-view-table ol > li {
+    display: inline-block;
+    margin: 0 !important;
+    padding: 0.2rem 0.6rem !important;
+    border: 1px solid var(--venezia-lagune) !important;
+    border-radius: 999px;
+    background: var(--venezia-lagune-soft) !important;
+    color: var(--venezia-lagune-deep) !important;
+    font-size: 0.86em;
+    font-weight: 600;
+}
+
+/* Readability override: keep body rows neutral. The accent belongs to the
+   header and identifier edge, not to full-width row backgrounds. */
+
+table.table-view-table > tbody > tr > td,
+table.table-view-table > tbody > tr:nth-child(even) > td,
+table.table-view-table > tbody > tr:hover > td,
+.markdown-rendered table:not(.table-view-table) > tbody > tr > td,
+.markdown-rendered table:not(.table-view-table) > tbody > tr:nth-child(even) > td,
+.markdown-rendered table:not(.table-view-table) > tbody > tr:hover > td {
+    background: var(--venezia-card) !important;
+}
+
+table.table-view-table > tbody > tr > td:first-child,
+.markdown-rendered table:not(.table-view-table) > tbody > tr > td:first-child {
+    background: var(--venezia-card) !important;
+}
+
+/* Dataview/Obsidian assigns the body font size directly to table cells. Keep
+   the Style Settings value effective for the actual table contents as well. */
+table.table-view-table > tbody > tr > td,
+.markdown-preview-view .block-language-dataview .table-view-table > tbody > tr > td {
+    font-size: var(--venezia-dataview-table-font-size, 15px) !important;
+}
+
+/* Tables are editorial surfaces: inline code should read as notation, not as
+   a collection of grey badges. */
+
+.markdown-rendered table:not(.table-view-table) code,
+table.table-view-table code {
+    padding: 0;
+    border: 0;
+    background: transparent !important;
+    color: var(--venezia-lagune-deep);
+    font-size: 0.94em;
+    font-weight: 600;
+}
+
+/* Balanced columns for four-column command/reference tables. */
+
+.markdown-rendered table:not(.table-view-table) > thead > tr > th:nth-child(1),
+.markdown-rendered table:not(.table-view-table) > tbody > tr > td:nth-child(1) {
+    width: 15%;
+}
+
+.markdown-rendered table:not(.table-view-table) > thead > tr > th:nth-child(2),
+.markdown-rendered table:not(.table-view-table) > tbody > tr > td:nth-child(2) {
+    width: 28%;
+}
+
+.markdown-rendered table:not(.table-view-table) > thead > tr > th:nth-child(3),
+.markdown-rendered table:not(.table-view-table) > tbody > tr > td:nth-child(3) {
+    width: 28%;
+}
+
+.markdown-rendered table:not(.table-view-table) > thead > tr > th:nth-child(4),
+.markdown-rendered table:not(.table-view-table) > tbody > tr > td:nth-child(4) {
+    width: 29%;
+}
+
+/* Global Markdown tables
+   Applies the same visual language to ordinary pipe tables throughout the
+   Vault, while leaving Dataview tables to the rules above. */
+
+.markdown-rendered table:not(.table-view-table) {
+    width: 100%;
+    min-width: 680px;
+    margin: 1.5rem 0 2.4rem;
+    border: 1px solid var(--venezia-line);
+    border-radius: var(--venezia-radius);
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    background: var(--venezia-card);
+    box-shadow: var(--venezia-shadow);
+    color: var(--venezia-ink);
+}
+
+.markdown-rendered table:not(.table-view-table) > thead > tr > th {
+    padding: 0.8rem 1rem;
+    background: var(--venezia-lagune);
+    color: var(--venezia-on-accent);
+    border: 0;
+    border-bottom: 3px solid var(--venezia-lagune-deep);
+    font-size: 0.78em;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.markdown-rendered table:not(.table-view-table) > tbody > tr > td {
+    padding: 0.9rem 1rem;
+    border: 0;
+    border-bottom: 1px solid var(--venezia-line);
+    color: var(--venezia-ink);
+    vertical-align: top;
+}
+
+.markdown-rendered table:not(.table-view-table) > tbody > tr:nth-child(even) > td {
+    background: var(--venezia-sand-2);
+}
+
+.markdown-rendered table:not(.table-view-table) > tbody > tr:hover > td {
+    background: var(--venezia-lagune-soft);
+}
+
+.markdown-rendered table:not(.table-view-table) > tbody > tr > td:first-child {
+    border-left: 5px solid var(--venezia-lagune);
+    background: color-mix(in srgb, var(--venezia-lagune-soft) 58%, var(--venezia-card));
+    color: var(--venezia-lagune-deep);
+    font-weight: 700;
+}
+
+@media (max-width: 840px) {
+    .markdown-rendered table:not(.table-view-table) {
+        min-width: 620px;
+        font-size: 0.86em;
+    }
+
+    .markdown-rendered table:not(.table-view-table) > thead > tr > th,
+    .markdown-rendered table:not(.table-view-table) > tbody > tr > td {
+        padding: 0.75rem 0.8rem;
+    }
+}
+
+/* Final neutral-row pass: prevents theme or hover colors from filling whole
+   body rows and keeps long reference tables easy to scan. */
+
+.markdown-rendered table:not(.table-view-table) > tbody > tr > td,
+.markdown-rendered table:not(.table-view-table) > tbody > tr:nth-child(even) > td,
+.markdown-rendered table:not(.table-view-table) > tbody > tr:hover > td {
+    background: var(--venezia-card) !important;
+}
+
+.markdown-rendered table:not(.table-view-table) > tbody > tr > td:first-child {
+    background: var(--venezia-card) !important;
+}
