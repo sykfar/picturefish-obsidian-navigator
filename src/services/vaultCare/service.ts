@@ -32,7 +32,7 @@ export function careService(plugin: NotebookNavigatorPlugin): CareService {
     }
     return service;
 }
-function physicalChecker(plugin: NotebookNavigatorPlugin): (path: string) => Promise<boolean> {
+export function physicalChecker(plugin: NotebookNavigatorPlugin): (path: string) => Promise<boolean> {
     const adapter = plugin.app.vault.adapter;
     interface DesktopFs {
         lstat(path: string): Promise<{ isSymbolicLink(): boolean }>;

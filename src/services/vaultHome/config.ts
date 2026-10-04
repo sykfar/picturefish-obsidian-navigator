@@ -1,5 +1,6 @@
+import { safePath } from '../vaultCare/model';
 /** The home note is the only configuration source. */
-export const MODULES = ['tasks', 'recent', 'projects', 'inbox', 'reading', 'freshness', 'loose'] as const;
+export const MODULES = ['tasks', 'recent', 'projects', 'inbox', 'reading', 'freshness', 'loose', 'dashboards'] as const;
 export type ModuleId = (typeof MODULES)[number];
 export interface HomeModule {
     id: ModuleId;
@@ -19,14 +20,12 @@ const defaults: Record<ModuleId, string[]> = {
     inbox: ['01 Inbox'],
     reading: ['04 Ressourcen/Bücher', '04 Ressourcen/Zeitschriften'],
     freshness: ['02 Projekte', '04 Ressourcen/Software-Entwicklung'],
+    dashboards: [],
     loose: []
 };
 export function safeHomeFolder(path: string): boolean {
     const parts = path.split('/');
-    return (
-        ['01 Inbox', '02 Projekte', '03 Bereiche', '04 Ressourcen', '05 Daily Notes', 'Dashboard'].includes(parts[0]) &&
-        !parts.some(part => !part || part === '.' || part === '..' || part === '999_classified_confidential')
-    );
+    return ['01 Inbox', '02 Projekte', '03 Bereiche', '04 Ressourcen', '05 Daily Notes', 'Dashboard'].includes(parts[0]) && safePath(path);
 }
 export function homeConfig(raw: unknown): HomeConfig {
     const data = raw && typeof raw === 'object' ? (raw as Record<string, unknown>) : {};

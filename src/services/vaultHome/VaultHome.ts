@@ -1,10 +1,13 @@
-import { MarkdownRenderChild, Modal, Setting, TFile, TFolder, setIcon, type MarkdownPostProcessorContext } from 'obsidian';
+import { MarkdownRenderChild, Modal, Setting, TFile, setIcon, type MarkdownPostProcessorContext } from 'obsidian';
 import { showNotice } from '../../utils/noticeUtils';
 import type NotebookNavigatorPlugin from '../../main';
-import { homeConfig, homeHeading, localDate, safeHomeFolder, type HomeConfig } from './config';
+import { homeConfig, homeHeading, safeHomeFolder, type HomeConfig } from './config';
 import { getCurrentLanguage } from '../../i18n';
 import { careService } from '../vaultCare/service';
 import { CARE_NOTE } from '../vaultCare/model';
+import { DashboardSettings, dashboardModule } from '../vaultDashboards/VaultDashboards';
+import { taskList } from '../vaultDashboards/model';
+import { DashboardService } from '../vaultDashboards/service';
 
 const scalar = (value: unknown): string => (typeof value === 'string' || typeof value === 'number' ? String(value) : '');
 const text = () =>
@@ -24,6 +27,7 @@ const text = () =>
               reading: 'Leseliste und Quellen',
               freshness: 'Wissenspflege',
               loose: 'Lose Enden',
+              dashboards: 'Deine Dashboards',
               empty: 'Keine passenden Einträge in den gewählten Bereichen.',
               sources: 'Quellen',
               limit: 'Einträge je Modul',
@@ -65,6 +69,7 @@ const text = () =>
               reading: 'Reading and sources',
               freshness: 'Knowledge upkeep',
               loose: 'Loose ends',
+              dashboards: 'Your dashboards',
               empty: 'No matching entries in the selected folders.',
               sources: 'Sources',
               limit: 'Entries per module',
@@ -93,35 +98,22 @@ const text = () =>
           };
 
 /** Metadata first; body reads only for Tasks, with hard limits and scoped traversal. */
-function homeFiles(plugin: NotebookNavigatorPlugin, folders: string[], moduleId?: string): { files: TFile[]; warnings: string[] } {
-    const files = new Map<string, TFile>();
-    const warnings: string[] = [];
-    let visited = 0;
-    const walk = (node: TFile | TFolder): void => {
-        if (++visited > 1500 || files.size >= 500) return;
-        if (node.path.split('/').includes('999_classified_confidential')) return;
-        if (node instanceof TFile) {
-            if (node.extension === 'md') files.set(node.path, node);
-        } else for (const child of node.children) if (child instanceof TFile || child instanceof TFolder) walk(child);
-    };
-    for (const folder of folders) {
-        if (!safeHomeFolder(folder)) continue;
-        const root = plugin.app.vault.getAbstractFileByPath(folder);
-        if (root instanceof TFolder) {
-            if (moduleId === 'projects' || moduleId === 'recent') {
-                for (const child of root.children) {
-                    if (child instanceof TFile) walk(child);
-                    else if (child instanceof TFolder && !child.path.split('/').includes('999_classified_confidential')) {
-                        for (const file of child.children) {
-                            if (file instanceof TFile && (moduleId !== 'projects' || file.basename === 'README')) walk(file);
-                        }
-                    }
-                }
-            } else walk(root);
-        } else warnings.push(`${text().missing}: ${folder}`);
-    }
-    if (visited > 1500 || files.size >= 500) warnings.push(text().capped);
-    return { files: [...files.values()], warnings };
+async function homeFiles(
+    plugin: NotebookNavigatorPlugin,
+    folders: string[],
+    moduleId?: string
+): Promise<{ files: TFile[]; warnings: string[] }> {
+    if (!folders.length) return { files: [], warnings: [] };
+    const result = await new DashboardService(plugin).collectRoots(folders);
+    const files = result.files.filter(file => {
+        if (moduleId !== 'projects' && moduleId !== 'recent') return true;
+        return folders.some(root => {
+            const relative = file.path.slice(root.length + 1).split('/');
+            return relative.length === 1 || (relative.length === 2 && (moduleId === 'recent' || file.basename === 'README'));
+        });
+    });
+    if (files.length > 500) result.warnings.push(text().capped);
+    return { files: files.slice(0, 500), warnings: result.warnings };
 }
 
 class HomeSettings extends Modal {
@@ -184,18 +176,33 @@ class HomeSettings extends Modal {
                                 render();
                             })
                     );
-                new Setting(group)
-                    .setName(text().sources)
-                    .setDesc(text().scope)
-                    .addTextArea(t =>
-                        t.setValue(module.folders.join('\n')).onChange(
-                            v =>
-                                (module.folders = v
-                                    .split('\n')
-                                    .map(s => s.trim())
-                                    .filter(Boolean))
+                if (module.id === 'tasks' || module.id === 'dashboards') {
+                    new Setting(group)
+                        .setName(text().sources)
+                        .setDesc(
+                            getCurrentLanguage() === 'de'
+                                ? 'Gemeinsame Konfiguration in der Dashboard-Übersicht.'
+                                : 'Shared configuration in the dashboard overview.'
                         )
-                    );
+                        .addButton(b =>
+                            b.setButtonText(text().configureShort).onClick(() => {
+                                if (this.plugin.dashboard) new DashboardSettings(this.plugin.dashboard).open();
+                            })
+                        );
+                } else if (module.id !== 'loose') {
+                    new Setting(group)
+                        .setName(text().sources)
+                        .setDesc(text().scope)
+                        .addTextArea(t =>
+                            t.setValue(module.folders.join('\n')).onChange(
+                                v =>
+                                    (module.folders = v
+                                        .split('\n')
+                                        .map(s => s.trim())
+                                        .filter(Boolean))
+                            )
+                        );
+                }
             });
         };
         render();
@@ -214,7 +221,11 @@ class HomeSettings extends Modal {
                         b.setDisabled(true);
                         try {
                             await this.app.fileManager.processFrontMatter(this.file, fm => {
-                                (fm as Record<string, unknown>).pf_home = config;
+                                const fields = fm as Record<string, unknown>;
+                                fields.pf_home = {
+                                    ...(fields.pf_home && typeof fields.pf_home === 'object' ? fields.pf_home : {}),
+                                    ...config
+                                };
                             });
                             if (startup) {
                                 this.plugin.settings.homepage = { ...this.plugin.settings.homepage, source: 'file', file: this.file.path };
@@ -302,10 +313,22 @@ class HomeView extends MarkdownRenderChild {
         const fm = (file: TFile): Record<string, unknown> => this.plugin.app.metadataCache.getFileCache(file)?.frontmatter ?? {};
         for (const module of config.modules.filter(m => m.enabled)) {
             const card = grid.createDiv({ cls: 'pf-home-card' });
+            if (module.id === 'dashboards' && this.plugin.dashboard) {
+                card.addClass('pf-home-dashboard-card');
+                try {
+                    await dashboardModule(this.plugin.dashboard, card);
+                } catch (e) {
+                    card.createEl('p', { text: String(e), cls: 'pf-home-warning' });
+                }
+                if (revision !== this.revision) return;
+                continue;
+            }
             const cardHeader = card.createDiv({ cls: 'pf-home-card-header' });
             cardHeader.createEl('h2', { text: text()[module.id] });
             cardHeader.createEl('small', { text: `max. ${config.limit}` });
-            const { files, warnings } = homeFiles(this.plugin, module.folders, module.id);
+            const { files, warnings } = ['tasks', 'freshness', 'loose'].includes(module.id)
+                ? { files: [] as TFile[], warnings: [] as string[] }
+                : await homeFiles(this.plugin, module.folders, module.id);
             const content = card.createDiv({ cls: 'pf-home-list' });
             let count = 0;
             try {
@@ -350,6 +373,7 @@ class HomeView extends MarkdownRenderChild {
                         case 'reading':
                             return (
                                 ['buch', 'zeitschriftenartikel'].includes(String(data.type)) &&
+                                !(data.type === 'buch' && this.plugin.dashboard?.bookRead(data)) &&
                                 !['gelesen', 'abgeschlossen', 'done'].includes(String(data.lesestatus ?? data.status))
                             );
                         case 'freshness':
@@ -361,30 +385,52 @@ class HomeView extends MarkdownRenderChild {
                             return true;
                     }
                 });
-                if (module.id === 'tasks') {
-                    for (const file of candidates.slice(0, 100)) {
-                        const body = await this.plugin.app.vault.cachedRead(file);
-                        if (revision !== this.revision) return;
-                        const lines = body.slice(0, 100000).split('\n');
-                        let fenced = false;
-                        for (let line = 0; line < lines.length; line++) {
-                            if (/^\s*(```|~~~)/.test(lines[line])) {
-                                fenced = !fenced;
-                                continue;
-                            }
-                            if (fenced || !/^\s*[-*] \[ \] /.test(lines[line])) continue;
-                            const due = /(?:📅|due::?)\s*(\d{4}-\d{2}-\d{2})/.exec(lines[line]);
-                            if (due && due[1] > localDate()) continue;
-                            const row = content.createDiv({ cls: 'pf-home-row pf-home-task' });
-                            const marker = row.createSpan({ cls: 'pf-home-task-mark', attr: { 'aria-hidden': 'true' } });
-                            setIcon(marker, 'square');
-                            this.link(row, file, lines[line].replace(/^\s*[-*] \[ \] /, ''), line);
-                            row.createEl('small', { text: file.basename });
-                            if (++count >= config.limit) break;
-                        }
-                        if (count >= config.limit) break;
+                if (module.id === 'tasks' && this.plugin.dashboard) {
+                    const result = await this.plugin.dashboard.service.tasks();
+                    if (revision !== this.revision) return;
+                    warnings.push(...result.warnings);
+                    for (const task of taskList(result.records, 'home').slice(0, config.limit)) {
+                        const file = this.plugin.app.vault.getAbstractFileByPath(task.path);
+                        if (!(file instanceof TFile)) continue;
+                        const row = content.createDiv({ cls: 'pf-home-row pf-home-task' });
+                        const marker = row.createSpan({ cls: 'pf-home-task-mark', attr: { 'aria-hidden': 'true' } });
+                        setIcon(marker, 'square');
+                        this.link(row, file, task.text, task.line);
+                        row.createEl('small', { text: `${task.project} · ${task.due || '—'}` });
+                        count++;
                     }
-                    if (candidates.length > 100) warnings.push(text().capped);
+                    const note = this.plugin.app.vault.getAbstractFileByPath('Dashboard/19-Task-Overview.md');
+                    if (note instanceof TFile) {
+                        this.link(
+                            content,
+                            note,
+                            getCurrentLanguage() === 'de' ? 'Heute & überfällig öffnen →' : 'Open today and overdue →'
+                        );
+                    }
+                } else if (module.id === 'freshness') {
+                    const snapshot = await careService(this.plugin).scan();
+                    if (revision !== this.revision) return;
+                    const selected = [
+                        ...new Map(
+                            snapshot.findings
+                                .filter(
+                                    f =>
+                                        !f.exception &&
+                                        ['review', 'stale'].includes(f.rule) &&
+                                        module.folders.some(folder => f.note.path.startsWith(`${folder}/`))
+                                )
+                                .map(f => [f.note.path, f.note])
+                        ).values()
+                    ];
+                    for (const note of selected.slice(0, config.limit)) {
+                        const file = this.plugin.app.vault.getAbstractFileByPath(note.path);
+                        if (!(file instanceof TFile)) continue;
+                        const row = content.createDiv({ cls: 'pf-home-row' });
+                        this.link(row, file, file.basename);
+                        row.createEl('small', { text: `${text().stale}: ${scalar(note.meta.reviewed) || text().unknown}` });
+                        count++;
+                    }
+                    warnings.push(...snapshot.warnings);
                 } else {
                     for (const file of candidates.slice(0, config.limit)) {
                         const data = fm(file);
@@ -398,10 +444,7 @@ class HomeView extends MarkdownRenderChild {
                                   ? `${file.parent?.name} · CLAUDE`
                                   : file.basename);
                         this.link(row, file, scalar(title));
-                        const status =
-                            module.id === 'freshness'
-                                ? `${text().stale}: ${scalar(data.reviewed) || text().unknown}`
-                                : `${scalar(data.lesestatus ?? data.status)} · ${new Date(file.stat.mtime).toLocaleDateString(getCurrentLanguage())}`;
+                        const status = `${scalar(data.lesestatus ?? data.status)} · ${new Date(file.stat.mtime).toLocaleDateString(getCurrentLanguage())}`;
                         row.createEl('small', { text: status });
                         count++;
                     }
@@ -410,7 +453,9 @@ class HomeView extends MarkdownRenderChild {
                 warnings.push(`${text().fault}: ${String(e instanceof Error ? e.message : e)}`);
             }
             if (!count) content.createEl('p', { text: text().empty, cls: 'pf-home-empty' });
-            card.createEl('small', { text: `${text().sources}: ${module.folders.join(', ') || '—'}` });
+            card.createEl('small', {
+                text: `${text().sources}: ${module.id === 'tasks' ? ((await this.plugin.dashboard?.service.config())?.sources.tasks.join(', ') ?? '—') : module.id === 'freshness' ? `Lose Enden · ${module.folders.join(', ')}` : module.folders.join(', ') || '—'}`
+            });
             for (const warning of warnings) card.createEl('p', { text: warning, cls: 'pf-home-warning' });
         }
         const footer = root.createDiv({ cls: 'pf-home-footer' });
@@ -423,7 +468,7 @@ class HomeView extends MarkdownRenderChild {
             if (!commands.commands.executeCommandById('picturefish-zitate:insert-reference')) showNotice('Picturefish Zitate aktivieren.');
         };
         footer.createEl('small', { text: `${text().updated}: ${new Date().toLocaleTimeString()} · ${text().guide}` });
-        for (const path of ['Dashboard/00-Vault-Cockpit.md', 'Dashboard/22-Wissensfrische.md', '04 Ressourcen/Zeitschriften/README.md']) {
+        for (const path of ['Dashboard/Dashboards.md', 'Dashboard/Lose Enden.md', '04 Ressourcen/Zeitschriften/README.md']) {
             const file = this.plugin.app.vault.getAbstractFileByPath(path);
             if (file instanceof TFile) this.link(footer, file, path.includes('Zeitschriften') ? text().guide : file.basename);
         }

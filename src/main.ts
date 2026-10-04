@@ -18,6 +18,7 @@
 
 import { registerVaultHome } from './services/vaultHome/VaultHome';
 import { registerVaultCare } from './services/vaultCare/VaultCare';
+import { registerVaultDashboards, type DashboardApi } from './services/vaultDashboards/VaultDashboards';
 import { App, Platform, Plugin, TFile, FileView, TFolder, WorkspaceLeaf, addIcon } from 'obsidian';
 import type { NotebookNavigatorSettings } from './settings/types';
 import { LazyNotebookNavigatorSettingTab } from './settings/LazyNotebookNavigatorSettingTab';
@@ -133,6 +134,7 @@ const RECENT_INSTALL_WINDOW_MS = 10 * 60 * 1000;
  * Manages plugin lifecycle, settings, and view registration
  */
 export default class NotebookNavigatorPlugin extends Plugin implements ISettingsProvider {
+    dashboard?: DashboardApi;
     ribbonIconEl: HTMLElement | undefined = undefined;
     metadataService: MetadataService | null = null;
     tagOperations: TagOperations | null = null;
@@ -673,6 +675,7 @@ export default class NotebookNavigatorPlugin extends Plugin implements ISettings
     private async completeStartup(isFirstLaunch: boolean): Promise<void> {
         registerVaultHome(this);
         registerVaultCare(this);
+        this.dashboard = registerVaultDashboards(this);
         this.preferencesController.syncMirrorsFromSettings();
         const storedLocalStorageVersion = this.settingsController.getStoredLocalStorageVersion();
         this.preferencesController.loadUXPreferences();
