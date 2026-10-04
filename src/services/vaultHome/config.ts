@@ -7,6 +7,7 @@ export interface HomeModule {
     folders: string[];
 }
 export interface HomeConfig {
+    name: string;
     limit: number;
     density: 'standard' | 'compact';
     modules: HomeModule[];
@@ -44,6 +45,7 @@ export function homeConfig(raw: unknown): HomeConfig {
     }
     for (const id of MODULES) if (!seen.has(id)) modules.push({ id, enabled: false, folders: [...defaults[id]] });
     return {
+        name: typeof data.name === 'string' ? data.name.trim().slice(0, 80) : '',
         limit: [3, 5, 10].includes(Number(data.limit)) ? Number(data.limit) : 5,
         density: data.density === 'compact' ? 'compact' : 'standard',
         modules
@@ -51,4 +53,25 @@ export function homeConfig(raw: unknown): HomeConfig {
 }
 export function localDate(date = new Date()): string {
     return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+}
+
+/** Presentation uses local time; task due dates keep the ISO calendar helper. */
+export function homeHeading(name: string, language: string, date = new Date()): { date: string; greeting: string } {
+    const hour = date.getHours();
+    const german = language === 'de';
+    const greeting = german
+        ? hour >= 5 && hour < 11
+            ? 'Guten Morgen'
+            : hour >= 11 && hour < 18
+              ? 'Guten Tag'
+              : 'Guten Abend'
+        : hour >= 5 && hour < 11
+          ? 'Good morning'
+          : hour >= 11 && hour < 18
+            ? 'Good afternoon'
+            : 'Good evening';
+    return {
+        date: date.toLocaleDateString(german ? 'de-DE' : 'en-US', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }),
+        greeting: `${greeting}${name ? `, ${name}` : ''}.`
+    };
 }

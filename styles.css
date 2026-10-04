@@ -11044,60 +11044,115 @@ settings:
         default-dark: '#'
 */
 .pf-home {
+    container-type: inline-size;
     font-family: var(--font-interface);
     color: var(--text-normal);
-    max-width: 1120px;
+    max-width: 1280px;
     margin: 0 auto;
 }
 .pf-home-header {
-    padding: 8px 0 24px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 24px 16px;
+    padding: 8px 0 28px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--background-modifier-border);
 }
 .pf-home .pf-home-eyebrow {
     color: var(--text-muted);
-    font-size: 13px;
+    font-size: 15px;
+    margin: 0 0 8px;
 }
-.pf-home h1 {
-    margin: 6px 0 10px;
-    font-size: 30px;
+.markdown-rendered .pf-home h1 {
+    margin: 0 0 12px;
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+}
+.pf-home .pf-home-subtitle {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 15px;
+}
+.pf-home button {
+    min-height: 38px;
+    height: auto;
+    padding: 8px 14px;
+    font-size: 15px;
+    white-space: normal;
 }
 .pf-home-actions {
+    grid-column: 1 / -1;
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-}
-.pf-home-actions button {
-    font-size: 13px;
+    gap: 12px;
+    padding-top: 12px;
 }
 .pf-home-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
 }
 .pf-home-card {
     min-width: 0;
-    padding: 20px;
+    padding: 22px;
     border: 1px solid var(--background-modifier-border);
     border-radius: 12px;
-    background: var(--background-primary);
+    background: var(--venezia-card, var(--background-primary-alt));
 }
-.pf-home-card h2 {
-    font-size: 18px;
-    margin: 0 0 14px;
+.pf-home-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+.markdown-rendered .pf-home-card h2 {
+    font-size: 21px;
+    font-weight: 500;
+    margin: 0;
+}
+.pf-home-card-header small {
+    flex-shrink: 0;
 }
 .pf-home-row {
     display: flex;
     flex-direction: column;
     gap: 4px;
-    padding: 10px 0;
+    padding: 14px 0;
     border-bottom: 1px solid var(--background-modifier-border);
     overflow-wrap: anywhere;
 }
-.pf-home-row a {
-    color: var(--text-normal);
+.pf-home-row a,
+.pf-home-footer a {
+    color: var(--link-color);
+    font-size: 16px;
     text-decoration: none;
 }
-.pf-home-row a:hover {
-    color: var(--interactive-accent);
+.pf-home-row a:hover,
+.pf-home-footer a:hover {
+    color: var(--link-color-hover);
+    text-decoration: underline;
+}
+.pf-home-task {
+    position: relative;
+    padding-left: 32px;
+}
+.markdown-rendered .pf-home .pf-home-task a {
+    color: var(--text-normal);
+}
+.pf-home-task-mark {
+    position: absolute;
+    top: 17px;
+    left: 0;
+    color: var(--text-muted);
+}
+.pf-home-task-mark svg {
+    width: 18px;
+    height: 18px;
+    stroke-width: 1.5;
 }
 .pf-home small,
 .pf-home-empty {
@@ -11116,11 +11171,16 @@ settings:
     padding: 14px;
 }
 .pf-home-compact .pf-home-row {
-    padding: 6px 0;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+.pf-home-compact .pf-home-task-mark {
+    top: 9px;
 }
 .pf-home-footer {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 12px;
     padding: 20px 0;
     font-size: 13px;
@@ -11135,8 +11195,31 @@ settings:
 .pf-home-config-module {
     border-bottom: 1px solid var(--background-modifier-border);
 }
-
-.pf-home-note .metadata-container,
-.pf-home-note .inline-title {
+.markdown-reading-view .pf-home-note.markdown-preview-view .metadata-container,
+.markdown-reading-view .pf-home-note.markdown-preview-view .inline-title {
     display: none;
+}
+.pf-home-note.markdown-preview-view .markdown-preview-sizer,
+.pf-home-note.markdown-source-view .cm-sizer {
+    max-width: 1280px;
+    width: 100%;
+}
+@container (max-width: 640px) {
+    .pf-home-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    .pf-home-header {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+    }
+    .pf-home-configure {
+        justify-self: start;
+    }
+    .markdown-rendered .pf-home h1 {
+        font-size: 28px;
+    }
+    .pf-home-actions {
+        gap: 8px;
+        padding-top: 0;
+    }
 }

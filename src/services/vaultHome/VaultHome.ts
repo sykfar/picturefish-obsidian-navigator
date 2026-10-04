@@ -1,15 +1,18 @@
-import { MarkdownRenderChild, Modal, Setting, TFile, TFolder, type MarkdownPostProcessorContext } from 'obsidian';
+import { MarkdownRenderChild, Modal, Setting, TFile, TFolder, setIcon, type MarkdownPostProcessorContext } from 'obsidian';
 import { showNotice } from '../../utils/noticeUtils';
 import type NotebookNavigatorPlugin from '../../main';
-import { homeConfig, localDate, safeHomeFolder, type HomeConfig } from './config';
+import { homeConfig, homeHeading, localDate, safeHomeFolder, type HomeConfig } from './config';
 import { getCurrentLanguage } from '../../i18n';
 
 const scalar = (value: unknown): string => (typeof value === 'string' || typeof value === 'number' ? String(value) : '');
 const text = () =>
     getCurrentLanguage() === 'de'
         ? {
-              title: 'Dein Arbeitsstart',
-              sub: 'Das Wichtige im Blick. Alles bleibt an seinem Ort.',
+              name: 'Name für die Begrüßung',
+              daily: 'Daily Note öffnen',
+              dailyMissing: 'Bitte Daily Notes in Obsidian aktivieren.',
+              configureShort: 'Anpassen',
+              sub: 'Dein nächster Schritt, ohne den ganzen Vault zu durchsuchen.',
               configure: 'Startseite anpassen',
               refresh: 'Aktualisieren',
               tasks: 'Heute im Blick',
@@ -40,13 +43,16 @@ const text = () =>
               fault: 'Modul konnte nicht geladen werden',
               view: 'Lesenotiz öffnen',
               guide: 'Quellen und Zitate',
-              capture: 'Artikel erfassen',
+              capture: 'Magazinartikel erfassen',
               quote: 'Zitat erfassen',
               cite: 'Quelle referenzieren'
           }
         : {
-              title: 'Your work start',
-              sub: 'What matters, linked to its source.',
+              name: 'Name for your greeting',
+              daily: 'Open daily note',
+              dailyMissing: 'Please enable Daily Notes in Obsidian.',
+              configureShort: 'Customize',
+              sub: 'Your next step, without searching the entire vault.',
               configure: 'Configure homepage',
               refresh: 'Refresh',
               tasks: 'Today',
@@ -125,6 +131,9 @@ class HomeSettings extends Modal {
         this.contentEl.addClass('pf-home-settings');
         this.contentEl.createEl('h2', { text: text().configure });
         const config = homeConfig(this.app.metadataCache.getFileCache(this.file)?.frontmatter?.pf_home);
+        new Setting(this.contentEl)
+            .setName(text().name)
+            .addText(t => t.setValue(config.name).onChange(v => (config.name = v.trim().slice(0, 80))));
         let startup = this.plugin.settings.homepage.source === 'file' && this.plugin.settings.homepage.file === this.file.path;
         new Setting(this.contentEl).setName(text().limit).addDropdown(d => {
             for (const n of [3, 5, 10]) d.addOption(String(n), String(n));
@@ -263,21 +272,22 @@ class HomeView extends MarkdownRenderChild {
         const root = createDiv();
         root.className = `pf-home pf-home-${config.density}`;
         const header = root.createDiv({ cls: 'pf-home-header' });
-        header.createEl('p', { text: localDate(), cls: 'pf-home-eyebrow' });
-        header.createEl('h1', { text: text().title });
-        header.createEl('p', { text: text().sub });
-        const actions = header.createDiv({ cls: 'pf-home-actions' });
-        const configure = actions.createEl('button', { text: text().configure });
+        const heading = homeHeading(config.name, getCurrentLanguage());
+        const intro = header.createDiv({ cls: 'pf-home-intro' });
+        intro.createEl('p', { text: heading.date, cls: 'pf-home-eyebrow' });
+        intro.createEl('h1', { text: heading.greeting });
+        intro.createEl('p', { text: text().sub, cls: 'pf-home-subtitle' });
+        const configure = header.createEl('button', { text: text().configureShort, cls: 'pf-home-configure' });
         configure.onclick = () => new HomeSettings(this.plugin, this.file).open();
-        const refresh = actions.createEl('button', { text: text().refresh });
-        refresh.onclick = () => {
-            void this.render();
-        };
+        const actions = header.createDiv({ cls: 'pf-home-actions' });
         const commands = this.plugin.app as unknown as { commands: { executeCommandById(id: string): boolean } };
+        const daily = actions.createEl('button', { text: text().daily });
+        daily.onclick = () => {
+            if (!commands.commands.executeCommandById('daily-notes')) showNotice(text().dailyMissing);
+        };
         for (const [id, label] of [
             ['capture-article', text().capture],
-            ['capture-quote', text().quote],
-            ['insert-reference', text().cite]
+            ['capture-quote', text().quote]
         ]) {
             const button = actions.createEl('button', { text: label });
             button.onclick = () => {
@@ -288,7 +298,9 @@ class HomeView extends MarkdownRenderChild {
         const fm = (file: TFile): Record<string, unknown> => this.plugin.app.metadataCache.getFileCache(file)?.frontmatter ?? {};
         for (const module of config.modules.filter(m => m.enabled)) {
             const card = grid.createDiv({ cls: 'pf-home-card' });
-            card.createEl('h2', { text: text()[module.id] });
+            const cardHeader = card.createDiv({ cls: 'pf-home-card-header' });
+            cardHeader.createEl('h2', { text: text()[module.id] });
+            cardHeader.createEl('small', { text: `max. ${config.limit}` });
             const { files, warnings } = homeFiles(this.plugin, module.folders, module.id);
             const content = card.createDiv({ cls: 'pf-home-list' });
             let count = 0;
@@ -330,7 +342,9 @@ class HomeView extends MarkdownRenderChild {
                             if (fenced || !/^\s*[-*] \[ \] /.test(lines[line])) continue;
                             const due = /(?:📅|due::?)\s*(\d{4}-\d{2}-\d{2})/.exec(lines[line]);
                             if (due && due[1] > localDate()) continue;
-                            const row = content.createDiv({ cls: 'pf-home-row' });
+                            const row = content.createDiv({ cls: 'pf-home-row pf-home-task' });
+                            const marker = row.createSpan({ cls: 'pf-home-task-mark', attr: { 'aria-hidden': 'true' } });
+                            setIcon(marker, 'square');
                             this.link(row, file, lines[line].replace(/^\s*[-*] \[ \] /, ''), line);
                             row.createEl('small', { text: file.basename });
                             if (++count >= config.limit) break;
@@ -345,7 +359,11 @@ class HomeView extends MarkdownRenderChild {
                         const title =
                             data.titel ??
                             data.title ??
-                            (module.id === 'projects' || file.basename === 'README' ? file.parent?.name : file.basename);
+                            (file.basename === 'README'
+                                ? file.parent?.name
+                                : file.basename === 'CLAUDE'
+                                  ? `${file.parent?.name} · CLAUDE`
+                                  : file.basename);
                         this.link(row, file, scalar(title));
                         const status =
                             module.id === 'freshness'
@@ -363,10 +381,18 @@ class HomeView extends MarkdownRenderChild {
             for (const warning of warnings) card.createEl('p', { text: warning, cls: 'pf-home-warning' });
         }
         const footer = root.createDiv({ cls: 'pf-home-footer' });
+        const refresh = footer.createEl('button', { text: text().refresh });
+        refresh.onclick = () => {
+            void this.render();
+        };
+        const cite = footer.createEl('button', { text: text().cite });
+        cite.onclick = () => {
+            if (!commands.commands.executeCommandById('picturefish-zitate:insert-reference')) showNotice('Picturefish Zitate aktivieren.');
+        };
         footer.createEl('small', { text: `${text().updated}: ${new Date().toLocaleTimeString()} · ${text().guide}` });
         for (const path of ['Dashboard/00-Vault-Cockpit.md', 'Dashboard/22-Wissensfrische.md', '04 Ressourcen/Zeitschriften/README.md']) {
             const file = this.plugin.app.vault.getAbstractFileByPath(path);
-            if (file instanceof TFile) this.link(footer, file, file.basename);
+            if (file instanceof TFile) this.link(footer, file, path.includes('Zeitschriften') ? text().guide : file.basename);
         }
         if (revision === this.revision) {
             this.containerEl.empty();
