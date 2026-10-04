@@ -27,6 +27,7 @@ class Element {
         this.text = text;
     }
     setAttribute(): void {}
+    addClass(): void {}
     focus(): void {}
     select(): void {}
     empty(): void {

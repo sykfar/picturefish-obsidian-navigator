@@ -37,6 +37,8 @@ Die Preview wertet keinen Templater-Code aus. Eingebaute Eingabevariablen könne
 
 `tests/modals/noteCreationModal.test.ts` prüft die tatsächliche Dialoglogik mit Ereignis-Stubs. Das ersetzt keine Sichtprüfung in Obsidian oder auf dem iPad. Produktive Vault-Dateien und die installierten Plugin-Artefakte werden vom Entwicklungsbuild nicht verändert.
 
+Der Ordnerpfad wendet vorgemerkte Cursorpositionen nach dem abgeschlossenen `leaf.openFile` an, ebenso wie der Befehls- und Pickerpfad. Die Regression in `tests/utils/templateNoteCreation.test.ts` stellt sicher, dass der Editor erst nach dem Öffnen angesprochen und der Eintrag danach verbraucht wird. Der Vorlagendialog erhält eigene Eingabehöhen und 13-pt-Felder, damit Obsidian den ausgewählten Vorlagenpfad nicht vertikal abschneidet. Der aktuelle native Abnahmestand steht im Vault-Projekteinstieg.
+
 ## Abhängigkeiten
 
 Kompatible Audit-Korrekturen wurden in der Sperrdatei aktualisiert. Vitest und Coverage laufen zusammen mit Version 5; Moment wird auf die gepatchte 2.31-Reihe überschrieben. Der Test-Config verwendet `.mts`, passend zu ESM.

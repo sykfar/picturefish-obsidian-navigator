@@ -485,6 +485,7 @@ export async function createFileWithOptions(parent: TFolder, app: App, options: 
             const leaf = app.workspace.getLeaf(openInNewTab);
             const openState = extension === 'md' ? { state: { mode: 'source' }, active: true } : undefined;
             await leaf.openFile(file, openState);
+            applyPendingTemplateCursor(app, file);
 
             // Trigger rename mode if requested
             if (triggerRename && !options.promptForName) {

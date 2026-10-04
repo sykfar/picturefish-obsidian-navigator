@@ -24,6 +24,7 @@ export function requestNoteCreation(app: App, options: NoteCreationOptions): Pro
         class NoteCreationModal extends Modal {
             onOpen(): void {
                 const labels = strings.noteCreation;
+                this.contentEl.addClass('nn-note-creation-modal');
                 this.titleEl.setText(labels.title);
                 let name = options.baseName;
                 let template = options.templateFile;

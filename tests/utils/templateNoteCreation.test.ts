@@ -26,6 +26,7 @@ import { DEFAULT_SETTINGS } from '../../src/settings/defaultSettings';
 import { applyNativeSettingControlValue } from '../../src/settings/nativeSettingControls';
 import {
     allocateNoteNumber,
+    createFileWithOptions,
     createMarkdownFileFromTemplate,
     createNoteFromTemplateInFolder,
     formatNumberedBaseName
@@ -89,6 +90,40 @@ function captureTemplateChoice(): { open: ReturnType<typeof vi.fn>; choose: (fil
         }
     };
 }
+
+describe('folder creation with a confirmed template', () => {
+    afterEach(() => {
+        vi.mocked(requestNoteCreation).mockReset();
+    });
+
+    it('places the cursor only after the editor has finished opening the new note', async () => {
+        const app = new App();
+        const folder = createFolder('Cursor QA');
+        const template = createTestTFile('Templates/Cursor QA.md');
+        const created = createTestTFile('Cursor QA/Confirmed.md');
+        const editor = { setCursor: vi.fn(), focus: vi.fn() };
+        const openFile = vi.fn(async () => {
+            expect(editor.setCursor).not.toHaveBeenCalled();
+            app.workspace.activeEditor = { file: created, editor } as unknown as App['workspace']['activeEditor'];
+        });
+        app.workspace = { getLeaf: () => ({ openFile }) } as unknown as App['workspace'];
+        app.vault.getAbstractFileByPath = vi.fn(path => (path === template.path ? template : null));
+        app.vault.cachedRead = vi.fn(async () => '# {{title}}\n\n{{cursor}}\nBody');
+        app.vault.create = vi.fn(async () => created);
+        vi.mocked(requestNoteCreation).mockResolvedValue({ baseName: 'Confirmed', templateFile: template });
+
+        await createFileWithOptions(folder, app, {
+            extension: 'md',
+            promptForName: true,
+            templateSettings: { templateEngine: 'builtin', dateFormat: 'YYYY-MM-DD', timeFormat: 'HH:mm', folderTemplates: {} }
+        });
+
+        expect(openFile).toHaveBeenCalledWith(created, { state: { mode: 'source' }, active: true });
+        expect(editor.setCursor).toHaveBeenCalledWith({ line: 2, ch: 0 });
+        expect(editor.focus).toHaveBeenCalled();
+        expect(hasPendingTemplateCursor(created.path)).toBe(false);
+    });
+});
 
 describe('createNoteFromTemplateInFolder', () => {
     beforeEach(() => {
