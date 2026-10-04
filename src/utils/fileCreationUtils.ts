@@ -415,14 +415,19 @@ export async function createFileWithOptions(parent: TFolder, app: App, options: 
     try {
         let baseName = strings.fileSystem.defaultNames.untitled;
         let chosenTemplate: TFile | null | undefined;
-        if (options.promptForName && extension === 'md' && content.length === 0) {
-            const settings = options.templateSettings;
-            const mappedPath = settings ? getFolderTemplatePath(settings.folderTemplates, parent.path) : null;
-            const mappedFile = settings ? getFolderTemplateFile(app, settings, parent.path) : null;
-            if (mappedPath && !mappedFile) {
+        // The same folder mapping applies to folder, tag and property actions. A missing configured template
+        // must never silently turn one of those actions into a blank note.
+        const templateSettingsForValidation = options.templateSettings;
+        if (extension === 'md' && content.length === 0 && templateSettingsForValidation) {
+            const mappedPath = getFolderTemplatePath(templateSettingsForValidation.folderTemplates, parent.path);
+            if (mappedPath && !getFolderTemplateFile(app, templateSettingsForValidation, parent.path)) {
                 showNotice(strings.templates.templateNotFound.replace('{name}', mappedPath), { variant: 'warning' });
                 return null;
             }
+        }
+        if (options.promptForName && extension === 'md' && content.length === 0) {
+            const settings = options.templateSettings;
+            const mappedFile = settings ? getFolderTemplateFile(app, settings, parent.path) : null;
             const choice = await requestNoteCreation(app, {
                 folder: parent,
                 baseName: generateUniqueFilename(parent.path, baseName, extension, app, {

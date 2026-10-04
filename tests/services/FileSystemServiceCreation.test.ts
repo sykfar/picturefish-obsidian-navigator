@@ -134,10 +134,10 @@ describe('templated note creation from folders, tags and properties', () => {
         expect(context.openFile).not.toHaveBeenCalled();
     });
 
-    it('does not fall back to a blank note when the mapped template is missing', async () => {
+    it.each(['folder', 'tag', 'property'] as const)('does not create a blank %s note when the mapped template is missing', async source => {
         const context = createContext('content');
         context.vault.unregisterFile('Templates/Default.md');
-        expect(await createNote(context, 'folder')).toBeNull();
+        expect(await createNote(context, source)).toBeNull();
         expect(requestNoteCreation).not.toHaveBeenCalled();
         expect(context.create).not.toHaveBeenCalled();
     });
