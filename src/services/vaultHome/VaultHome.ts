@@ -6,7 +6,7 @@ import { getCurrentLanguage } from '../../i18n';
 import { careService } from '../vaultCare/service';
 import { CARE_NOTE } from '../vaultCare/model';
 import { DashboardSettings, dashboardModule } from '../vaultDashboards/VaultDashboards';
-import { taskList } from '../vaultDashboards/model';
+import { byAudience, taskList, type TaskAudience } from '../vaultDashboards/model';
 import { DashboardService } from '../vaultDashboards/service';
 
 const scalar = (value: unknown): string => (typeof value === 'string' || typeof value === 'number' ? String(value) : '');
@@ -21,6 +21,11 @@ const text = () =>
               configure: 'Startseite anpassen',
               refresh: 'Aktualisieren',
               tasks: 'Heute im Blick',
+              audience: 'Für wen',
+              me: 'Ich',
+              ai: 'KI',
+              all: 'Alle',
+              aiEmpty: 'Keine KI-Aufgaben im gewählten Umfang.',
               recent: 'Weiterarbeiten',
               projects: 'Aktive Projekte',
               inbox: 'Inbox sichten',
@@ -63,6 +68,11 @@ const text = () =>
               configure: 'Configure homepage',
               refresh: 'Refresh',
               tasks: 'Today',
+              audience: 'For whom',
+              me: 'Me',
+              ai: 'AI',
+              all: 'All',
+              aiEmpty: 'No AI tasks in the selected scope.',
               recent: 'Continue working',
               projects: 'Active projects',
               inbox: 'Review inbox',
@@ -389,16 +399,56 @@ class HomeView extends MarkdownRenderChild {
                     const result = await this.plugin.dashboard.service.tasks();
                     if (revision !== this.revision) return;
                     warnings.push(...result.warnings);
-                    for (const task of taskList(result.records, 'home').slice(0, config.limit)) {
-                        const file = this.plugin.app.vault.getAbstractFileByPath(task.path);
-                        if (!(file instanceof TFile)) continue;
-                        const row = content.createDiv({ cls: 'pf-home-row pf-home-task' });
-                        const marker = row.createSpan({ cls: 'pf-home-task-mark', attr: { 'aria-hidden': 'true' } });
-                        setIcon(marker, 'square');
-                        this.link(row, file, task.text, task.line);
-                        row.createEl('small', { text: `${task.project} · ${task.due || '—'}` });
-                        count++;
+                    const open = taskList(result.records, 'home');
+                    const rows = content.createDiv({ cls: 'pf-home-task-rows' });
+                    // Always opens on "Ich" (UC-0185): the choice is deliberately not remembered.
+                    const seg = cardHeader.createDiv({ cls: 'pf-home-seg', attr: { role: 'radiogroup', 'aria-label': text().audience } });
+                    const draw = (audience: TaskAudience) => {
+                        rows.empty();
+                        let shown = 0;
+                        for (const task of byAudience(open, audience).slice(0, config.limit)) {
+                            const file = this.plugin.app.vault.getAbstractFileByPath(task.path);
+                            if (!(file instanceof TFile)) continue;
+                            const row = rows.createDiv({ cls: 'pf-home-row pf-home-task' });
+                            const marker = row.createSpan({ cls: 'pf-home-task-mark', attr: { 'aria-hidden': 'true' } });
+                            setIcon(marker, 'square');
+                            this.link(row, file, task.text, task.line);
+                            if (audience === 'alle' && task.forAi) row.createSpan({ cls: 'pf-home-ai-badge', text: text().ai });
+                            row.createEl('small', { text: `${task.project} · ${task.due || '—'}` });
+                            shown++;
+                        }
+                        if (!shown) rows.createEl('p', { text: audience === 'ki' ? text().aiEmpty : text().empty, cls: 'pf-home-empty' });
+                        for (const button of Array.from(seg.children)) {
+                            const on = (button as HTMLElement).dataset.audience === audience;
+                            button.setAttribute('aria-checked', String(on));
+                            button.toggleClass('is-active', on);
+                        }
+                    };
+                    for (const [audience, label] of [
+                        ['ich', text().me],
+                        ['ki', text().ai],
+                        ['alle', text().all]
+                    ] as [TaskAudience, string][]) {
+                        const button = seg.createEl('button', {
+                            cls: `pf-home-seg-option pf-home-seg-${audience}`,
+                            attr: { role: 'radio', 'data-audience': audience, type: 'button' }
+                        });
+                        button.createSpan({ text: label });
+                        button.createSpan({ cls: 'pf-home-seg-count', text: String(byAudience(open, audience).length) });
+                        button.onclick = () => draw(audience);
                     }
+                    seg.addEventListener('keydown', event => {
+                        if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+                        const buttons = Array.from(seg.children) as HTMLElement[];
+                        const index = buttons.findIndex(b => b.getAttribute('aria-checked') === 'true');
+                        const next = buttons[(index + (event.key === 'ArrowRight' ? 1 : buttons.length - 1)) % buttons.length];
+                        next.click();
+                        next.focus();
+                        event.preventDefault();
+                    });
+                    draw('ich');
+                    // draw() renders its own empty state.
+                    count = 1;
                     const note = this.plugin.app.vault.getAbstractFileByPath('Dashboard/19-Task-Overview.md');
                     if (note instanceof TFile) {
                         this.link(
