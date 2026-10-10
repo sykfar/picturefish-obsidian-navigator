@@ -1,6 +1,6 @@
 {
   "name": "picturefish-obsidian-navigator",
-  "version": "0.3.0",
+  "version": "0.7.0",
   "description": "Independent, security-conscious Obsidian navigator based on Notebook Navigator.",
   "main": "main.js",
   "engines": {
@@ -58,7 +58,8 @@
     "emoji-regex-xs": "^2.0.1",
     "emojilib": "^4.0.3",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "yaml": "2.9.0"
   },
   "overrides": {
     "moment": "^2.31.0"

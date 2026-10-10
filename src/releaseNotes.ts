@@ -107,6 +107,17 @@ export interface ReleaseNote {
  */
 const RELEASE_NOTES: ReleaseNote[] = [
     {
+        version: '0.7.0',
+        date: '2026-10-10',
+        showOnUpdate: true,
+        new: [
+            'Startseite: „Heute im Blick“ trennt Aufgaben für dich und für die KI (Tag #an/ki). Der Umschalter Ich · KI · Alle steht beim Öffnen auf „Ich“.'
+        ],
+        changed: [
+            'Aufgaben-Auswertungen beachten die Ausschlussordner aus TaskForge/Settings/settings.json und zählen damit wie TaskForge.'
+        ]
+    },
+    {
         version: '0.3.0',
         date: '2026-10-04',
         showOnUpdate: true,

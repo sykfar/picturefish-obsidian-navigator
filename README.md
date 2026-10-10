@@ -6,6 +6,8 @@
 > [M1 runtime namespacing](docs/m1-runtime-namespacing.md), [M1 validation](docs/m1-validation.md),
 > [PRODUCT.md](PRODUCT.md), and [UPSTREAM.md](UPSTREAM.md).
 
+The local 0.6.0 build adds the configurable Vault dashboard entry, shared task/book sources and perspective navigation. See [dashboard integration](docs/dashboard-consolidation.md). Product approval and delivery records live in the linked Vault project; the GitHub review branch remains a draft.
+
 Read in your language: [English](https://notebooknavigator.com/docs.html) • [العربية](https://notebooknavigator.com/ar/docs.html) • [Deutsch](https://notebooknavigator.com/de/docs.html) • [Español](https://notebooknavigator.com/es/docs.html) • [فارسی](https://notebooknavigator.com/fa/docs.html) • [Français](https://notebooknavigator.com/fr/docs.html) • [Bahasa Indonesia](https://notebooknavigator.com/id/docs.html) • [Italiano](https://notebooknavigator.com/it/docs.html) • [Nederlands](https://notebooknavigator.com/nl/docs.html) • [Polski](https://notebooknavigator.com/pl/docs.html) • [Português](https://notebooknavigator.com/pt/docs.html) • [Português (Brasil)](https://notebooknavigator.com/pt-br/docs.html) • [Русский](https://notebooknavigator.com/ru/docs.html) • [ไทย](https://notebooknavigator.com/th/docs.html) • [Türkçe](https://notebooknavigator.com/tr/docs.html) • [Українська](https://notebooknavigator.com/uk/docs.html) • [Tiếng Việt](https://notebooknavigator.com/vi/docs.html) • [日本語](https://notebooknavigator.com/ja/docs.html) • [한국어](https://notebooknavigator.com/ko/docs.html) • [中文简体](https://notebooknavigator.com/zh-cn/docs.html) • [中文繁體](https://notebooknavigator.com/zh-tw/docs.html)
 
 ![Notebook Navigator Screenshot](https://github.com/johansan/notebook-navigator/blob/main/images/notebook-navigator.png?raw=true)
@@ -555,3 +557,7 @@ Read the [FAQ](FAQ.md) for answers to common questions.
 ## 14 License
 
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](https://github.com/johansan/notebook-navigator/blob/main/LICENSE) file for details.
+
+## Vault-Pflege
+
+[Pflegeübersicht und Notizwerkstatt](docs/vault-care.md) verwenden eine gemeinsame Vault-Notiz und ein versioniertes Typregister. Änderungen an einzelnen Typfeldern brauchen Vorschau und Bestätigung.

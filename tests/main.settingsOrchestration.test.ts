@@ -26,6 +26,7 @@ vi.mock('obsidian', async importOriginal => {
         ...original,
         FuzzySuggestModal: fallbackClass,
         AbstractInputSuggest: fallbackClass,
+        MarkdownRenderChild: fallbackClass,
         ItemView: fallbackClass
     };
 });
