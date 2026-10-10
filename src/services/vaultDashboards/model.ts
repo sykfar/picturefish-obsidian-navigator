@@ -46,6 +46,14 @@ export interface TaskRecord {
     priority: string;
     links: string;
     recurring: boolean;
+    /** Tagged `#an/ki`: work for an AI system, hidden from Alexander's default view. */
+    forAi: boolean;
+}
+export type TaskAudience = 'ich' | 'ki' | 'alle';
+/** `#an/ki` exactly; `#ki` or `#an/kinderbuch` are topics, not assignments. */
+const AI_TAG = /(?:^|\s)#an\/ki(?=$|[\s,.;:!?)\]])/i;
+export function byAudience(records: TaskRecord[], audience: TaskAudience): TaskRecord[] {
+    return audience === 'alle' ? records : records.filter(r => r.forAi === (audience === 'ki'));
 }
 export function dashboardConfig(raw: unknown): DashboardConfig {
     if (!raw || typeof raw !== 'object' || Array.isArray(raw)) throw new Error('pf_dashboards fehlt.');
@@ -130,7 +138,8 @@ export function taskRecords(path: string, meta: Record<string, unknown>, body: s
             status: state === 'done' ? 'done' : 'open',
             workState: state,
             priority: scalar(meta.priority) || 'normal',
-            recurring: Boolean(meta.recurrence)
+            recurring: Boolean(meta.recurrence),
+            forAi: [meta.tags].flat().some(tag => scalar(tag).replace(/^#/, '').toLowerCase() === 'an/ki')
         });
     }
     let fence = '';
@@ -175,7 +184,8 @@ export function taskRecords(path: string, meta: Record<string, unknown>, body: s
             status: done ? 'done' : 'open',
             workState: state,
             priority: /⏫/.test(line) ? 'highest' : /🔼/.test(line) ? 'high' : scalar(meta.priority) || 'normal',
-            recurring: /🔁|\brepeat::?/.test(line)
+            recurring: /🔁|\brepeat::?/.test(line),
+            forAi: AI_TAG.test(match[2])
         });
     });
     return result;
