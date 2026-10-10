@@ -2,7 +2,9 @@ import { TFile, TFolder } from 'obsidian';
 import type NotebookNavigatorPlugin from '../../main';
 import { physicalChecker } from '../vaultCare/service';
 import { safePath } from '../vaultCare/model';
-import { DASHBOARD_NOTE, dashboardConfig, taskRecords, type DashboardConfig, type TaskRecord, type Scope, type Page } from './model';
+import { DASHBOARD_NOTE, dashboardConfig, excludedFromTasks, taskRecords, type DashboardConfig, type TaskRecord, type Scope, type Page } from './model';
+
+const TASKFORGE_SETTINGS = 'TaskForge/Settings/settings.json';
 
 export class DashboardService {
     private cached = new Map<string, { mtime: number; size: number; body: string }>();
@@ -63,8 +65,22 @@ export class DashboardService {
         this.cached.set(file.path, { mtime: file.stat.mtime, size: file.stat.size, body });
         return body;
     }
+    /** Exclusions shared with TaskForge; without them every checkbox in plans and checklists counted as a task. */
+    private async taskExclusions(warnings: string[]): Promise<string[]> {
+        try {
+            const raw: unknown = JSON.parse(await this.plugin.app.vault.adapter.read(TASKFORGE_SETTINGS));
+            const folders = (raw as { exclusions?: { excluded_folders?: unknown } }).exclusions?.excluded_folders;
+            return Array.isArray(folders) ? folders.filter((f): f is string => typeof f === 'string' && f.length > 0) : [];
+        } catch {
+            warnings.push(`Ausschlüsse nicht lesbar: ${TASKFORGE_SETTINGS}`);
+            return [];
+        }
+    }
     async tasks(): Promise<{ records: TaskRecord[]; warnings: string[] }> {
-        const { files, warnings } = await this.collect('tasks');
+        const collected = await this.collect('tasks');
+        const warnings = collected.warnings;
+        const exclusions = await this.taskExclusions(warnings);
+        const files = collected.files.filter(file => !excludedFromTasks(file.path, exclusions));
         const records: TaskRecord[] = [];
         let i = 0;
         const read = async () => {

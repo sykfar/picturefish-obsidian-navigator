@@ -50,6 +50,16 @@ export interface TaskRecord {
     forAi: boolean;
 }
 export type TaskAudience = 'ich' | 'ki' | 'alle';
+/**
+ * Folder exclusions of "Regel – Aufgaben im Vault": a plain name matches on every level,
+ * a name with a slash matches as a path prefix.
+ */
+export function excludedFromTasks(path: string, folders: string[]): boolean {
+    const segments = path.split('/').slice(0, -1);
+    return folders.some(folder =>
+        folder.includes('/') ? path.startsWith(`${folder.replace(/\/+$/, '')}/`) : segments.includes(folder)
+    );
+}
 /** `#an/ki` exactly; `#ki` or `#an/kinderbuch` are topics, not assignments. */
 const AI_TAG = /(?:^|\s)#an\/ki(?=$|[\s,.;:!?)\]])/i;
 export function byAudience(records: TaskRecord[], audience: TaskAudience): TaskRecord[] {

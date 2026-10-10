@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest';
-import { byAudience, dashboardConfig, taskRecords, taskState, taskList, type Page } from '../src/services/vaultDashboards/model';
+import { byAudience, dashboardConfig, excludedFromTasks, taskRecords, taskState, taskList, type Page } from '../src/services/vaultDashboards/model';
 import { classifyBook, bookRead } from '../src/services/vaultDashboards/books';
 const cfg = () => ({
     entries: [{ path: 'Dashboard/Book.md', label: 'Book', area: 'sources' }],
@@ -86,4 +86,14 @@ it('separates tasks for the AI by the exact #an/ki tag and keeps everything else
     expect(byAudience(records, 'ich')).toHaveLength(3);
     expect(byAudience(records, 'ki')).toHaveLength(3);
     expect(byAudience(records, 'alle')).toHaveLength(6);
+});
+
+it('applies the vault task exclusions by folder name on every level and by path prefix', () => {
+    const folders = ['Knowledge', 'Plans', '03 Bereiche/Produktaufbau/Anforderungsmanagement', 'Checklisten'];
+    expect(excludedFromTasks('02 Projekte/x/Knowledge/Tools/A.md', folders)).toBe(true);
+    expect(excludedFromTasks('02 Projekte/x/Notes/Checklisten/Abnahme.md', folders)).toBe(true);
+    expect(excludedFromTasks('03 Bereiche/Produktaufbau/Anforderungsmanagement/Use Cases/UC.md', folders)).toBe(true);
+    expect(excludedFromTasks('02 Projekte/x/Notes/Offene Punkte.md', folders)).toBe(false);
+    expect(excludedFromTasks('02 Projekte/Plans.md', folders)).toBe(false);
+    expect(excludedFromTasks('03 Bereiche/Produktaufbau/Offene Punkte.md', folders)).toBe(false);
 });
