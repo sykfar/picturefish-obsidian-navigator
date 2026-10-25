@@ -142,3 +142,37 @@ body:is(.pf-vault-surface-sand, .pf-vault-surface-white) table.table-view-table 
     background: transparent !important;
     color: var(--venezia-lagune-deep);
 }
+
+/* CF-PFNAV-0013: Markdown tables with long text stay readable.
+ * The legacy 15/28/28/29 % column widths outrank the `width: auto` above and
+ * squeeze every column after the fourth. They now apply to four-column tables
+ * only. Words break at syllables instead of anywhere; only code may break
+ * mid-token. Headers keep normal case and never wrap, so a short column is as
+ * narrow as its header. Dataview tables are unchanged.
+ */
+.markdown-rendered table:not(.table-view-table):not(:has(> thead > tr > th:nth-child(4):last-child)) > thead > tr > th,
+.markdown-rendered table:not(.table-view-table):not(:has(> thead > tr > th:nth-child(4):last-child)) > tbody > tr > td {
+    width: auto;
+}
+
+body:is(.pf-vault-surface-sand, .pf-vault-surface-white) .markdown-rendered table:not(.table-view-table) > thead > tr > th {
+    font-size: 0.85em;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    white-space: nowrap;
+}
+
+body:is(.pf-vault-surface-sand, .pf-vault-surface-white) .markdown-rendered table:not(.table-view-table) > tbody > tr > td {
+    overflow-wrap: break-word;
+    hyphens: auto;
+}
+
+body:is(.pf-vault-surface-sand, .pf-vault-surface-white) .markdown-rendered table:not(.table-view-table) > tbody > tr > td:first-child,
+body:is(.pf-vault-surface-sand, .pf-vault-surface-white) .markdown-rendered table:not(.table-view-table) > tbody > tr > td strong {
+    hyphens: manual;
+}
+
+body:is(.pf-vault-surface-sand, .pf-vault-surface-white) .markdown-rendered table:not(.table-view-table) > tbody > tr > td code {
+    overflow-wrap: anywhere;
+    hyphens: none;
+}
